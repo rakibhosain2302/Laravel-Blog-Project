@@ -19,9 +19,15 @@ class HomeController extends Controller
         $perPage = 3;
         $page = request()->query('page', 1);
         $skip = ($page - 1) * $perPage;
-        $totalPosts = Post::count();
+        $totalPosts = 0;
+        $posts = collect();
 
-        $posts = Post::with(['user', 'category'])->skip($skip)->take($perPage)->get();
+        try {
+            $totalPosts = Post::count();
+            $posts = Post::with(['user', 'category'])->skip($skip)->take($perPage)->get();
+        } catch (\Throwable $e) {
+            // Fall back to an empty homepage when the database is unavailable.
+        }
 
         return view('index', compact('posts','page', 'perPage', 'totalPosts'));
     }

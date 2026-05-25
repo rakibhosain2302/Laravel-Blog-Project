@@ -12,10 +12,13 @@
           <li><a href="{{ route('contract') }}">Contact</a></li>
       </ul>
     </div>
-    @foreach ( $copyright as $noteData)
-      
-    @endforeach
-    <p>&copy; Copyright- {{ $noteData->note. date('Y') }}.</p>
+    @php
+        $copyrightNote = '';
+        if (!empty($copyright) && count($copyright) > 0) {
+            $copyrightNote = $copyright->first()->note ?? '';
+        }
+    @endphp
+    <p>&copy; Copyright- {{ $copyrightNote . date('Y') }}.</p>
   </div>
   <div class="fixedicon clear">
     @foreach ($socialslink as $link)
