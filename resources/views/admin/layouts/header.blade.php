@@ -27,7 +27,7 @@
     <script src=" {{ asset('assets/admin/js/table/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src=" {{ asset('assets/admin/js/fancy-button/fancy-button.js') }}" type="text/javascript"></script>
     <!-- END: load jquery -->
-    <script type="text/javascript" src=" {{ asset('assets/admin/js/table/table.js') }}"></script>
+    <script type="text/javascript" src=" {{ asset('assets/admin/js/table/jquery.dataTables.min.js') }}"></script>
     <script src=" {{ asset('assets/admin/js/setup.js') }}" type="text/javascript"></script>
 
     @yield('scripts')
