@@ -379,7 +379,7 @@
                 <button type="button" class="blogtitle-modal__close" id="closeBlogTitleModal" aria-label="Close modal">
                     &times;
                 </button>
-                @include('admin.pages.blogtitle.add')
+                @include('admin.pages.blogtitle.create')
             </div>
         </div>
     @endif

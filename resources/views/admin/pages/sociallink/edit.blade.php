@@ -26,7 +26,7 @@
 @endprepend
 
 @section('content')
-    @include('admin.layouts.sidebar', ['socials' => \App\Models\Titleslogan::first()])
+    @include('admin.layouts.sidebar', ['socials' => \App\Models\Social::first()])
 
     <div class="grid_10">
         <div class="box round first grid">

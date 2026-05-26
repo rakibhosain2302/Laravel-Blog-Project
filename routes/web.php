@@ -16,6 +16,9 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('blog-title', 'titleSlogan')->name('blog.title.index');
     Route::post('blog-title', 'titleSloganStore')->name('blog.title.store');
     Route::delete('blog-title/{id}', 'titleSloganDelete')->name('blog.title.destroy');
+    Route::get('social-link', 'socialIndex')->name('social.index');
+    Route::post('social-link', 'socialStore')->name('social.store');
+    Route::delete('social-link/{id}', 'socialDelete')->name('social.destroy');
     Route::get('post/{id}', 'show')->name('showPost');
     Route::get('category/{id}', 'categoryFilter')->name('category.filter');
     Route::get('titleslogan/{id}', 'getTitleSlogan')->name('title.slogan');
@@ -65,4 +68,3 @@ Route::resource('message', ContractController::class);
 Route::post('/message/{id}/seenMsg', [ContractController::class, 'seenMsg'])->name('messages.seen');
 
 Route::post('/message/{id}/undo', [ContractController::class, 'undo'])->name('messages.undo');
-

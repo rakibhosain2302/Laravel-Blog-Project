@@ -12,19 +12,7 @@
 
                         <ul class="submenu">
                             <li><a href="{{ route('blog.title.index') }}">Title & Slogan</a></li>
-
-
-                            <li>
-                                @if ($socials)
-                                    <a href="{{ route('social', $socials->id) }}">
-                                        Social Media
-                                    </a>
-                                @else
-                                    <span class="text-muted">
-                                        Social Media (No Data)
-                                    </span>
-                                @endif
-                            </li>
+                            <li><a href="{{ route('social.index') }}">Social Media</a></li>
 
                             <li>
                                 @if ($copyright)

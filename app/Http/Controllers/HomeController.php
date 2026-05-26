@@ -152,13 +152,50 @@ class HomeController extends Controller
         return redirect()->route('blog.title.index')->with('success', 'Blog title deleted successfully!');
     }
 
+    public function socialIndex()
+    {
+        $data = Social::orderByDesc('id')->get();
+        return view('admin.pages.sociallink.index', compact('data'));
+    }
+
+    public function socialStore(Request $request)
+    {
+        if (Social::exists()) {
+            return redirect()->route('social.index')
+                ->with('error', 'Social media links already exist. Please update the existing record instead.');
+        }
+
+        $request->validate([
+            'fblink' => 'required|url',
+            'twlink' => 'required|url',
+            'lnlink' => 'required|url',
+            'gllink' => 'required|url',
+        ]);
+
+        Social::create([
+            'fblink' => $request->fblink,
+            'twlink' => $request->twlink,
+            'lnlink' => $request->lnlink,
+            'gllink' => $request->gllink,
+        ]);
+
+        return redirect()->route('social.index')->with('success', 'Social media links added successfully!');
+    }
+
+    public function socialDelete(string $id)
+    {
+        Social::findOrFail($id)->delete();
+
+        return redirect()->route('social.index')->with('success', 'Social media links deleted successfully!');
+    }
+
 
 
 
     public function getSocialLink(string $id)
     {
         $socials = Social::findOrFail($id);
-        return view('admin.pages.social', compact('socials'));
+        return view('admin.pages.sociallink.edit', compact('socials'));
     }
 
 
