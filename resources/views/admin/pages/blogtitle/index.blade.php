@@ -168,6 +168,7 @@
             border: 1px solid #cbd5e1;
             background: #fff;
             padding: 4px;
+            margin-top: 4px;
         }
 
         .blogtitle-slogan {
@@ -181,6 +182,42 @@
 
         .blogtitle-actions {
             white-space: nowrap;
+        }
+
+        .blogtitle-action-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 3px 12px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+            color: #fff;
+        }
+
+        .btn-delete {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: #b91c1c;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: #991b1b;
         }
 
         .blogtitle-empty {
@@ -249,41 +286,32 @@
                 <p class="errorMsg">{{ session('error') }}</p>
             @endif
 
+            @php
+                $canAdd = $data->isEmpty();
+                $totalTitles = $data->count();
+                $activeTitle = $data->first();
+            @endphp
+
             <div class="block">
-                <div class="blogtitle-toolbar">
-                    <div class="blogtitle-toolbar__text">
-                        <h3>Manage Blog Title</h3>
-                        <p>Create a new site title, slogan, and logo without leaving the list page.</p>
+                @if ($canAdd)
+                    <div class="blogtitle-toolbar">
+                        <div class="blogtitle-toolbar__text">
+                            <h3>Manage Blog Title</h3>
+                            <p>Create a new site title, slogan, and logo without leaving the list page.</p>
+                        </div>
+
+                        <button type="button" class="btn-add" id="openBlogTitleModal">
+                            + Add Blog Title
+                        </button>
                     </div>
-
-                    <button type="button" class="btn-add" id="openBlogTitleModal">
-                        + Add Blog Title
-                    </button>
-                </div>
-
-                @php
-                    $totalTitles = $data->count();
-                    $activeTitle = $data->first();
-                @endphp
-
-                <div class="blogtitle-summary">
-                    <div class="blogtitle-card">
-                        <h4>Total Records</h4>
-                        <strong>{{ $totalTitles }}</strong>
-                    </div>
-
-                    <div class="blogtitle-card">
-                        <h4>Current Title</h4>
-                        <strong>{{ optional($activeTitle)->title ?? 'No title found' }}</strong>
-                    </div>
-
-                    <div class="blogtitle-card">
-                        <h4>Current Slogan</h4>
-                        <div class="blogtitle-slogan">
-                            {{ optional($activeTitle)->slogan ?? 'No slogan found' }}
+                @else
+                    <div class="blogtitle-toolbar">
+                        <div class="blogtitle-toolbar__text">
+                            <h3>Blog Title Already Set</h3>
+                            <p>You can update the existing title, slogan, or logo from the action column.</p>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 @if ($data->isEmpty())
                     <div class="blogtitle-empty">
@@ -298,7 +326,7 @@
                                 <th width="15%">Logo</th>
                                 <th width="25%">Title</th>
                                 <th width="37%">Slogan</th>
-                                <th width="15%">Action</th>
+                                <th width="20%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -307,7 +335,8 @@
                                     <td>{{ ++$id }}</td>
                                     <td>
                                         @if ($titleSlogan->logo)
-                                            <img class="blogtitle-logo" src="{{ asset('storage/' . $titleSlogan->logo) }}" alt="Site logo">
+                                            <img class="blogtitle-logo" src="{{ asset('storage/' . $titleSlogan->logo) }}"
+                                                alt="Site logo">
                                         @else
                                             <span class="text-muted">No Logo</span>
                                         @endif
@@ -318,8 +347,21 @@
                                     <td class="blogtitle-slogan">
                                         {{ $titleSlogan->slogan }}
                                     </td>
-                                    <td class="blogtitle-actions edit-btn">
-                                        <a href="{{ route('title.slogan', $titleSlogan->id) }}">Update</a>
+                                    <td class="blogtitle-actions">
+                                        <div class="blogtitle-action-group">
+                                            <a class="edit-btn"
+                                                href="{{ route('title.slogan', $titleSlogan->id) }}">Update</a>
+
+                                            <form action="{{ route('blog.title.destroy', $titleSlogan->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn-delete" type="submit"
+                                                    onclick="return confirm('Are you sure you want to delete this blog title?');">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -330,14 +372,17 @@
         </div>
     </div>
 
-    <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleModal" aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
-        <div class="blogtitle-modal__dialog">
-            <button type="button" class="blogtitle-modal__close" id="closeBlogTitleModal" aria-label="Close modal">
-                &times;
-            </button>
-            @include('admin.pages.blogtitle.add')
+    @if ($canAdd)
+        <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleModal"
+            aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
+            <div class="blogtitle-modal__dialog">
+                <button type="button" class="blogtitle-modal__close" id="closeBlogTitleModal" aria-label="Close modal">
+                    &times;
+                </button>
+                @include('admin.pages.blogtitle.add')
+            </div>
         </div>
-    </div>
+    @endif
 
     @include('admin.layouts.footer')
 @endsection
@@ -353,42 +398,44 @@
             $('.datatable').dataTable();
             setSidebarHeight();
 
-            var $modal = $('#blogTitleModal');
+            @if ($canAdd)
+                var $modal = $('#blogTitleModal');
 
-            function openModal() {
-                $modal.addClass('is-open').attr('aria-hidden', 'false');
-                $('body').css('overflow', 'hidden');
-            }
-
-            function closeModal() {
-                $modal.removeClass('is-open').attr('aria-hidden', 'true');
-                $('body').css('overflow', '');
-            }
-
-            $('#openBlogTitleModal').click(function() {
-                openModal();
-                return false;
-            });
-
-            $('#closeBlogTitleModal').click(function() {
-                closeModal();
-                return false;
-            });
-
-            $modal.bind('click', function(e) {
-                if (e.target === this) {
-                    closeModal();
+                function openModal() {
+                    $modal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
                 }
-            });
 
-            $(document).bind('keydown', function(e) {
-                if (e.keyCode === 27) {
-                    closeModal();
+                function closeModal() {
+                    $modal.removeClass('is-open').attr('aria-hidden', 'true');
+                    $('body').css('overflow', '');
                 }
-            });
 
-            @if ($errors->any())
-                openModal();
+                $('#openBlogTitleModal').click(function() {
+                    openModal();
+                    return false;
+                });
+
+                $('#closeBlogTitleModal').click(function() {
+                    closeModal();
+                    return false;
+                });
+
+                $modal.bind('click', function(e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
+
+                $(document).bind('keydown', function(e) {
+                    if (e.keyCode === 27) {
+                        closeModal();
+                    }
+                });
+
+                @if ($errors->any())
+                    openModal();
+                @endif
             @endif
         });
     </script>

@@ -11,19 +11,8 @@
                         @endphp
 
                         <ul class="submenu">
-                            <li><a href="{{ route('blog.title.index') }}">Blog Title List</a></li>
+                            <li><a href="{{ route('blog.title.index') }}">Title & Slogan</a></li>
 
-                            <li>
-                                @if ($data)
-                                    <a href="{{ route('title.slogan', $data->id) }}">
-                                        Title & Slogan
-                                    </a>
-                                @else
-                                    <span class="text-muted">
-                                        Title & Slogan (No Data)
-                                    </span>
-                                @endif
-                            </li>
 
                             <li>
                                 @if ($socials)

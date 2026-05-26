@@ -29,7 +29,7 @@ class HomeController extends Controller
             // Fall back to an empty homepage when the database is unavailable.
         }
 
-        return view('index', compact('posts','page', 'perPage', 'totalPosts'));
+        return view('index', compact('posts', 'page', 'perPage', 'totalPosts'));
     }
 
 
@@ -67,6 +67,11 @@ class HomeController extends Controller
 
     public function titleSloganStore(Request $request)
     {
+        if (Titleslogan::exists()) {
+            return redirect()->route('blog.title.index')
+                ->with('error', 'A blog title already exists. Please update the existing one instead.');
+        }
+
         $request->validate([
             'title' => 'required|max:100',
             'slogan' => 'required|max:100',
@@ -135,7 +140,16 @@ class HomeController extends Controller
         $update->slogan = $request->slogan;
         $update->save();
         return redirect()->back()->with('success', 'Title & Slogan updated successfully!');
+    }
 
+    public function titleSloganDelete(string $id)
+    {
+        $delete = Titleslogan::findOrFail($id);
+        if ($delete->logo) {
+            Storage::disk('public')->delete($delete->logo);
+        }
+        $delete->delete();
+        return redirect()->route('blog.title.index')->with('success', 'Blog title deleted successfully!');
     }
 
 
@@ -224,21 +238,16 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('keyword');
-    
+
         if (!$search) {
-            return redirect()->route('home'); 
+            return redirect()->route('home');
         }
-    
+
         $posts = Post::where('title', 'LIKE', "%{$search}%")
-                     ->orWhere('discription', 'LIKE', "%{$search}%")
-                     ->get();
-    
-    
+            ->orWhere('discription', 'LIKE', "%{$search}%")
+            ->get();
+
+
         return view('search', compact('posts', 'search'));
     }
-    
-
-
-
-
 }
