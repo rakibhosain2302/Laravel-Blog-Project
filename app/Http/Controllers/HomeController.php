@@ -59,12 +59,42 @@ class HomeController extends Controller
     }
 
 
+    public function titleSlogan()
+    {
+        $data = Titleslogan::orderByDesc('id')->get();
+        return view('admin.pages.blogtitle.index', compact('data'));
+    }
+
+    public function titleSloganStore(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:100',
+            'slogan' => 'required|max:100',
+            'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
+        ]);
+
+        $path = null;
+
+        if ($request->hasFile('logo')) {
+            $fileName = time() . '.' . $request->file('logo')->getClientOriginalExtension();
+            $path = $request->file('logo')->storeAs('uploads/logo', $fileName, 'public');
+        }
+
+        Titleslogan::create([
+            'title' => $request->title,
+            'slogan' => $request->slogan,
+            'logo' => $path,
+        ]);
+
+        return redirect()->route('blog.title.index')->with('success', 'Blog title added successfully!');
+    }
+
+
 
     public function getTitleSlogan(string $id)
     {
-
         $data = Titleslogan::findOrFail($id);
-        return view('admin.pages.titleslogan', compact('data'));
+        return view('admin.pages.blogtitle.edit', compact('data'));
     }
 
 

@@ -11,6 +11,7 @@
                         @endphp
 
                         <ul class="submenu">
+                            <li><a href="{{ route('blog.title.index') }}">Blog Title List</a></li>
 
                             <li>
                                 @if ($data)

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home'); // Home page
+    Route::get('blog-title', 'titleSlogan')->name('blog.title.index');
+    Route::post('blog-title', 'titleSloganStore')->name('blog.title.store');
     Route::get('post/{id}', 'show')->name('showPost');
     Route::get('category/{id}', 'categoryFilter')->name('category.filter');
     Route::get('titleslogan/{id}', 'getTitleSlogan')->name('title.slogan');
@@ -62,7 +64,5 @@ Route::resource('message', ContractController::class);
 Route::post('/message/{id}/seenMsg', [ContractController::class, 'seenMsg'])->name('messages.seen');
 
 Route::post('/message/{id}/undo', [ContractController::class, 'undo'])->name('messages.undo');
-
-
 
 
