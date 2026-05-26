@@ -51,7 +51,7 @@
 
         .blogtitle-create__field input[type="text"],
         .blogtitle-create__field input[type="file"] {
-            width: 100%;
+            width: 350px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             padding: 12px 14px;
