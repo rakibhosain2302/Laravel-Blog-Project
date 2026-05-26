@@ -3,19 +3,53 @@
         <div class="block" id="section-menu">
             <ul class="section menu">
                 @if (in_array(auth()->user()->role->name, ['Admin', 'Editor']))
-                <li><a class="menuitem">Site Option</a>
-                    @php
-                        $data = \App\Models\Titleslogan::first();
-                        $socials = \App\Models\Social::first();
-                        $copyright = \App\Models\Copyright::first();
-                    @endphp
+                    <li><a class="menuitem">Site Option</a>
+                        @php
+                            $data = \App\Models\Titleslogan::first();
+                            $socials = \App\Models\Social::first();
+                            $copyright = \App\Models\Copyright::first();
+                        @endphp
 
-                    <ul class="submenu">
-                        <li><a href="{{ route('title.slogan', $data->id) }}">Title & Slogan</a></li>
-                        <li><a href="{{ route('social', $socials->id) }}">Social Media</a></li>
-                        <li><a href="{{ route('copyright', $copyright->id) }}">Copyright</a></li>
-                    </ul>
-                </li>
+                        <ul class="submenu">
+
+                            <li>
+                                @if ($data)
+                                    <a href="{{ route('title.slogan', $data->id) }}">
+                                        Title & Slogan
+                                    </a>
+                                @else
+                                    <span class="text-muted">
+                                        Title & Slogan (No Data)
+                                    </span>
+                                @endif
+                            </li>
+
+                            <li>
+                                @if ($socials)
+                                    <a href="{{ route('social', $socials->id) }}">
+                                        Social Media
+                                    </a>
+                                @else
+                                    <span class="text-muted">
+                                        Social Media (No Data)
+                                    </span>
+                                @endif
+                            </li>
+
+                            <li>
+                                @if ($copyright)
+                                    <a href="{{ route('copyright', $copyright->id) }}">
+                                        Copyright
+                                    </a>
+                                @else
+                                    <span class="text-muted">
+                                        Copyright (No Data)
+                                    </span>
+                                @endif
+                            </li>
+
+                        </ul>
+                    </li>
                 @endif
 
                 @if (in_array(auth()->user()->role->name, ['Admin', 'Editor']))
@@ -28,20 +62,20 @@
                 @endif
 
                 @if (in_array(auth()->user()->role->name, ['Admin', 'Editor']))
-                <li><a class="menuitem">Slider Option</a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('slider.create') }}">Add New Slider</a></li>
-                        <li><a href="{{ route('slider.index') }}">Slider List</a></li>
-                    </ul>
-                </li>
+                    <li><a class="menuitem">Slider Option</a>
+                        <ul class="submenu">
+                            <li><a href="{{ route('slider.create') }}">Add New Slider</a></li>
+                            <li><a href="{{ route('slider.index') }}">Slider List</a></li>
+                        </ul>
+                    </li>
                 @endif
                 @if (in_array(auth()->user()->role->name, ['Admin', 'Editor']))
-                <li><a class="menuitem">Category Option</a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('categories.create') }}">Add Category</a> </li>
-                        <li><a href="{{ route('categories.index') }}">Category List</a> </li>
-                    </ul>
-                </li>
+                    <li><a class="menuitem">Category Option</a>
+                        <ul class="submenu">
+                            <li><a href="{{ route('categories.create') }}">Add Category</a> </li>
+                            <li><a href="{{ route('categories.index') }}">Category List</a> </li>
+                        </ul>
+                    </li>
                 @endif
                 <li><a class="menuitem">Post Option</a>
                     <ul class="submenu">

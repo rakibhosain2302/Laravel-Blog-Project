@@ -8,8 +8,11 @@
         $noteData = \App\Models\Copyright::first();
     @endphp
     <p>
-        &copy; Copyright <a href="{{ route('home') }}">{{ $noteData->note . date('Y') }}</a>. All Rights
-        Reserved.
+        &copy; Copyright
+        <a href="{{ route('home') }}">
+            {{ optional($noteData)->note ?? 'Your Website' }} {{ date('Y') }}
+        </a>.
+        All Rights Reserved.
     </p>
 </div>
 </body>

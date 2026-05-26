@@ -51,11 +51,11 @@
             @endphp
             <div id="branding">
                 <div class="floatleft logo">
-                    <img src="{{ asset('storage/' . $data->logo) }}" alt="Logo" />
+                    <img src="{{ asset('storage/' . optional($data)->logo) }}" alt="Logo" />
                 </div>
                 <div class="floatleft middle">
-                    <h1>{{ $data->title }}</h1>
-                    <p>{{ $data->slogan }}</p>
+                    <h1>{{ optional($data)->title }}</h1>
+                    <p>{{ optional($data)->slogan }}</p>
                 </div>
                 <div class="floatright">
                     <div class="floatleft">
