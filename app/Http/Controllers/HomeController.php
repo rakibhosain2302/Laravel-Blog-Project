@@ -272,7 +272,9 @@ class HomeController extends Controller
 
         $isSameNote = $update->note === $request->note;
         if ($isSameNote) {
-            return redirect()->back()->with('error', 'Copyright text already updated. Please try again.');
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Copyright text already updated. Please try again.');
         }
 
 

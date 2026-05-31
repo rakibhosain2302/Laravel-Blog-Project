@@ -16,7 +16,7 @@
         </div>
 
         <div class="copyright-create__actions">
-            <button type="submit" class="btn-save">Save Copyright</button>
+            <button type="submit" class="btn-save">Save</button>
         </div>
     </form>
 </div>
