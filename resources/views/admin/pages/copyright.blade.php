@@ -1,4 +1,4 @@
-﻿@extends('admin.layouts.header')
+@extends('admin.layouts.header')
 
 @prepend('style')
     <style>
@@ -28,7 +28,7 @@
                 <p class="errorMsg">{{ session('error') }}</p>
             @endif
             <div class="block boder">
-                <form action="{{ route('capyright.update', $noteData->id) }}" method="POST">
+                <form action="{{ route('copyright.update', $noteData->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <table class="form">

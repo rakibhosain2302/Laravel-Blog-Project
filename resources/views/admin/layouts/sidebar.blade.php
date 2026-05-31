@@ -13,18 +13,7 @@
                         <ul class="submenu">
                             <li><a href="{{ route('blog.title.index') }}">Title & Slogan</a></li>
                             <li><a href="{{ route('social.index') }}">Social Media</a></li>
-
-                            <li>
-                                @if ($copyright)
-                                    <a href="{{ route('copyright', $copyright->id) }}">
-                                        Copyright
-                                    </a>
-                                @else
-                                    <span class="text-muted">
-                                        Copyright (No Data)
-                                    </span>
-                                @endif
-                            </li>
+                            <li><a href="{{ route('copyright.index') }}">Copyright</a></li>
 
                         </ul>
                     </li>

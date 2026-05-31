@@ -25,8 +25,11 @@ Route::controller(HomeController::class)->group(function () {
     Route::put('titleslogan/update/{id}', 'titleSloganUpdate')->name('title.slogan.update');
     Route::get('social/{id}', 'getSocialLink')->name('social');
     Route::put('social/update/{id}', 'socialUpdate')->name('social.update');
-    Route::get('copyright/{id}', 'getCopynote')->name('copyright');
+    Route::get('copyright', 'copyrightIndex')->name('copyright.index');
+    Route::post('copyright', 'copyrightStore')->name('copyright.store');
+    Route::get('copyright/{id}', 'getCopynote')->name('copyright.edit');
     Route::put('copyright/update/{id}', 'CopyNoteUpdate')->name('copyright.update');
+    Route::delete('copyright/{id}', 'copyrightDelete')->name('copyright.destroy');
     Route::get('pages/{id}', 'singlePage')->name('single.page');
     Route::get('contract', 'contractPage')->name('contract');
     Route::get('search', 'search')->name('search');

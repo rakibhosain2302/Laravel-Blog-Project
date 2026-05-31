@@ -232,32 +232,62 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Socials Links updated successfully!');
     }
 
+    public function copyrightIndex()
+    {
+        $data = Copyright::orderByDesc('id')->get();
+        return view('admin.pages.copyright.copyright', compact('data'));
+    }
+
+    public function copyrightStore(Request $request)
+    {
+        if (Copyright::exists()) {
+            return redirect()->route('copyright.index')
+                ->with('error', 'Copyright text already exists. Please update the existing record instead.');
+        }
+
+        $request->validate([
+            'note' => 'required|max:100',
+        ]);
+
+        Copyright::create([
+            'note' => $request->note,
+        ]);
+
+        return redirect()->route('copyright.index')->with('success', 'Copyright text added successfully!');
+    }
+
     public function getCopynote(string $id)
     {
         $noteData = Copyright::findOrFail($id);
-        return view('admin.pages.copyright', compact('noteData'));
+        return view('admin.pages.copyright.edit', compact('noteData'));
     }
 
     public function CopyNoteUpdate(Request $request, string $id)
     {
-
         $request->validate([
-            'note' => 'required|max:100'
+            'note' => 'required|max:100',
         ]);
 
         $update = Copyright::findOrFail($id);
 
         $isSameNote = $update->note === $request->note;
         if ($isSameNote) {
-            return redirect()->back()->with('error', 'Title & Slogan already updated. Please try again.');
+            return redirect()->back()->with('error', 'Copyright text already updated. Please try again.');
         }
 
 
         $update->update([
-            'note' => $request->note
+            'note' => $request->note,
         ]);
 
-        return redirect()->back()->with('success', 'Socials Links updated successfully!');
+        return redirect()->back()->with('success', 'Copyright text updated successfully!');
+    }
+
+    public function copyrightDelete(string $id)
+    {
+        Copyright::findOrFail($id)->delete();
+
+        return redirect()->route('copyright.index')->with('success', 'Copyright text deleted successfully!');
     }
 
 
