@@ -34,7 +34,7 @@
         </div>
 
         <div class="blogtitle-create__actions">
-            <button type="submit" class="btn-save">Save Blog Title</button>
+            <button type="submit" class="btn-save">Save</button>
         </div>
     </form>
 </div>

@@ -98,8 +98,9 @@ class HomeController extends Controller
 
     public function getTitleSlogan(string $id)
     {
-        $data = Titleslogan::findOrFail($id);
-        return view('admin.pages.blogtitle.edit', compact('data'));
+        Titleslogan::findOrFail($id);
+
+        return redirect()->route('blog.title.index', ['edit_id' => $id]);
     }
 
 
@@ -122,7 +123,9 @@ class HomeController extends Controller
 
 
         if ($isTitleSame && $isSloganSame && $isLogoSame) {
-            return redirect()->back()->with('error', 'Title & Slogan already updated. Please try again.');
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Title & Slogan already updated. Please try again.');
         }
 
 

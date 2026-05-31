@@ -1,100 +1,91 @@
-﻿@extends('admin.layouts.header')
+@if ($data->isNotEmpty())
+    <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleEditModal"
+        aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
+        <div class="blogtitle-modal__dialog">
+            <button type="button" class="blogtitle-modal__close" id="closeBlogTitleEditModal" aria-label="Close modal">
+                &times;
+            </button>
 
-@prepend('style')
-    <style>
-        .left-side {
-            float: left;
-            width: 70%;
-        }
-
-        .right-side {
-            margin-top: 20px;
-            float: left;
-            height: 150px;
-            width: 150px;
-            border: 2px solid #CCC;
-            border-radius: 50%;
-        }
-
-        .right-side img {
-            display: flex;
-            margin: 18px 7px 1px 15px;
-            height: 100px;
-            width: 120px;
-        }
-    </style>
-@endprepend
-
-@section('content')
-    @include('admin.layouts.sidebar', ['data' => \App\Models\Titleslogan::first()])
-
-    <div class="grid_10">
-        <div class="box round first grid">
-            <h2>Update Site Title and Description</h2>
-            @if (session('success'))
-                <p class="successMsg">{{ session('success') }}</p>
-            @endif
-
-            @if (session('error'))
-                <p class="errorMsg">{{ session('error') }}</p>
-            @endif
-            <div class="block sloginblock">
-                <div class="left-side">
-                    <form action="{{ route('title.slogan.update', $data->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-                        <table class="form">
-                            <tr>
-                                <td>
-                                    <label>Website Title</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="title" class="medium" value="{{ $data->title }}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Website Slogan</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="slogan" class="medium" value="{{ $data->slogan }}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Website Logo</label>
-                                </td>
-                                <td>
-                                    <input type="file" name="logo"
-                                        onchange="document.querySelector('#output').src=window.URL.createObjectURL(this.files[0])" />
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <input type="submit" name="submit" Value="Update" />
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+            <div class="blogtitle-create">
+                <div class="blogtitle-create__head">
+                    <h3>Update Blog Title</h3>
+                    <p>Edit the site title, slogan, and logo without leaving the list page.</p>
                 </div>
-                <div class="right-side">
-                    <div class="Title-logo">
-                        <img id="output" class="img-thumbnuil img-fluid mt-2" src="{{ asset('storage/' . $data->logo) }}"
-                            alt="logo">
+
+                <form action="{{ route('title.slogan.update', $activeTitle->id) }}" method="POST"
+                    enctype="multipart/form-data" id="blogTitleEditForm">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="title_id" id="blogTitleEditId" value="{{ old('title_id', $activeTitle->id) }}">
+
+                    <div class="blogtitle-create__grid">
+                        <div class="blogtitle-create__field">
+                            <label for="blogtitle_edit_title">Website Title</label>
+                            <input
+                                id="blogtitle_edit_title"
+                                type="text"
+                                name="title"
+                                value="{{ old('title', $activeTitle->title) }}"
+                                placeholder="Enter website title"
+                            />
+                            @error('title')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="blogtitle-create__field">
+                            <label for="blogtitle_edit_slogan">Website Slogan</label>
+                            <input
+                                id="blogtitle_edit_slogan"
+                                type="text"
+                                name="slogan"
+                                value="{{ old('slogan', $activeTitle->slogan) }}"
+                                placeholder="Enter website slogan"
+                            />
+                            @error('slogan')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="blogtitle-create__field blogtitle-create__field--full">
+                            <label for="blogtitle_edit_logo">Website Logo</label>
+                            <input
+                                id="blogtitle_edit_logo"
+                                type="file"
+                                name="logo"
+                                onchange="document.querySelector('#blogtitle_edit_preview').src = window.URL.createObjectURL(this.files[0]); document.querySelector('#blogtitle_edit_preview').style.display = 'block';"
+                            />
+                            @error('logo')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+
+                            <div class="blogtitle-preview">
+                                @if ($activeTitle->logo)
+                                    <img
+                                        id="blogtitle_edit_preview"
+                                        class="blogtitle-preview__img"
+                                        src="{{ asset('storage/' . $activeTitle->logo) }}"
+                                        alt="Current logo"
+                                    >
+                                @else
+                                    <img
+                                        id="blogtitle_edit_preview"
+                                        class="blogtitle-preview__img"
+                                        src=""
+                                        alt="Current logo"
+                                        style="display: none;"
+                                    >
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="blogtitle-modal__actions">
+                        <button type="button" class="btn-cancel" id="cancelBlogTitleEditModal">Cancel</button>
+                        <button type="submit" class="btn-save">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    @include('admin.layouts.footer')
-@endsection
-
-@section('title')
-    Title-Slogan
-@endsection
+@endif

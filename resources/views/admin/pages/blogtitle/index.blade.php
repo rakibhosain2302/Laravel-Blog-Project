@@ -51,7 +51,6 @@
 
         .blogtitle-create__field input[type="text"],
         .blogtitle-create__field input[type="file"] {
-            width: 350px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             padding: 12px 14px;
@@ -220,6 +219,20 @@
             background: #991b1b;
         }
 
+        .btn-edit-open {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-edit-open:hover {
+            background: #1d4ed8;
+        }
+
         .blogtitle-empty {
             border: 1px dashed #cbd5e1;
             background: #f8fafc;
@@ -252,7 +265,7 @@
         .blogtitle-modal__close {
             position: absolute;
             top: 14px;
-            right: 14px;
+            right: -24px;
             width: 38px;
             height: 38px;
             border-radius: 999px;
@@ -267,6 +280,45 @@
 
         .blogtitle-modal__close:hover {
             background: #cbd5e1;
+        }
+
+        .blogtitle-modal__actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-cancel {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #e2e8f0;
+            color: #0f172a;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: #cbd5e1;
+        }
+
+        .blogtitle-preview {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .blogtitle-preview__img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            padding: 4px;
         }
     </style>
 @endprepend
@@ -289,7 +341,8 @@
             @php
                 $canAdd = $data->isEmpty();
                 $totalTitles = $data->count();
-                $activeTitle = $data->first();
+                $selectedTitleId = old('title_id', request('edit_id'));
+                $activeTitle = $data->firstWhere('id', $selectedTitleId) ?? $data->first();
             @endphp
 
             <div class="block">
@@ -349,8 +402,17 @@
                                     </td>
                                     <td class="blogtitle-actions">
                                         <div class="blogtitle-action-group">
-                                            <a class="edit-btn"
-                                                href="{{ route('title.slogan', $titleSlogan->id) }}">Update</a>
+                                            <button
+                                                type="button"
+                                                class="btn-edit-open js-open-blogtitle-edit"
+                                                data-action="{{ route('title.slogan.update', $titleSlogan->id) }}"
+                                                data-id="{{ $titleSlogan->id }}"
+                                                data-title="{{ e($titleSlogan->title) }}"
+                                                data-slogan="{{ e($titleSlogan->slogan) }}"
+                                                data-logo="{{ $titleSlogan->logo }}"
+                                            >
+                                                Update
+                                            </button>
 
                                             <form action="{{ route('blog.title.destroy', $titleSlogan->id) }}"
                                                 method="POST">
@@ -384,6 +446,8 @@
         </div>
     @endif
 
+    @include('admin.pages.blogtitle.edit')
+
     @include('admin.layouts.footer')
 @endsection
 
@@ -397,6 +461,69 @@
             setupLeftMenu();
             $('.datatable').dataTable();
             setSidebarHeight();
+
+            @if ($data->isNotEmpty())
+                var $editModal = $('#blogTitleEditModal');
+                var $editForm = $('#blogTitleEditForm');
+                var $editId = $('#blogTitleEditId');
+                var $titleInput = $('#blogtitle_edit_title');
+                var $sloganInput = $('#blogtitle_edit_slogan');
+                var $logoPreview = $('#blogtitle_edit_preview');
+
+                function openEditModal(action, id, title, slogan, logo) {
+                    $editForm.attr('action', action);
+                    $editId.val(id);
+                    $titleInput.val(title);
+                    $sloganInput.val(slogan);
+                    if (logo) {
+                        $logoPreview.attr('src', "{{ asset('storage') }}/" + logo).show();
+                    } else {
+                        $logoPreview.hide();
+                    }
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                }
+
+                function closeEditModal() {
+                    $editModal.removeClass('is-open').attr('aria-hidden', 'true');
+                    $('body').css('overflow', '');
+                }
+
+                $('.js-open-blogtitle-edit').click(function() {
+                    openEditModal(
+                        $(this).data('action'),
+                        $(this).data('id'),
+                        $(this).data('title'),
+                        $(this).data('slogan'),
+                        $(this).data('logo')
+                    );
+                });
+
+                $('#closeBlogTitleEditModal, #cancelBlogTitleEditModal').click(function() {
+                    closeEditModal();
+                    return false;
+                });
+
+                $editModal.bind('click', function(e) {
+                    if (e.target === this) {
+                        closeEditModal();
+                    }
+                });
+
+                $(document).bind('keydown', function(e) {
+                    if (e.keyCode === 27) {
+                        closeEditModal();
+                    }
+                });
+
+                @if ($errors->any())
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @elseif(request('edit_id') && $activeTitle)
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @endif
+            @endif
 
             @if ($canAdd)
                 var $modal = $('#blogTitleModal');
