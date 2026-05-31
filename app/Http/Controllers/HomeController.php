@@ -235,7 +235,7 @@ class HomeController extends Controller
     public function copyrightIndex()
     {
         $data = Copyright::orderByDesc('id')->get();
-        return view('admin.pages.copyright.copyright', compact('data'));
+        return view('admin.pages.copyright.index', compact('data'));
     }
 
     public function copyrightStore(Request $request)
