@@ -40,7 +40,6 @@
         }
 
         .copyright-create__field input[type="text"] {
-            width: 100%;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             padding: 12px 14px;
@@ -209,7 +208,7 @@
         .copyright-modal__close {
             position: absolute;
             top: 14px;
-            right: 14px;
+            right: -24px;
             width: 38px;
             height: 38px;
             border-radius: 999px;
@@ -266,7 +265,8 @@
 
             @php
                 $canAdd = $data->isEmpty();
-                $activeCopyright = $data->firstWhere('id', old('copyright_id')) ?? $data->first();
+                $selectedCopyrightId = old('copyright_id', request('edit_id'));
+                $activeCopyright = $data->firstWhere('id', $selectedCopyrightId) ?? $data->first();
             @endphp
 
             <div class="block">
@@ -351,47 +351,7 @@
         </div>
     @endif
 
-    @if ($data->isNotEmpty())
-        <div class="copyright-modal {{ $errors->any() ? 'is-open' : '' }}" id="copyrightEditModal"
-            aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
-            <div class="copyright-modal__dialog">
-                <button type="button" class="copyright-modal__close" id="closeCopyrightEditModal" aria-label="Close modal">
-                    &times;
-                </button>
-                <div class="copyright-create">
-                    <div class="copyright-create__head">
-                        <h3>Update Copyright Text</h3>
-                        <p>Edit the footer copyright note without leaving the list page.</p>
-                    </div>
-
-                    <form action="{{ route('copyright.update', $activeCopyright->id) }}" method="POST" id="copyrightEditForm">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="copyright_id" id="copyrightEditId" value="{{ old('copyright_id', $activeCopyright->id) }}">
-
-                        <div class="copyright-create__field">
-                            <label for="copyright_edit_note">Copyright Note</label>
-                            <input
-                                id="copyright_edit_note"
-                                type="text"
-                                name="note"
-                                value="{{ old('note', $activeCopyright->note) }}"
-                                placeholder="All rights reserved. Demo content for"
-                            >
-                            @error('note')
-                                <span class="field-error">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="copyright-modal__actions">
-                            <button type="button" class="btn-cancel" id="cancelCopyrightEditModal">Cancel</button>
-                            <button type="submit" class="btn-save">Update Copyright</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('admin.pages.copyright.edit')
 
     @include('admin.layouts.footer')
 @endsection
@@ -450,6 +410,14 @@
                         closeEditModal();
                     }
                 });
+
+                @if ($errors->any())
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @elseif(request('edit_id') && $activeCopyright)
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @endif
             @endif
 
             @if ($canAdd)
@@ -492,10 +460,6 @@
                 @endif
             @endif
 
-            @if ($data->isNotEmpty() && $errors->any())
-                $('#copyrightEditModal').addClass('is-open').attr('aria-hidden', 'false');
-                $('body').css('overflow', 'hidden');
-            @endif
         });
     </script>
 @endsection

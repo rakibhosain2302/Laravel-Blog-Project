@@ -258,8 +258,9 @@ class HomeController extends Controller
 
     public function getCopynote(string $id)
     {
-        $noteData = Copyright::findOrFail($id);
-        return view('admin.pages.copyright.edit', compact('noteData'));
+        Copyright::findOrFail($id);
+
+        return redirect()->route('copyright.index', ['edit_id' => $id]);
     }
 
     public function CopyNoteUpdate(Request $request, string $id)
