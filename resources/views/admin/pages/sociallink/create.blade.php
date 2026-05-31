@@ -33,7 +33,7 @@
             </div>
 
             <div class="social-create__field">
-                <label for="social_gg">Google</label>
+                <label for="social_gg">Github</label>
                 <input id="social_gg" type="url" name="gllink" value="{{ old('gllink') }}" placeholder="https://google.com/">
                 @error('gllink')
                     <span class="field-error">{{ $message }}</span>

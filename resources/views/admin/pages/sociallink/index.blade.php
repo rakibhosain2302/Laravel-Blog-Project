@@ -46,7 +46,6 @@
         }
 
         .social-create__field input[type="url"] {
-            width: 400px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             padding: 12px 14px;
@@ -170,6 +169,20 @@
             background: #991b1b;
         }
 
+        .btn-edit-open {
+            border: 0;
+            border-radius: 6px;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-edit-open:hover {
+            background: #1d4ed8;
+        }
+
         .social-empty {
             border: 1px dashed #cbd5e1;
             background: #f8fafc;
@@ -202,7 +215,7 @@
         .social-modal__close {
             position: absolute;
             top: 14px;
-            right: 14px;
+            right: -24px;
             width: 38px;
             height: 38px;
             border-radius: 999px;
@@ -216,6 +229,27 @@
         }
 
         .social-modal__close:hover {
+            background: #cbd5e1;
+        }
+
+        .social-modal__actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-cancel {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #e2e8f0;
+            color: #0f172a;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
             background: #cbd5e1;
         }
     </style>
@@ -238,8 +272,8 @@
 
             @php
                 $canAdd = $data->isEmpty();
-                $totalSocials = $data->count();
-                $activeSocial = $data->first();
+                $selectedSocialId = old('social_id', request('edit_id'));
+                $activeSocial = $data->firstWhere('id', $selectedSocialId) ?? $data->first();
             @endphp
 
             <div class="block">
@@ -290,7 +324,18 @@
                                     <td>{{ $social->gllink }}</td>
                                     <td class="social-actions">
                                         <div class="social-action-group">
-                                            <a class="edit-btn" href="{{ route('social', $social->id) }}">Update</a>
+                                            <button
+                                                type="button"
+                                                class="btn-edit-open js-open-social-edit"
+                                                data-action="{{ route('social.update', $social->id) }}"
+                                                data-id="{{ $social->id }}"
+                                                data-fblink="{{ e($social->fblink) }}"
+                                                data-twlink="{{ e($social->twlink) }}"
+                                                data-lnlink="{{ e($social->lnlink) }}"
+                                                data-gllink="{{ e($social->gllink) }}"
+                                            >
+                                                Update
+                                            </button>
                                             <form action="{{ route('social.destroy', $social->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -321,6 +366,8 @@
         </div>
     @endif
 
+    @include('admin.pages.sociallink.edit')
+
     @include('admin.layouts.footer')
 @endsection
 
@@ -335,8 +382,70 @@
             $('.datatable').dataTable();
             setSidebarHeight();
 
+            @if ($data->isNotEmpty())
+                var $editModal = $('#socialEditModal');
+                var $editForm = $('#socialEditForm');
+                var $editId = $('#socialEditId');
+                var $fbInput = $('#social_edit_fb');
+                var $twInput = $('#social_edit_tw');
+                var $lnInput = $('#social_edit_ln');
+                var $ggInput = $('#social_edit_gg');
+
+                function openEditModal(action, id, fblink, twlink, lnlink, gllink) {
+                    $editForm.attr('action', action);
+                    $editId.val(id);
+                    $fbInput.val(fblink);
+                    $twInput.val(twlink);
+                    $lnInput.val(lnlink);
+                    $ggInput.val(gllink);
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                }
+
+                function closeEditModal() {
+                    $editModal.removeClass('is-open').attr('aria-hidden', 'true');
+                    $('body').css('overflow', '');
+                }
+
+                $('.js-open-social-edit').click(function() {
+                    openEditModal(
+                        $(this).data('action'),
+                        $(this).data('id'),
+                        $(this).data('fblink'),
+                        $(this).data('twlink'),
+                        $(this).data('lnlink'),
+                        $(this).data('gllink')
+                    );
+                });
+
+                $('#closeSocialEditModal, #cancelSocialEditModal').click(function() {
+                    closeEditModal();
+                    return false;
+                });
+
+                $editModal.bind('click', function(e) {
+                    if (e.target === this) {
+                        closeEditModal();
+                    }
+                });
+
+                $(document).bind('keydown', function(e) {
+                    if (e.keyCode === 27) {
+                        closeEditModal();
+                    }
+                });
+
+                @if ($errors->any())
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @elseif(request('edit_id') && $activeSocial)
+                    $editModal.addClass('is-open').attr('aria-hidden', 'false');
+                    $('body').css('overflow', 'hidden');
+                @endif
+            @endif
+
             @if ($canAdd)
-            var $modal = $('#socialModal');
+                var $modal = $('#socialModal');
 
             function openModal() {
                 $modal.addClass('is-open').attr('aria-hidden', 'false');
@@ -370,9 +479,9 @@
                 }
             });
 
-            @if ($errors->any())
-                openModal();
-            @endif
+                @if ($errors->any())
+                    openModal();
+                @endif
             @endif
         });
     </script>

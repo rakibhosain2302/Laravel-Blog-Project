@@ -194,8 +194,9 @@ class HomeController extends Controller
 
     public function getSocialLink(string $id)
     {
-        $socials = Social::findOrFail($id);
-        return view('admin.pages.sociallink.edit', compact('socials'));
+        Social::findOrFail($id);
+
+        return redirect()->route('social.index', ['edit_id' => $id]);
     }
 
 
@@ -218,7 +219,9 @@ class HomeController extends Controller
 
 
         if ($isFblinkSame && $isTwlinkSame && $isLnlinkSame && $isGglinkSame) {
-            return redirect()->back()->with('error', 'Socials Links already updated. Please try again.');
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Socials Links already updated. Please try again.');
         }
 
 

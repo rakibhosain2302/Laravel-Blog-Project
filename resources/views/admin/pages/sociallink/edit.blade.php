@@ -1,100 +1,61 @@
-﻿@extends('admin.layouts.header')
-
-@prepend('style')
-    <style>
-        .left-side {
-            float: left;
-            width: 70%;
-        }
-
-        .right-side {
-            margin-top: 20px;
-            float: left;
-            height: 150px;
-            width: 150px;
-            border: 2px solid #CCC;
-            border-radius: 50%;
-        }
-
-        .right-side img {
-            display: flex;
-            margin: 18px 7px 1px 15px;
-            height: 100px;
-            width: 120px;
-        }
-    </style>
-@endprepend
-
-@section('content')
-    @include('admin.layouts.sidebar', ['socials' => \App\Models\Social::first()])
-
-    <div class="grid_10">
-        <div class="box round first grid">
-            <h2>Update Socials Links</h2>
-            @if (session('success')) 
-            <p class="successMsg">{{ session('success') }}</p> 
-            @endif
-
-            @if (session('error')) 
-            <p class="errorMsg">{{ session('error') }}</p> 
-            @endif
-            <div class="block sloginblock">
-                <div class="left-side">
-
-                    <form action="{{ route('social.update', $socials->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <table class="form">
-                            <tr>
-                                <td>
-                                    <label>Facebook</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="fblink" class="medium" value="{{ $socials->fblink }}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Twitter</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="twlink" class="medium" value="{{ $socials->twlink }}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Linkedin</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="lnlink" class="medium" value="{{ $socials->lnlink }}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Google</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="gllink" class="medium" value="{{ $socials->gllink }}" />
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <input type="submit" name="submit" Value="Update" />
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+﻿@if ($data->isNotEmpty())
+    <div class="social-modal {{ $errors->any() ? 'is-open' : '' }}" id="socialEditModal"
+        aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
+        <div class="social-modal__dialog">
+            <button type="button" class="social-modal__close" id="closeSocialEditModal" aria-label="Close modal">
+                &times;
+            </button>
+            <div class="social-create">
+                <div class="social-create__head">
+                    <h3>Update Social Media Links</h3>
+                    <p>Edit the public social links without leaving the list page.</p>
                 </div>
+
+                <form action="{{ route('social.update', $activeSocial->id) }}" method="POST" id="socialEditForm">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="social_id" id="socialEditId" value="{{ old('social_id', $activeSocial->id) }}">
+
+                    <div class="social-create__grid">
+                        <div class="social-create__field">
+                            <label for="social_edit_fb">Facebook</label>
+                            <input id="social_edit_fb" type="url" name="fblink" value="{{ old('fblink', $activeSocial->fblink) }}" placeholder="https://facebook.com/your-page">
+                            @error('fblink')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="social-create__field">
+                            <label for="social_edit_tw">Twitter</label>
+                            <input id="social_edit_tw" type="url" name="twlink" value="{{ old('twlink', $activeSocial->twlink) }}" placeholder="https://x.com/your-handle">
+                            @error('twlink')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="social-create__field">
+                            <label for="social_edit_ln">LinkedIn</label>
+                            <input id="social_edit_ln" type="url" name="lnlink" value="{{ old('lnlink', $activeSocial->lnlink) }}" placeholder="https://linkedin.com/in/your-profile">
+                            @error('lnlink')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="social-create__field">
+                            <label for="social_edit_gg">Github</label>
+                            <input id="social_edit_gg" type="url" name="gllink" value="{{ old('gllink', $activeSocial->gllink) }}" placeholder="https://google.com/">
+                            @error('gllink')
+                                <span class="field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="social-modal__actions">
+                        <button type="button" class="btn-cancel" id="cancelSocialEditModal">Cancel</button>
+                        <button type="submit" class="btn-save">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    @include('admin.layouts.footer')
-@endsection
-
-@section('title')
-    Social
-@endsection
+@endif
