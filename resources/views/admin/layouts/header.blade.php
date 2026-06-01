@@ -48,6 +48,7 @@
         <div class="grid_12 header-repeat">
             @php
                 $data = \App\Models\Titleslogan::first();
+                $authUser = Auth::user();
             @endphp
             <div id="branding">
                 <div class="floatleft logo">
@@ -59,7 +60,10 @@
                 </div>
                 <div class="floatright">
                     <div class="floatleft">
-                        <img src=" {{ asset('assets/admin/img/img-profile.jpg') }}" alt="Profile Pic" />
+                        <img
+                            src="{{ optional($authUser)->image ? asset('storage/' . $authUser->image) : asset('assets/admin/img/img-profile.jpg') }}"
+                            alt="Profile Pic"
+                        />
                     </div>
                     <div class="floatleft marginleft10">
                         <ul class="inline-ul floatleft">
