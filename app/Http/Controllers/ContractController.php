@@ -15,7 +15,7 @@ class ContractController extends Controller
         $seenMessages = Contract::where('is_seen', true)->latest()->get();
         $seenCount = $seenMessages->count(); // Seen messages count
 
-        return view('admin.pages.inbox', compact('messages', 'seenMessages', 'unreadCount', 'seenCount'));
+        return view('admin.pages.inbox.inbox', compact('messages', 'seenMessages', 'unreadCount', 'seenCount'));
     }
 
 
