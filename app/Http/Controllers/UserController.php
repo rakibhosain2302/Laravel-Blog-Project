@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -15,7 +16,12 @@ class UserController extends Controller
     {
         $users = User::with('role')->get();
         $userCount = User::count();
-        return view('admin.pages.userlist', compact('users', 'userCount'));
+        $roles = Role::all();
+        $editUser = request()->filled('edit_id')
+            ? User::with('role')->findOrFail(request('edit_id'))
+            : null;
+
+        return view('admin.pages.userlist.index', compact('users', 'userCount', 'roles', 'editUser'));
     }
 
     /**
@@ -47,11 +53,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::findOrFail($id);
-
-        $roles = Role::all();
-
-        return view('admin.pages.edituser', compact('user', 'roles'));
+        return redirect()->route('users.index', ['edit_id' => $id]);
     }
 
     /**
@@ -59,17 +61,24 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'role_id' => 'required' 
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role_id' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('users.index', ['edit_id' => $id])
+                ->withErrors($validator)
+                ->withInput();
+        }
     
         $user = User::findOrFail($id);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'role_id' => $request->role_id, 
+            'role_id' => $request->role_id,
         ]);
     
         return redirect()->route('users.index')->with('success', 'User updated successfully');
