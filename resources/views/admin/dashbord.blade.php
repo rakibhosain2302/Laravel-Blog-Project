@@ -349,6 +349,7 @@
         .action-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+            color: #fff
         }
 
         .action-link__text strong {
@@ -396,10 +397,18 @@
             border-color: #bfdbfe;
         }
 
+        .action-link--soft:hover {
+            color: #000;
+        }
+
         .action-link--ghost {
             background: linear-gradient(135deg, #fff, #f8fafc);
             color: #0f172a;
             border-color: #e2e8f0;
+        }
+
+        .action-link--ghost:hover {
+            color: #000;
         }
 
         .activity-list {
