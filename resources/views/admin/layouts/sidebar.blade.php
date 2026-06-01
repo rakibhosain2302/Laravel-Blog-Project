@@ -196,7 +196,7 @@
             z-index: 1;
         }
 
-        .sidebar-menu > li {
+        .sidebar-menu>li {
             border-radius: 18px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.04);
@@ -204,7 +204,7 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
         }
 
-        .sidebar-menu > li > .menuitem {
+        .sidebar-menu>li>.menuitem {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -218,7 +218,7 @@
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
         }
 
-        .sidebar-menu > li > .menuitem::after {
+        .sidebar-menu>li>.menuitem::after {
             content: "▾";
             color: #94a3b8;
             font-size: 14px;
@@ -226,22 +226,22 @@
             transition: transform 0.18s ease;
         }
 
-        .sidebar-menu > li.ui-accordion-header-active > .menuitem::after {
+        .sidebar-menu>li.ui-accordion-header-active>.menuitem::after {
             transform: rotate(180deg);
         }
 
-        .sidebar-menu > li > .submenu {
+        .sidebar-menu>li>.submenu {
             list-style: none;
             margin: 0;
             padding: 0 10px 12px;
             background: rgba(15, 23, 42, 0.2);
         }
 
-        .sidebar-menu > li > .submenu li {
+        .sidebar-menu>li>.submenu li {
             margin: 0;
         }
 
-        .sidebar-menu > li > .submenu a {
+        .sidebar-menu>li>.submenu a {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -257,7 +257,7 @@
             transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
         }
 
-        .sidebar-menu > li > .submenu a::before {
+        .sidebar-menu>li>.submenu a::before {
             content: "";
             width: 8px;
             height: 8px;
@@ -267,8 +267,8 @@
             flex: 0 0 auto;
         }
 
-        .sidebar-menu > li > .submenu a:hover,
-        .sidebar-menu > li > .submenu a.active {
+        .sidebar-menu>li>.submenu a:hover,
+        .sidebar-menu>li>.submenu a.active {
             color: #fff;
             background: rgba(59, 130, 246, 0.15);
             border-color: rgba(96, 165, 250, 0.25);
@@ -294,10 +294,15 @@
                 position: static;
             }
         }
+
+        .mt{
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
     </style>
 @endprepend
 
-<div class="grid_2">
+<div class="grid_2 mt">
     <div class="modern-sidebar-wrap">
         <div class="modern-sidebar">
             @php
@@ -312,27 +317,40 @@
 
             <div class="sidebar-brand">
                 <div>
-                    <div class="sidebar-badge">{{ $roleName }}</div>
+                    <div class="sidebar-badge">Welcome {{ $roleName }}</div>
                 </div>
             </div>
 
             <div class="sidebar-quicklinks">
                 <p class="sidebar-quicklinks__title">Workspace</p>
-                <a href="{{ route('dashbord') }}" class="sidebar-quicklink {{ Request::routeIs('dashbord') ? 'is-active' : '' }}">
+                <a href="{{ route('dashbord') }}"
+                    class="sidebar-quicklink {{ Request::routeIs('dashbord') ? 'is-active' : '' }}">
                     <div>
                         <span class="sidebar-quicklink__label">Dashboard</span>
                         <span class="sidebar-quicklink__hint">Overview and activity</span>
                     </div>
                     <span class="sidebar-quicklink__arrow">→</span>
                 </a>
-                <a href="{{ route('profile') }}" class="sidebar-quicklink {{ Request::routeIs('profile') ? 'is-active' : '' }}">
+                <a href="{{ route('profile') }}"
+                    class="sidebar-quicklink {{ Request::routeIs('profile') ? 'is-active' : '' }}">
                     <div>
                         <span class="sidebar-quicklink__label">Profile</span>
                         <span class="sidebar-quicklink__hint">Your account settings</span>
                     </div>
                     <span class="sidebar-quicklink__arrow">→</span>
                 </a>
-                <a href="{{ route('change.pass') }}" class="sidebar-quicklink {{ Request::routeIs('change.pass') ? 'is-active' : '' }}">
+                @if ($canManageSite)
+                    <a href="{{ route('users.index') }}"
+                        class="sidebar-quicklink {{ Request::routeIs('users.index') ? 'is-active' : '' }}">
+                        <div>
+                            <span class="sidebar-quicklink__label">User List</span>
+                            <span class="sidebar-quicklink__hint">Manage registered users</span>
+                        </div>
+                        <span class="sidebar-quicklink__arrow">→</span>
+                    </a>
+                @endif
+                <a href="{{ route('change.pass') }}"
+                    class="sidebar-quicklink {{ Request::routeIs('change.pass') ? 'is-active' : '' }}">
                     <div>
                         <span class="sidebar-quicklink__label">Password</span>
                         <span class="sidebar-quicklink__hint">Keep your account secure</span>
@@ -340,7 +358,8 @@
                     <span class="sidebar-quicklink__arrow">→</span>
                 </a>
                 @if ($roleName === 'Admin')
-                    <a href="{{ route('message.index') }}" class="sidebar-quicklink {{ Request::routeIs('message.index') ? 'is-active' : '' }}">
+                    <a href="{{ route('message.index') }}"
+                        class="sidebar-quicklink {{ Request::routeIs('message.index') ? 'is-active' : '' }}">
                         <div>
                             <span class="sidebar-quicklink__label">Inbox</span>
                             <span class="sidebar-quicklink__hint">Pending visitor messages</span>

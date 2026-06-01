@@ -70,37 +70,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="clear">
-                </div>
             </div>
-        </div>
-        <div class="clear">
-        </div>
-        <div class="grid_12">
-            <ul class="nav main">
-                <li class="ic-dashboard"><a href="{{ Route('dashbord') }}" class="{{ Request::routeIs('dashbord') ? 'active' : '' }}"><span>Dashboard</span></a> </li>
-                <li class="ic-form-style"><a href="{{ Route('profile') }}" class="{{ Request::routeIs('profile') ? 'active' : '' }}"><span>User Profile</span></a></li>
-                <li class="ic-typography"><a href="{{ Route('change.pass') }}" class="{{ Request::routeIs('change.pass') ? 'active' : '' }}"><span>Change Password</span></a></li>
-               @if (auth()->user()->role->name === 'Admin')
-               <li class="ic-grid-tables">
-                   <a href="{{ route('message.index') }}" class="{{ Request::routeIs('message.index') ? 'active' : '' }}">
-                       <span>
-                           Inbox 
-                           @if(isset($unreadCount) && $unreadCount > 0)
-                           ({{ $unreadCount }})
-                           @else
-                           (0)
-                           @endif
-                        </span>
-                    </a>
-                </li>
-                @endif
-                @if (in_array(auth()->user()->role->name , ['Admin','Editor']))
-                <li class="ic-grid-tables"><a href="{{ route('users.index') }}" class="{{ Request::routeIs('users.index') ? 'active' : '' }}"><span>User List</span></a></li>
-                @endif
-            </ul>
-        </div>
-        <div class="clear">
         </div>
 
 
