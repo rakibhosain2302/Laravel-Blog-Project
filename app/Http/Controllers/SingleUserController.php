@@ -47,7 +47,7 @@ class SingleUserController extends Controller
     }
 
     public function changePass(){
-         return view('admin.pages.changpassword');
+         return view('admin.pages.profile.changpassword');
     }
 
     public function changePassword(Request $request)
