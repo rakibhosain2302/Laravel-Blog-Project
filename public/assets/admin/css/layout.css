@@ -292,9 +292,7 @@ ul.section {
 	border-top:0;
 	margin-bottom:0;
 }
-ul.section li {
 
-}
 ul.section li a {
 	background:url(../img/sidemenu-repeat.jpg) repeat-x;
 	line-height:26px;
@@ -302,6 +300,7 @@ ul.section li a {
 }
 ul.section li a:hover {
 	background:url(../img/sidemenu-repeat-hover.jpg) repeat-x;
+	background: rgba(59, 130, 246, 0.15);
 }
 ul.section li a:active {
 	color:#1B548D;
