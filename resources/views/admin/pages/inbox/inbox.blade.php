@@ -526,7 +526,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8">
+                                        <td>
                                             <div class="inbox-empty">
                                                 <strong>No unread messages</strong>
                                                 Everything is up to date in the inbox.
@@ -603,7 +603,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7">
+                                        <td>
                                             <div class="inbox-empty">
                                                 <strong>No seen messages</strong>
                                                 Seen messages will appear here after you mark them reviewed.
@@ -623,23 +623,27 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
-            setupLeftMenu();
-            $('#unreadTable').dataTable({
-                dom: 'rtip'
-            });
-            setSidebarHeight();
-        });
-    </script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            setupLeftMenu();
-            $('#seenTable').dataTable({
-                dom: 'rtip',
+            $('#unreadTable').DataTable({
+                "lengthChange": true,
+                "searching": true,
+                "info": true,
+                "paging": true,
+                "pageLength": 10,
+                "dom": '<"top"lf>rt<"bottom"ip><"clear">'
             });
-            setSidebarHeight();
+
+            $('#seenTable').DataTable({
+                "lengthChange": true,
+                "searching": true,
+                "info": true,
+                "paging": true,
+                "pageLength": 10,
+                "dom": '<"top"lf>rt<"bottom"ip><"clear">'
+            });
+
         });
     </script>
 @endsection

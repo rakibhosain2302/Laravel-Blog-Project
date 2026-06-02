@@ -12,11 +12,13 @@
     <link rel="stylesheet" type="text/css" href=" {{ asset('assets/admin/css/layout.css') }} " media="screen" />
     <link rel="stylesheet" type="text/css" href=" {{ asset('assets/admin/css/nav.css') }}" media="screen" />
     <link href=" {{ asset('assets/admin/css/table/demo_page.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href=" {{ asset('assets/admin/css/table/demo_table.css') }} " type="text/css" />
+    <link rel="stylesheet" href=" {{ asset('assets/admin/css/table/demo_table_jui.css') }} " type="text/css" />
 
     <link href=" {{ asset('assets/admin/css/fancy-button/fancy-button.css') }}" rel="stylesheet" type="text/css" />
     <link href=" {{ asset('assets/admin/css/themes/base/jquery.ui.all.css') }} " rel="stylesheet" type="text/css" />
     <!-- BEGIN: load jquery -->
-    <script src="{{ asset('assets/admin/js/jquery-1.6.4.min.js') }} " type="text/javascript"></script>
+    <script src="{{ asset('assets/admin/js/jquery.min.js') }} " type="text/javascript"></script>
     <script type="text/javascript" src=" {{ asset('assets/admin/js/jquery-ui/jquery.ui.core.min.js') }}"></script>
     <script src=" {{ asset('assets/admin/js/jquery-ui/jquery.ui.widget.min.js') }} " type="text/javascript"></script>
     <script src=" {{ asset('assets/admin/js/jquery-ui/jquery.ui.accordion.min.js') }} " type="text/javascript"></script>
