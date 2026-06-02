@@ -197,6 +197,67 @@
             line-height: 1.6;
         }
 
+        .inbox-card__tools {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .inbox-length-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+            color: #475569;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .inbox-length-control select {
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: #0f172a;
+            font-weight: 700;
+            cursor: pointer;
+            min-width: 66px;
+        }
+
+        .inbox-search-control {
+            min-width: min(360px, 100%);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 16px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        .inbox-search-control svg {
+            width: 18px;
+            height: 18px;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+
+        .inbox-search-control input {
+            width: 100%;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: #0f172a;
+            font-size: 14px;
+        }
+
 
         .inbox-toolbar {
             min-width: min(360px, 100%);
@@ -270,7 +331,6 @@
 
         table.inbox-table tbody td {
             padding: 16px 14px;
-            border-bottom: 1px solid #e2e8f0;
             color: #0f172a;
             vertical-align: middle;
         }
@@ -374,7 +434,7 @@
             width: 100%;
             display: block;
         }
-        
+
         table.inbox-table tbody tr:has(.inbox-empty) td {
             padding: 0;
             text-align: center;
@@ -406,6 +466,66 @@
             .inbox-toolbar {
                 min-width: 100%;
             }
+
+            .inbox-search-control {
+                min-width: 100%;
+            }
+
+            .inbox-card__tools {
+                width: 100%;
+            }
+        }
+
+        /* DataTables Custom Search & Length Controls */
+        .dataTables_wrapper .dataTables_length {
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            float: right;
+            margin-bottom: 15px;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .dataTables_wrapper .dataTables_length select:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .dataTables_wrapper .dataTables_length label,
+        .dataTables_wrapper .dataTables_filter label {
+            font-size: 14px;
+            color: #0f172a;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .dataTables_wrapper {
+            clear: both;
         }
     </style>
 @endprepend
@@ -479,6 +599,27 @@
                 </div>
 
                 <div class="inbox-body">
+                    <div class="inbox-card__tools" style="margin-bottom: 14px;">
+                        <label class="inbox-length-control" for="unreadLength">
+                            Show
+                            <select id="unreadLength">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries
+                        </label>
+
+                        <label class="inbox-search-control" for="unreadSearch">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m21 21-4.35-4.35m1.2-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+                            </svg>
+                            <input id="unreadSearch" type="search" placeholder="Search unread messages...">
+                        </label>
+                    </div>
+
                     @if (session('mtoseen'))
                         <div class="inbox-success">{{ session('mtoseen') }}</div>
                     @endif
@@ -556,6 +697,27 @@
                 </div>
 
                 <div class="inbox-body">
+                    <div class="inbox-card__tools" style="margin-bottom: 14px;">
+                        <label class="inbox-length-control" for="seenLength">
+                            Show
+                            <select id="seenLength">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries
+                        </label>
+
+                        <label class="inbox-search-control" for="seenSearch">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m21 21-4.35-4.35m1.2-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+                            </svg>
+                            <input id="seenSearch" type="search" placeholder="Search seen messages...">
+                        </label>
+                    </div>
+
                     @if (session('success'))
                         <div class="inbox-success">{{ session('success') }}</div>
                     @endif
@@ -633,22 +795,52 @@
     <script>
         $(document).ready(function() {
 
-            $('#unreadTable').DataTable({
-                "lengthChange": true,
-                "searching": true,
-                "info": true,
-                "paging": true,
-                "pageLength": 10,
-                "dom": '<"top"lf>rt<"bottom"ip><"clear">'
+            var unreadTable = $('#unreadTable').dataTable({
+                "bDestroy": true,
+                "bFilter": true,
+                "bLengthChange": false,
+                "bInfo": true,
+                "bPaginate": true,
+                "iDisplayLength": 10,
+                "sDom": 'rtip'
             });
 
-            $('#seenTable').DataTable({
-                "lengthChange": true,
+            var seenTable = $('#seenTable').dataTable({
+                "bDestroy": true,
+                "lengthChange": false,
                 "searching": true,
                 "info": true,
                 "paging": true,
                 "pageLength": 10,
-                "dom": '<"top"lf>rt<"bottom"ip><"clear">'
+                "dom": 'rtip'
+            });
+
+            $('#seenLength').on('change', function() {
+                const length = parseInt($(this).val(), 10) || 10;
+                if (seenTable.fnSettings) {
+                    seenTable.fnSettings()._iDisplayLength = length;
+                    seenTable.fnDraw();
+                }
+            });
+
+            $('#seenSearch').on('keyup change', function() {
+                if (seenTable.fnFilter) {
+                    seenTable.fnFilter(this.value);
+                }
+            });
+
+            $('#unreadLength').on('change', function() {
+                const length = parseInt($(this).val(), 10) || 10;
+                if (unreadTable.fnSettings) {
+                    unreadTable.fnSettings()._iDisplayLength = length;
+                    unreadTable.fnDraw();
+                }
+            });
+
+            $('#unreadSearch').on('keyup change', function() {
+                if (unreadTable.fnFilter) {
+                    unreadTable.fnFilter(this.value);
+                }
             });
 
         });
