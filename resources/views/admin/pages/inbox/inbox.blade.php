@@ -197,6 +197,7 @@
             line-height: 1.6;
         }
 
+
         .inbox-toolbar {
             min-width: min(360px, 100%);
             display: inline-flex;
@@ -476,7 +477,7 @@
                     @endif
 
                     <div class="inbox-table-wrap">
-                        <table class="inbox-table data display datatable" data-table-id="unreadTable">
+                        <table id="unreadTable" class="inbox-table data display datatable" data-table-id="unreadTable">
                             <thead>
                                 <tr>
                                     <th style="width: 5%;">SL</th>
@@ -545,14 +546,6 @@
                         <h2>Seen Messages ({{ $seenCount ?? 0 }})</h2>
                         <p>Reviewed messages that you can undo or remove anytime.</p>
                     </div>
-
-                    <label class="inbox-toolbar" for="seenSearch">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m21 21-4.35-4.35m1.2-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
-                        </svg>
-                        <input id="seenSearch" type="search" placeholder="Search seen messages...">
-                    </label>
                 </div>
 
                 <div class="inbox-body">
@@ -561,7 +554,7 @@
                     @endif
 
                     <div class="inbox-table-wrap">
-                        <table class="inbox-table data display datatable" data-table-id="seenTable">
+                        <table id="seenTable" class="inbox-table data display datatable" data-table-id="seenTable">
                             <thead>
                                 <tr>
                                     <th style="width: 5%;">SL</th>
@@ -627,30 +620,26 @@
     </div>
 
     @include('admin.layouts.footer')
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setupLeftMenu();
+            $('#unreadTable').dataTable({
+                dom: 'rtip'
+            });
+            setSidebarHeight();
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             setupLeftMenu();
-            const unreadTable = $('[data-table-id="unreadTable"]').dataTable({
-                dom: 'rtip'
+            $('#seenTable').dataTable({
+                dom: 'rtip',
             });
-            const seenTable = $('[data-table-id="seenTable"]').dataTable({
-                dom: 'rtip'
-            });
-
             setSidebarHeight();
-
-            $('#unreadSearch').on('keyup change', function() {
-                if (unreadTable.fnFilter) {
-                    unreadTable.fnFilter(this.value);
-                }
-            });
-
-            $('#seenSearch').on('keyup change', function() {
-                if (seenTable.fnFilter) {
-                    seenTable.fnFilter(this.value);
-                }
-            });
         });
     </script>
 @endsection
