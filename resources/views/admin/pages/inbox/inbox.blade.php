@@ -371,6 +371,13 @@
             padding: 34px 24px;
             text-align: center;
             color: #64748b;
+            width: 100%;
+            display: block;
+        }
+        
+        table.inbox-table tbody tr:has(.inbox-empty) td {
+            padding: 0;
+            text-align: center;
         }
 
         .inbox-empty strong {
@@ -526,7 +533,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td>
+                                        <td colspan="7">
                                             <div class="inbox-empty">
                                                 <strong>No unread messages</strong>
                                                 Everything is up to date in the inbox.
@@ -603,7 +610,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td>
+                                        <td colspan="6">
                                             <div class="inbox-empty">
                                                 <strong>No seen messages</strong>
                                                 Seen messages will appear here after you mark them reviewed.
