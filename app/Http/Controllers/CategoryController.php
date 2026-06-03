@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         $catData = Category::withCount('posts')->latest()->get();
-        return view('admin.pages.catlist', compact('catData'));
+        return view('admin.pages.categories.index', compact('catData'));
     }
 
     /**
@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.addcat');
+        return view('admin.pages.categories.create');
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryController extends Controller
     {
         $catSelect = Category::findOrFail($id);
 
-        return view('admin.pages.catUpdate', compact('catSelect'));
+        return view('admin.pages.categories.edit', compact('catSelect'));
     }
 
     /**
