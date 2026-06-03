@@ -337,6 +337,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
+            margin-top: 8px
         }
 
         .category-delete-form {
@@ -429,7 +430,7 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.5);
             display: none;
-            z-index: 9999;
+            z-index: 1000;
             align-items: center;
             justify-content: center;
         }
@@ -604,6 +605,7 @@
                     <div class="category-hero__top">
                         <div class="category-kicker">Category library</div>
                         <a class="category-create-btn" href="{{ route('categories.create') }}">+ Add New Category</a>
+                        <button onclick="testSwal()" style="margin-left:10px; padding:10px 15px; background:#4ade80; color:white; border:none; border-radius:6px; cursor:pointer;">Test Swal</button>
 
 
                     </div>
@@ -719,7 +721,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="category-action category-action--delete" type="submit"
-                                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                                        onclick="event.preventDefault(); confirmDelete(this);">
                                                         Delete
                                                     </button>
                                                 </form>
@@ -860,7 +862,7 @@
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'This action cannot be undone!',
-                icon: 'warning',
+                icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#6b7280',
@@ -870,6 +872,14 @@
                 if (result.isConfirmed) {
                     button.closest('form').submit();
                 }
+            });
+        }
+    
+        function testSwal() {
+            Swal.fire({
+                title: 'Test Alert',
+                text: 'SweetAlert2 is working!',
+                icon: 'success'
             });
         }
     </script>
