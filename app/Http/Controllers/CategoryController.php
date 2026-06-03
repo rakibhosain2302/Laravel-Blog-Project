@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $catData = Category::withCount('posts')->latest()->get();
-        return view('admin.pages.categories.index', compact('catData'));
+        $editCategory = request()->filled('edit_id') ? Category::find(request('edit_id')) : null;
+
+        return view('admin.pages.categories.index', compact('catData', 'editCategory'));
     }
 
     /**
@@ -53,9 +56,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $catSelect = Category::findOrFail($id);
-
-        return view('admin.pages.categories.edit', compact('catSelect'));
+        return redirect()->route('categories.index', ['edit_id' => $id]);
     }
 
     /**
@@ -63,11 +64,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|unique:categories,name,' . $id
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories,name,' . $id,
         ], [
-            'name.unique'
+            'name.required' => 'Category name is required.',
+            'name.unique' => 'This category name already exists.',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('categories.index', ['edit_id' => $id])
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $update = Category::findOrFail($id);
         $update->update([

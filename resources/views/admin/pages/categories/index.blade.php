@@ -320,7 +320,7 @@
             color: #fff;
             box-shadow: 0 12px 20px rgba(15, 23, 42, 0.12);
         }
-        
+
         .category-action--edit:hover {
             background: #0f172a;
             color: #fff;
@@ -332,8 +332,16 @@
             color: #b91c1c;
         }
 
+        .actions-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
         .category-delete-form {
             display: inline-block;
+            margin: 0;
         }
 
         .category-empty {
@@ -370,6 +378,7 @@
         }
 
         @media (max-width: 991px) {
+
             .category-hero-stats,
             .category-quick-links {
                 grid-template-columns: 1fr;
@@ -408,6 +417,173 @@
             .category-table-wrap .dataTables_filter {
                 margin-top: 10px;
             }
+
+        }
+
+        /* Edit Category Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 16px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #0f172a;
+            font-size: 24px;
+            letter-spacing: -0.03em;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #64748b;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal-form-group {
+            margin-bottom: 18px;
+        }
+
+        .modal-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .modal-form-group input {
+            width: 95%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .modal-form-group input:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            font-size: 14px;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .modal-btn--cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border-color: #cbd5e1;
+        }
+
+        .modal-btn--save {
+            background: #0f172a;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+        }
+
+        .modal-btn--save:hover {
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.16);
+        }
+
+        .modal-loader {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+        }
+
+        .modal-loader::after {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+            border-top-color: #0f172a;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 @endprepend
@@ -428,25 +604,36 @@
                     <div class="category-hero__top">
                         <div class="category-kicker">Category library</div>
                         <a class="category-create-btn" href="{{ route('categories.create') }}">+ Add New Category</a>
+
+
                     </div>
                     <h1>Manage your categories with a cleaner, faster workflow.</h1>
                     <p>
-                        Keep your blog structure organized, track how many posts live inside each category, and manage everything from one polished admin surface.
+                        Keep your blog structure organized, track how many posts live inside each category, and manage
+                        everything from one polished admin surface.
                     </p>
 
                     <div class="category-hero-stats">
                         <div class="category-stat">
                             <span>Total categories</span>
                             <strong>{{ $totalCategories }}</strong>
+
+
                         </div>
                         <div class="category-stat">
                             <span>Total posts</span>
                             <strong>{{ $totalPosts }}</strong>
+
+
                         </div>
                         <div class="category-stat">
                             <span>Top category</span>
                             <strong>{{ optional($topCategory)->name ?? 'N/A' }}</strong>
+
+
                         </div>
+
+
                     </div>
                 </section>
 
@@ -455,13 +642,19 @@
                         <div class="category-pill">Workflow tip</div>
                         <h3>Keep category names meaningful</h3>
                         <p>Short, clear labels make it easier to scan, filter, and reuse your category structure later.</p>
+
+
                     </div>
 
                     <div class="category-mini-card">
                         <div class="category-pill">Quick action</div>
                         <h3>Need a new category?</h3>
                         <p>Use the add button above to create a category without leaving this page’s context.</p>
+
+
                     </div>
+
+
                 </div>
 
                 <section class="category-table-card">
@@ -469,20 +662,28 @@
                         <div>
                             <h2>Category List</h2>
                             <p>Review post counts and update or delete categories as needed.</p>
+
+
                         </div>
                         <div class="category-pill">{{ $totalCategories }} records</div>
+
+
                     </div>
 
                     <div class="category-table-wrap">
                         @if (session('success'))
                             <div class="category-pill" style="margin-bottom: 16px; background:#ecfdf5; color:#047857;">
                                 {{ session('success') }}
+
+
                             </div>
                         @endif
 
                         @if ($catData->isEmpty())
                             <div class="category-empty">
                                 No categories found yet. Add your first category to start organizing posts.
+
+
                             </div>
                         @else
                             <table class="data display datatable" id="example">
@@ -491,8 +692,7 @@
                                         <th>Serial</th>
                                         <th>Category Name</th>
                                         <th>Total Posts</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
+                                        <th style="text-align: center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -503,23 +703,23 @@
                                                 <div class="category-name">
                                                     <span class="category-name__dot"></span>
                                                     <span>{{ $category->name }}</span>
+
+
                                                 </div>
                                             </td>
                                             <td>
                                                 <span class="category-count">{{ $category->posts_count }}</span>
                                             </td>
-                                            <td>
-                                                <a class="category-action category-action--edit" href="{{ route('categories.edit', $category->id) }}">Update</a>
-                                            </td>
-                                            <td>
-                                                <form class="category-delete-form" action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                            <td class="actions-btn">
+                                                <button type="button" class="category-action category-action--edit"
+                                                    onclick="openEditModal('{{ $category->id }}', '{{ $category->name }}')">Update</button>
+                                                <form class="category-delete-form"
+                                                    action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button
-                                                        class="category-action category-action--delete"
-                                                        type="submit"
-                                                        onclick="return confirm('Are you sure you want to delete this record?');"
-                                                    >
+                                                    <button class="category-action category-action--delete" type="submit"
+                                                        onclick="return confirm('Are you sure you want to delete this record?');">
                                                         Delete
                                                     </button>
                                                 </form>
@@ -529,10 +729,44 @@
                                 </tbody>
                             </table>
                         @endif
+
+
                     </div>
                 </section>
+
+
+            </div>
+
+
+
+            <!-- Edit Category Modal -->
+            <div id="editModal" class="modal-overlay">
+                <div class="modal-content">
+                    <button type="button" class="modal-close" onclick="closeEditModal()">&times;</button>
+                    <div class="modal-header">
+                        <h2>Edit Category</h2>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCategoryForm">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-form-group">
+                                <label for="categoryName">Category Name</label>
+                                <input type="text" id="categoryName" name="name" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="modal-btn modal-btn--cancel"
+                            onclick="closeEditModal()">Cancel</button>
+                        <button type="button" class="modal-btn modal-btn--save" onclick="saveCategory()">Save
+                            Changes</button>
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </div>
 
     <script type="text/javascript">
@@ -545,6 +779,69 @@
                 });
             }
             setSidebarHeight();
+        });
+
+        // Modal Functions
+        let currentCategoryId = null;
+
+        function openEditModal(categoryId, categoryName) {
+            currentCategoryId = categoryId;
+            document.getElementById('categoryName').value = categoryName;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            currentCategoryId = null;
+        }
+
+        function saveCategory() {
+            if (!currentCategoryId) return;
+
+            const categoryName = document.getElementById('categoryName').value.trim();
+            if (!categoryName) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', categoryName);
+            formData.append('_method', 'PUT');
+            formData.append('_token', document.querySelector('input[name="_token"]').value);
+
+            fetch(`/admin/categories/${currentCategoryId}`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Category updated successfully!');
+                        location.reload();
+                    } else {
+                        alert('Error updating category. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating category. Please try again.');
+                });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('editModal').classList.contains('active')) {
+                closeEditModal();
+            }
         });
     </script>
 
