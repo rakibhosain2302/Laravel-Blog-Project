@@ -12,8 +12,6 @@
     <link rel="stylesheet" type="text/css" href=" {{ asset('assets/admin/css/layout.css') }} " media="screen" />
     <link rel="stylesheet" type="text/css" href=" {{ asset('assets/admin/css/nav.css') }}" media="screen" />
     <link href=" {{ asset('assets/admin/css/table/demo_page.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href=" {{ asset('assets/admin/css/table/demo_table.css') }} " type="text/css" />
-    <link rel="stylesheet" href=" {{ asset('assets/admin/css/table/demo_table_jui.css') }} " type="text/css" />
 
     <link href=" {{ asset('assets/admin/css/fancy-button/fancy-button.css') }}" rel="stylesheet" type="text/css" />
     <link href=" {{ asset('assets/admin/css/themes/base/jquery.ui.all.css') }} " rel="stylesheet" type="text/css" />

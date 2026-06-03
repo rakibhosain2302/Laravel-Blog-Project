@@ -295,7 +295,7 @@
             }
         }
 
-        .mt{
+        .mt {
             margin-top: 20px;
             margin-bottom: 10px;
         }
@@ -370,16 +370,24 @@
             </div>
 
             <ul class="section menu sidebar-menu">
+
                 @if ($canManageSite)
                     <li>
-                        <a class="menuitem">Site Option</a>
+                        <a class="menuitem">Category Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('blog.title.index') }}">Title &amp; Slogan</a></li>
-                            <li><a href="{{ route('social.index') }}">Social Media</a></li>
-                            <li><a href="{{ route('copyright.index') }}">Copyright</a></li>
+                            <li><a href="{{ route('categories.create') }}">Add Category</a></li>
+                            <li><a href="{{ route('categories.index') }}">Category List</a></li>
                         </ul>
                     </li>
                 @endif
+
+                <li>
+                    <a class="menuitem">Post Option</a>
+                    <ul class="submenu">
+                        <li><a href="{{ route('posts.create') }}">Add Post</a></li>
+                        <li><a href="{{ route('posts.index') }}">Post List</a></li>
+                    </ul>
+                </li>
 
                 @if ($canManageSite)
                     <li>
@@ -403,21 +411,14 @@
 
                 @if ($canManageSite)
                     <li>
-                        <a class="menuitem">Category Option</a>
+                        <a class="menuitem">Site Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('categories.create') }}">Add Category</a></li>
-                            <li><a href="{{ route('categories.index') }}">Category List</a></li>
+                            <li><a href="{{ route('blog.title.index') }}">Title &amp; Slogan</a></li>
+                            <li><a href="{{ route('social.index') }}">Social Media</a></li>
+                            <li><a href="{{ route('copyright.index') }}">Copyright</a></li>
                         </ul>
                     </li>
                 @endif
-
-                <li>
-                    <a class="menuitem">Post Option</a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('posts.create') }}">Add Post</a></li>
-                        <li><a href="{{ route('posts.index') }}">Post List</a></li>
-                    </ul>
-                </li>
             </ul>
 
             <div class="sidebar-footer">
