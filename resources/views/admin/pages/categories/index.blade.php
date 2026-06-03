@@ -800,34 +800,46 @@
 
             const categoryName = document.getElementById('categoryName').value.trim();
             if (!categoryName) {
-                alert('Please enter a category name');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Empty Field',
+                    text: 'Please enter a category name'
+                });
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('name', categoryName);
-            formData.append('_method', 'PUT');
-            formData.append('_token', document.querySelector('input[name="_token"]').value);
+            const form = document.getElementById('editCategoryForm');
+            const formData = new FormData(form);
+            formData.set('name', categoryName);
 
             fetch(`/admin/categories/${currentCategoryId}`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Category updated successfully!');
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Category updated successfully!'
+                    }).then(() => {
                         location.reload();
-                    } else {
-                        alert('Error updating category. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error updating category. Please try again.');
+                    });
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error updating category. Please try again.'
                 });
+            });
         }
 
         // Close modal when clicking outside
@@ -843,6 +855,23 @@
                 closeEditModal();
             }
         });
+    
+        function confirmDelete(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
     </script>
 
     @include('admin.layouts.footer')

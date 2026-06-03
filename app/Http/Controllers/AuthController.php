@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
+    public function admin()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashbord');
+        }
+        return redirect()->route('auth.login');
+    }
+
     public function showRegister()
     {
         return view('auth.register');
@@ -33,7 +41,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed'
-            
+
         ]);
 
         User::create([
@@ -153,6 +161,4 @@ class AuthController extends Controller
 
         return redirect()->route('auth.login');
     }
-
-
 }

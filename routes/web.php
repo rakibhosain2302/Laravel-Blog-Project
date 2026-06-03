@@ -37,6 +37,7 @@ Route::controller(HomeController::class)->group(function () {
 
 
 Route::controller(AuthController::class)->group(function () {
+    Route::get('admin', 'admin')->name('admin');
     Route::get('showregister', 'showRegister')->name('auth.register');
     Route::post('register', 'registerStore')->name('register.store');
     Route::get('login', 'showLogin')->name('auth.login');
@@ -56,17 +57,19 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::resource('users', UserController::class);
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('users', UserController::class);
 
-Route::resource('posts', PostController::class);
+    Route::resource('posts', PostController::class);
 
-Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class);
 
-Route::resource('page', PageController::class);
+    Route::resource('page', PageController::class);
 
-Route::resource('slider', SliderController::class);
+    Route::resource('slider', SliderController::class);
 
-Route::resource('message', ContractController::class);
+    Route::resource('message', ContractController::class);
+});
 
 Route::post('/message/{id}/seenMsg', [ContractController::class, 'seenMsg'])->name('messages.seen');
 
