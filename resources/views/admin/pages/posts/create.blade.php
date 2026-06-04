@@ -487,7 +487,7 @@
                                     <input type="hidden" name="user_id" value="{{ Auth::id() }}" />
                                 </div>
 
-                                <div>
+                                <div style="display: flex; justify-content: end;">
                                     <button class="post-submit-btn" type="submit">Save Post</button>
                                 </div>
                             </div>
