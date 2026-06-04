@@ -25,7 +25,7 @@ class PostController extends Controller
             $postCount = $posts->count();
         }
 
-        return view('admin.pages.postlist', compact('posts', 'postCount'));
+        return view('admin.pages.posts.index', compact('posts', 'postCount'));
     }
 
 
@@ -37,7 +37,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.pages.addpost', compact('categories'));
+        return view('admin.pages.posts.create', compact('categories'));
     }
 
     /**
@@ -84,7 +84,7 @@ class PostController extends Controller
     public function show(string $id)
     {
         $viewPost = Post::with(['user', 'category'])->findOrFail($id);
-        return view('admin.pages.viewpost', compact('viewPost'));
+        return view('admin.pages.posts.show', compact('viewPost'));
     }
 
     /**
@@ -94,7 +94,7 @@ class PostController extends Controller
     {
         $updatePost = Post::with(['user', 'category'])->findOrFail($id);
         $categories = Category::all();
-        return view('admin.pages.postUpdate', compact('updatePost', 'categories'));
+        return view('admin.pages.posts.edit', compact('updatePost', 'categories'));
     }
 
     /**
