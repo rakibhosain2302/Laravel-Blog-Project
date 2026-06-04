@@ -484,12 +484,6 @@
                     </div>
 
                     <div class="post-table-wrap">
-                        @if (session('success'))
-                            <div class="post-pill" style="margin-bottom: 16px; background:#ecfdf5; color:#047857;">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
                         @if ($posts->isEmpty())
                             <div class="post-empty">
                                 No posts found yet. Add your first post to start building content.

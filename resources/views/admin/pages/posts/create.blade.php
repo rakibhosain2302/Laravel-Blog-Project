@@ -498,11 +498,11 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            setupLeftMenu();
-            setSidebarHeight();
+    @include('admin.layouts.footer')
 
+    @push('scripts')
+    <script>
+        $(document).ready(function() {
             @if(session('success'))
                 Swal.fire({
                     icon: 'success',
@@ -510,10 +510,17 @@
                     text: '{{ session('success') }}'
                 });
             @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}'
+                });
+            @endif
         });
     </script>
-
-    @include('admin.layouts.footer')
+    @endpush
 @endsection
 
 @section('title')

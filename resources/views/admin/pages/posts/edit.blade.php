@@ -98,9 +98,9 @@
             gap: 10px;
             padding: 12px 16px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(226, 232, 240, 0.12);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid #000;
+            color: #000;
             font-size: 13px;
             font-weight: 800;
             text-decoration: none;
@@ -110,7 +110,6 @@
         .post-back-btn:hover {
             transform: translateY(-1px);
             background: rgba(255, 255, 255, 0.14);
-            color: #fff;
         }
 
         .post-hero h1 {
@@ -217,7 +216,6 @@
         }
 
         .post-form-input {
-            width: 100%;
             padding: 12px 16px;
             border: 1px solid #dbe4f0;
             border-radius: 14px;
@@ -238,7 +236,6 @@
         }
 
         .post-textarea {
-            width: 100%;
             min-height: 180px;
             padding: 14px 16px;
             border: 1px solid #dbe4f0;
@@ -341,6 +338,7 @@
         }
 
         @media (max-width: 991px) {
+
             .post-hero-stats,
             .post-quick-links {
                 grid-template-columns: 1fr;
@@ -428,14 +426,16 @@
                     </div>
 
                     <div class="post-form-wrap">
-                        <form action="{{ route('posts.update', $updatePost->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('posts.update', $updatePost->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="post-form-grid">
                                 <div class="post-form-group">
                                     <label for="title">Title</label>
                                     <input type="text" id="title" name="title" placeholder="Enter Post Title..."
-                                        class="post-form-input @error('title') is-invalid @enderror" value="{{ $updatePost->title }}" />
+                                        class="post-form-input @error('title') is-invalid @enderror"
+                                        value="{{ $updatePost->title }}" />
                                     @error('title')
                                         <span class="post-error">{{ $message }}</span>
                                     @enderror
@@ -447,7 +447,8 @@
                                         class="post-form-input @error('category_id') is-invalid @enderror">
                                         <option disabled>Select Category</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" {{ $updatePost->category_id == $category->id ? 'selected' : '' }}>
+                                            <option value="{{ $category->id }}"
+                                                {{ $updatePost->category_id == $category->id ? 'selected' : '' }}>
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
@@ -482,8 +483,10 @@
 
                                 <div class="post-form-group">
                                     <label for="tags">Tags</label>
-                                    <input type="text" id="tags" name="tags" placeholder="Enter Tags (comma separated)"
-                                        class="post-form-input @error('tags') is-invalid @enderror" value="{{ $updatePost->tags }}" />
+                                    <input type="text" id="tags" name="tags"
+                                        placeholder="Enter Tags (comma separated)"
+                                        class="post-form-input @error('tags') is-invalid @enderror"
+                                        value="{{ $updatePost->tags }}" />
                                     @error('tags')
                                         <span class="post-error">{{ $message }}</span>
                                     @enderror
@@ -497,7 +500,7 @@
                                     <input type="hidden" name="user_id" value="{{ Auth::id() }}" />
                                 </div>
 
-                                <div style="display: flex; gap: 12px;">
+                                <div style="display: flex; justify-content: end; gap: 12px;">
                                     <a class="post-back-btn" href="{{ route('posts.index') }}">Cancel</a>
                                     <button class="post-submit-btn" type="submit">Save Changes</button>
                                 </div>
@@ -509,14 +512,29 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            setupLeftMenu();
-            setSidebarHeight();
-        });
-    </script>
-
     @include('admin.layouts.footer')
+
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                @if (session('success'))
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '{{ session('success') }}'
+                    });
+                @endif
+
+                @if (session('error'))
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: '{{ session('error') }}'
+                    });
+                @endif
+            });
+        </script>
+    @endpush
 @endsection
 
 @section('title')
