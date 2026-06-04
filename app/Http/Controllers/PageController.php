@@ -13,7 +13,7 @@ class PageController extends Controller
     public function index()
     {
         $pages = Page::all();
-        return view('admin.pages.pagelist',compact('pages'));
+        return view('admin.pages.navpage.index',compact('pages'));
     }
 
     /**
@@ -21,7 +21,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.addpage');
+        return view('admin.pages.navpage.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class PageController extends Controller
     public function show(string $id)
     {
         $showData = Page::findOrFail($id);
-        return view('admin.pages.viewpage',compact('showData'));
+        return view('admin.pages.navpage.show',compact('showData'));
     }
 
     /**
@@ -55,7 +55,7 @@ class PageController extends Controller
     public function edit(string $id)
     {
         $editPage = Page::findOrFail($id);
-        return view('admin.pages.updatePage', compact('editPage'));
+        return view('admin.pages.navpage.edit', compact('editPage'));
     }
 
     /**
