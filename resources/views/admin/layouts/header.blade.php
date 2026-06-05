@@ -27,7 +27,6 @@
     <script src=" {{ asset('assets/admin/js/table/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src=" {{ asset('assets/admin/js/fancy-button/fancy-button.js') }}" type="text/javascript"></script>
     <!-- END: load jquery -->
-    <script type="text/javascript" src=" {{ asset('assets/admin/js/table/jquery.dataTables.min.js') }}"></script>
     <script src=" {{ asset('assets/admin/js/setup.js') }}" type="text/javascript"></script>
 
     @yield('scripts')
@@ -37,7 +36,7 @@
             setupLeftMenu();
             setSidebarHeight();
         });
-    </script><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    </script>
 
     <!-- SweetAlert2 Library -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">

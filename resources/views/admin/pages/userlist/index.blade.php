@@ -724,11 +724,10 @@
                                         </td>
                                         @if (auth()->user()->role->name === 'Admin')
                                             <td>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="user-delete-form">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="user-btn user-btn--delete" type="submit"
-                                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    <button class="user-btn user-btn--delete" type="submit" onclick="event.preventDefault(); confirmDelete(this);">
                                                         Delete
                                                     </button>
                                                 </form>
@@ -763,6 +762,23 @@
             });
             setSidebarHeight();
         });
+
+        function confirmDelete(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
     </script>
 
     @if (session('userdelete'))
@@ -777,8 +793,6 @@
             });
         </script>
     @endif
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @include('admin.layouts.footer')
 @endsection

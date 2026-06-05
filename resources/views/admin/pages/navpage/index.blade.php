@@ -2,67 +2,520 @@
 
 @prepend('style')
     <style>
-        .view-btn a {
-            padding: 0px 16px;
+        .page-index-shell {
+            position: relative;
+            padding: 18px 0 34px;
+        }
+
+        .page-index-shell::before,
+        .page-index-shell::after {
+            content: "";
+            position: fixed;
+            pointer-events: none;
+            border-radius: 999px;
+            filter: blur(24px);
+            opacity: 0.9;
+        }
+
+        .page-index-shell::before {
+            top: 86px;
+            right: -90px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0));
+        }
+
+        .page-index-shell::after {
+            bottom: -90px;
+            left: -70px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.16), rgba(168, 85, 247, 0));
+        }
+
+        .page-index-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 20px;
+        }
+
+        .page-hero,
+        .page-table-card,
+        .page-mini-card {
+            border-radius: 28px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 22px 56px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
+        }
+
+        .page-hero {
+            padding: 30px;
+            color: #fff;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.32), transparent 34%),
+                radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.22), transparent 28%),
+                linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.92));
+        }
+
+        .page-hero__top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .page-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+            color: #e2e8f0;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-kicker::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
+        }
+
+        .page-create-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 800;
             text-decoration: none;
-            border-radius: 3px;
-            font-weight: bold;
+            transition: transform 0.18s ease, background 0.18s ease;
+        }
+
+        .page-create-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .page-hero h1 {
+            margin: 18px 0 10px;
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+        }
+
+        .page-hero p {
+            margin: 0;
+            max-width: 62ch;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .page-hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .page-stat {
+            padding: 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+        }
+
+        .page-stat span {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-stat strong {
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            letter-spacing: -0.03em;
+        }
+
+        .page-table-card__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 24px 24px 0;
+        }
+
+        .page-table-card__head h2 {
+            margin: 0;
+            color: #0f172a;
+            font-size: 26px;
+            letter-spacing: -0.04em;
+        }
+
+        .page-table-card__head p {
+            margin: 6px 0 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .page-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .page-table-wrap {
+            padding: 20px 24px 24px;
+        }
+
+        .page-table-wrap .dataTables_wrapper {
+            color: #334155;
+        }
+
+        .page-table-wrap .dataTables_length,
+        .page-table-wrap .dataTables_filter {
+            margin-bottom: 16px;
+        }
+
+        .page-table-wrap .dataTables_length label,
+        .page-table-wrap .dataTables_filter label {
+            color: #475569;
+            font-weight: 700;
+        }
+
+        .page-table-wrap .dataTables_length select,
+        .page-table-wrap .dataTables_filter input {
+            border: 1px solid #dbe4f0;
+            border-radius: 12px;
+            padding: 8px 12px;
+            background: #fff;
+            color: #0f172a;
+            outline: none;
+        }
+
+        .page-table-wrap .dataTables_filter input {
+            min-width: 240px;
+        }
+
+        .page-table-wrap table.dataTable {
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 12px !important;
+        }
+
+        .page-table-wrap table.dataTable thead th {
+            border-bottom: 0;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0 16px 10px;
+        }
+
+        .page-table-wrap table.dataTable tbody tr {
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.05);
+        }
+
+        .page-table-wrap table.dataTable tbody td {
+            background: #fff;
+            border-top: 1px solid #eef2f7;
+            border-bottom: 1px solid #eef2f7;
+            color: #0f172a;
+            font-weight: 600;
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+        .page-table-wrap table.dataTable tbody td:first-child {
+            border-left: 1px solid #eef2f7;
+            border-radius: 16px 0 0 16px;
+            width: 88px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .page-table-wrap table.dataTable tbody td:last-child {
+            border-right: 1px solid #eef2f7;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .page-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+            flex: 0 0 auto;
+        }
+
+        .page-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 0 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .page-action:hover {
+            transform: translateY(-1px);
+        }
+
+        .page-action--show {
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .page-action--edit {
+            background: #0f172a;
+            color: #fff;
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.12);
+        }
+
+        .page-action--edit:hover {
+            background: #0f172a;
+            color: #fff;
+            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16);
+        }
+
+        .page-action--delete {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .actions-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        .page-delete-form {
             display: inline-block;
+            margin: 0;
+        }
+
+        .page-empty {
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px dashed #cbd5e1;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            color: #475569;
             text-align: center;
-            border: 1px solid transparent;
-            background: gainsboro;
-            color: #000;
-            border-color: black;
+        }
+
+        .page-quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .page-mini-card {
+            padding: 20px;
+        }
+
+        .page-mini-card h3 {
+            margin: 0 0 8px;
+            color: #0f172a;
+            font-size: 18px;
+            letter-spacing: -0.03em;
+        }
+
+        .page-mini-card p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        @media (max-width: 991px) {
+
+            .page-hero-stats,
+            .page-quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .page-index-shell {
+                padding-top: 14px;
+            }
+
+            .page-hero,
+            .page-table-card__head,
+            .page-table-wrap,
+            .page-mini-card {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .page-create-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .page-table-wrap .dataTables_filter input {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .page-table-wrap .dataTables_length,
+            .page-table-wrap .dataTables_filter {
+                float: none !important;
+                text-align: left !important;
+            }
+
+            .page-table-wrap .dataTables_filter {
+                margin-top: 10px;
+            }
         }
     </style>
 @endprepend
-
 
 @section('content')
     @include('admin.layouts.sidebar')
 
     <div class="grid_10">
-        <div class="box round first grid">
-            <h2>Page List</h2>
-            @if (session('success'))
-                <p class="successMsg">{{ session('success') }}</p>
-            @endif
-            <div class="block">
-                <table class="data display datatable" id="example">
-                    <thead>
-                        <tr>
-                            <th style="width: 5%">Serial No.</th>
-                            <th style="width: 8%;">Page Name</th>
-                            <th style="width: 30%;">Description</th>
-                            <th style="width: 2%;">View</th>
-                            <th style="width: 2%">Update</th>
-                            <th style="width: 2%;">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pages as $id => $pageList)
-                            <tr class="odd gradeX">
-                                <td>{{ ++$id }}</td>
-                                <td>{{ $pageList->name }}</td>
-                                <td>{{ Str::limit($pageList->body, 80, '...') }}</td>
-                                <td class="view-btn">
-                                    <a href="{{ route('page.show', $pageList->id) }}">View</a>
-                                </td>
-                                <td class="update-btn">
-                                    <a href="{{ route('page.edit', $pageList->id) }}">Update</a>
-                                </td>
-                                <td>
-                                    <form action="{{ route('page.destroy', $pageList->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="delete-btn" type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="page-index-shell">
+            <div class="page-index-grid">
+                <section class="page-hero">
+                    <div class="page-hero__top">
+                        <div class="page-kicker">Page library</div>
+                        <a class="page-create-btn" href="{{ route('page.create') }}">+ Add New Page</a>
+                    </div>
+                    <h1>Manage all your pages from one place.</h1>
+                    <p>
+                        Browse, update, or remove pages. Keep your static content organized with an intuitive interface.
+                    </p>
+
+                    <div class="page-hero-stats">
+                        <div class="page-stat">
+                            <span>Total pages</span>
+                            <strong>{{ $pages->count() }}</strong>
+                        </div>
+                        <div class="page-stat">
+                            <span>Your role</span>
+                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
+                        </div>
+                        <div class="page-stat">
+                            <span>Status</span>
+                            <strong>Active</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="page-quick-links">
+                    <div class="page-mini-card">
+                        <div class="page-pill">Writing tip</div>
+                        <h3>Clear page structure</h3>
+                        <p>Organize your static pages with meaningful names for easier navigation.</p>
+                    </div>
+
+                    <div class="page-mini-card">
+                        <div class="page-pill">Quick action</div>
+                        <h3>Need a new page?</h3>
+                        <p>Use the add button above to create a page without leaving this page's context.</p>
+                    </div>
+                </div>
+
+                <section class="page-table-card">
+                    <div class="page-table-card__head">
+                        <div>
+                            <h2>Page List</h2>
+                            <p>Review and manage all static pages.</p>
+                        </div>
+                        <div class="page-pill">{{ $pages->count() }} records</div>
+                    </div>
+
+                    <div class="page-table-wrap">
+                        @if ($pages->isEmpty())
+                            <div class="page-empty">
+                                No pages found yet. Add your first page to start building static content.
+                            </div>
+                        @else
+                            <table class="data display datatable" id="example">
+                                <thead>
+                                    <tr>
+                                        <th>Serial</th>
+                                        <th>Page Name</th>
+                                        <th>Description</th>
+                                        <th style="text-align: center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pages as $id => $pageList)
+                                        <tr>
+                                            <td>{{ ++$id }}</td>
+                                            <td>
+                                                <div class="page-title">
+                                                    <span class="page-title__dot"></span>
+                                                    <span>{{ $pageList->name }}</span>
+                                                </div>
+                                            </td>
+                                            <td>{{ Str::limit($pageList->body, 60, '...') }}</td>
+                                            <td class="actions-btn">
+                                                <a class="page-action page-action--show"
+                                                    href="{{ route('page.show', $pageList->id) }}">Show</a>
+                                                <a class="page-action page-action--edit"
+                                                    href="{{ route('page.edit', $pageList->id) }}">Update</a>
+                                                <form class="page-delete-form"
+                                                    action="{{ route('page.destroy', $pageList->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="page-action page-action--delete" type="submit"
+                                                        onclick="event.preventDefault(); confirmDelete(this);">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -70,9 +523,39 @@
     <script type="text/javascript">
         $(document).ready(function() {
             setupLeftMenu();
-            $('.datatable').dataTable();
+            if ($('#example').length) {
+                $('#example').dataTable({
+                    sDom: 'lfrtip',
+                    iDisplayLength: 10
+                });
+            }
             setSidebarHeight();
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}'
+                });
+            @endif
         });
+
+        function confirmDelete(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
     </script>
 
     @include('admin.layouts.footer')

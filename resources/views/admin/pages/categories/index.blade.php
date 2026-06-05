@@ -605,9 +605,6 @@
                     <div class="category-hero__top">
                         <div class="category-kicker">Category library</div>
                         <a class="category-create-btn" href="{{ route('categories.create') }}">+ Add New Category</a>
-                        <button onclick="testSwal()" style="margin-left:10px; padding:10px 15px; background:#4ade80; color:white; border:none; border-radius:6px; cursor:pointer;">Test Swal</button>
-
-
                     </div>
                     <h1>Manage your categories with a cleaner, faster workflow.</h1>
                     <p>
@@ -619,23 +616,15 @@
                         <div class="category-stat">
                             <span>Total categories</span>
                             <strong>{{ $totalCategories }}</strong>
-
-
                         </div>
                         <div class="category-stat">
                             <span>Total posts</span>
                             <strong>{{ $totalPosts }}</strong>
-
-
                         </div>
                         <div class="category-stat">
                             <span>Top category</span>
                             <strong>{{ optional($topCategory)->name ?? 'N/A' }}</strong>
-
-
                         </div>
-
-
                     </div>
                 </section>
 
@@ -644,19 +633,13 @@
                         <div class="category-pill">Workflow tip</div>
                         <h3>Keep category names meaningful</h3>
                         <p>Short, clear labels make it easier to scan, filter, and reuse your category structure later.</p>
-
-
                     </div>
 
                     <div class="category-mini-card">
                         <div class="category-pill">Quick action</div>
                         <h3>Need a new category?</h3>
-                        <p>Use the add button above to create a category without leaving this page’s context.</p>
-
-
+                        <p>Use the add button above to create a category without leaving this page's context.</p>
                     </div>
-
-
                 </div>
 
                 <section class="category-table-card">
@@ -664,28 +647,20 @@
                         <div>
                             <h2>Category List</h2>
                             <p>Review post counts and update or delete categories as needed.</p>
-
-
                         </div>
                         <div class="category-pill">{{ $totalCategories }} records</div>
-
-
                     </div>
 
                     <div class="category-table-wrap">
                         @if (session('success'))
                             <div class="category-pill" style="margin-bottom: 16px; background:#ecfdf5; color:#047857;">
                                 {{ session('success') }}
-
-
                             </div>
                         @endif
 
                         @if ($catData->isEmpty())
                             <div class="category-empty">
                                 No categories found yet. Add your first category to start organizing posts.
-
-
                             </div>
                         @else
                             <table class="data display datatable" id="example">
@@ -705,8 +680,6 @@
                                                 <div class="category-name">
                                                     <span class="category-name__dot"></span>
                                                     <span>{{ $category->name }}</span>
-
-
                                                 </div>
                                             </td>
                                             <td>
@@ -731,15 +704,9 @@
                                 </tbody>
                             </table>
                         @endif
-
-
                     </div>
                 </section>
-
-
             </div>
-
-
 
             <!-- Edit Category Modal -->
             <div id="editModal" class="modal-overlay">
@@ -767,7 +734,6 @@
                 </div>
             </div>
         </div>
-
 
     </div>
 
@@ -815,33 +781,33 @@
             formData.set('name', categoryName);
 
             fetch(`/admin/categories/${currentCategoryId}`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                }
-            })
-            .then(response => {
-                if (response.ok) {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Category updated successfully!'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Category updated successfully!'
-                    }).then(() => {
-                        location.reload();
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error updating category. Please try again.'
                     });
-                } else {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error updating category. Please try again.'
                 });
-            });
         }
 
         // Close modal when clicking outside
@@ -857,7 +823,7 @@
                 closeEditModal();
             }
         });
-    
+
         function confirmDelete(button) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -872,14 +838,6 @@
                 if (result.isConfirmed) {
                     button.closest('form').submit();
                 }
-            });
-        }
-    
-        function testSwal() {
-            Swal.fire({
-                title: 'Test Alert',
-                text: 'SweetAlert2 is working!',
-                icon: 'success'
             });
         }
     </script>
