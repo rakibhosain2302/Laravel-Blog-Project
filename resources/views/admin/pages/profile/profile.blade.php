@@ -408,7 +408,7 @@
                         </div>
                         <div class="profile-meta__item">
                             <span>Member Since</span>
-                            {{-- <strong>{{ $user->created_at->format('M d, Y') }}</strong> --}}
+                            <strong>{{ $user->created_at->format('M d, Y') }}</strong>
                         </div>
                     </div>
                 </div>
