@@ -363,9 +363,6 @@
 
     <div class="grid_10">
         <div class="profile-shell">
-            @if (session('success'))
-                <p class="successMsg">{{ session('success') }}</p>
-            @endif
 
             <!-- Profile Header with Edit Button -->
             <div class="profile-header">
@@ -389,7 +386,8 @@
                         <div class="profile-badge">Profile Overview</div>
                         <h2 class="profile-title">Welcome, {{ $user->name }}</h2>
                         <p class="profile-copy">
-                            Here's a complete overview of your profile information. You can update your details by clicking the Edit Profile button above.
+                            Here's a complete overview of your profile information. You can update your details by clicking
+                            the Edit Profile button above.
                         </p>
                     </div>
 
@@ -464,6 +462,38 @@
     </div>
 
     @include('admin.layouts.footer')
+@endsection
+
+@section('scripts')
+    {{-- Success Message --}}
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: @json(session('success')),
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
+
+    {{-- Error Message --}}
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: @json(session('error')),
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
 @endsection
 
 @section('title')

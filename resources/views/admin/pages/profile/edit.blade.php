@@ -329,22 +329,6 @@
 
     <div class="grid_10">
         <div class="edit-profile-shell">
-            <!-- Success Message -->
-            @if (session('success'))
-                <div class="success-message">
-                    <i class="fas fa-check-circle"></i>
-                    <span>{{ session('success') }}</span>
-                </div>
-            @endif
-
-            <!-- Error Messages -->
-            @if ($errors->any())
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Please fix the highlighted fields and try again.</span>
-                </div>
-            @endif
-
             <!-- Edit Header with Back Button -->
             <div class="edit-header">
                 <div class="edit-header-title">
@@ -376,20 +360,11 @@
                             <div class="profile-field profile-field--full">
                                 <label for="profile_image">Profile Image</label>
                                 <div class="profile-avatar-upload">
-                                    <img
-                                        id="profile_image_preview"
-                                        class="profile-avatar-upload__preview"
-                                        src="{{ $profileImage }}"
-                                        alt="Current profile image"
-                                    >
+                                    <img id="profile_image_preview" class="profile-avatar-upload__preview"
+                                        src="{{ $profileImage }}" alt="Current profile image">
                                     <div>
-                                        <input
-                                            id="profile_image"
-                                            type="file"
-                                            name="image"
-                                            accept="image/*"
-                                            onchange="document.querySelector('#profile_image_preview').src = window.URL.createObjectURL(this.files[0]);"
-                                        >
+                                        <input id="profile_image" type="file" name="image" accept="image/*"
+                                            onchange="document.querySelector('#profile_image_preview').src = window.URL.createObjectURL(this.files[0]);">
                                         <div class="profile-avatar-upload__hint">
                                             <i class="fas fa-info-circle"></i> JPG, PNG, WEBP. Max 2MB.
                                         </div>
@@ -403,14 +378,8 @@
                             <!-- Name Field -->
                             <div class="profile-field">
                                 <label for="profile_name">Full Name</label>
-                                <input
-                                    id="profile_name"
-                                    type="text"
-                                    name="name"
-                                    value="{{ old('name', $user->name) }}"
-                                    placeholder="Enter your full name"
-                                    required
-                                >
+                                <input id="profile_name" type="text" name="name"
+                                    value="{{ old('name', $user->name) }}" placeholder="Enter your full name" required>
                                 @error('name')
                                     <span class="field-error"><i class="fas fa-times-circle"></i> {{ $message }}</span>
                                 @enderror
@@ -419,14 +388,9 @@
                             <!-- Email Field -->
                             <div class="profile-field">
                                 <label for="profile_email">Email Address</label>
-                                <input
-                                    id="profile_email"
-                                    type="email"
-                                    name="email"
-                                    value="{{ old('email', $user->email) }}"
-                                    placeholder="Enter your email address"
-                                    required
-                                >
+                                <input id="profile_email" type="email" name="email"
+                                    value="{{ old('email', $user->email) }}" placeholder="Enter your email address"
+                                    required>
                                 @error('email')
                                     <span class="field-error"><i class="fas fa-times-circle"></i> {{ $message }}</span>
                                 @enderror
@@ -435,14 +399,10 @@
                             <!-- Role Field (Read-only) -->
                             <div class="profile-field profile-field--full">
                                 <label for="profile_role">User Role</label>
-                                <input
-                                    id="profile_role"
-                                    type="text"
-                                    value="{{ $roleName }}"
-                                    readonly
-                                >
+                                <input id="profile_role" type="text" value="{{ $roleName }}" readonly>
                                 <span class="profile-avatar-upload__hint">
-                                    <i class="fas fa-lock"></i> Your role cannot be changed here. Contact an administrator for role changes.
+                                    <i class="fas fa-lock"></i> Your role cannot be changed here. Contact an administrator
+                                    for role changes.
                                 </span>
                             </div>
                         </div>
@@ -465,6 +425,34 @@
     </div>
 
     @include('admin.layouts.footer')
+@endsection
+
+@section('scripts')
+    {{-- Success Message --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Error Message --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                timer: 2500,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 @endsection
 
 @section('title')
