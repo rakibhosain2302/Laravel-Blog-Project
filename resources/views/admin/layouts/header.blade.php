@@ -545,7 +545,7 @@
                                 @auth
                                     <div class="user-info">
                                         <span class="user-name">{{ Auth::user()->name }}</span>
-                                        <span class="user-role">{{ $userRole ?? 'Admin' }}</span>
+                                        <span class="user-role">{{ $userRole?->name ?? 'Admin' }}</span>
                                     </div>
                                 @endauth
                                 <i class="fas fa-chevron-down user-dropdown-icon"></i>
