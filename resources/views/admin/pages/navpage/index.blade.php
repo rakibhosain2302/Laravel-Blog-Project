@@ -558,7 +558,6 @@
         }
     </script>
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

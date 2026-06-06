@@ -67,7 +67,6 @@
     </div>
 
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

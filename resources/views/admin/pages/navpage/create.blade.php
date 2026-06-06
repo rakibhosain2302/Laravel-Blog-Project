@@ -407,8 +407,6 @@
     </div>
 
 
-    @include('admin.layouts.footer')
-
     @push('scripts')
     <script>
         $(document).ready(function() {

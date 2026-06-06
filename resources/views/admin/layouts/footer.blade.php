@@ -40,6 +40,7 @@
         All Rights Reserved.
     </p>
 </div>
+@yield('scripts')
 </body>
 
 </html>

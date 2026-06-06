@@ -424,7 +424,6 @@
         </div>
     </div>
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('scripts')
@@ -434,7 +433,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: '{{ session('success') }}',
+                text: @json(session('success')),
                 timer: 2000,
                 showConfirmButton: false
             });
@@ -447,7 +446,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '{{ session('error') }}',
+                text: @json(session('error')),
                 timer: 2500,
                 showConfirmButton: false
             });

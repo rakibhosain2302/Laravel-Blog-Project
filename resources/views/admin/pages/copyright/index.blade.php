@@ -353,7 +353,6 @@
 
     @include('admin.pages.copyright.edit')
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

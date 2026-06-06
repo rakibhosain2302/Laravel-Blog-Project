@@ -448,7 +448,6 @@
 
     @include('admin.pages.blogtitle.edit')
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

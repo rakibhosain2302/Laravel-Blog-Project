@@ -368,7 +368,6 @@
 
     @include('admin.pages.sociallink.edit')
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

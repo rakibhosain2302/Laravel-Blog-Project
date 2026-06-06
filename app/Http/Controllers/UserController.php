@@ -81,7 +81,7 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
     
-        return redirect()->route('users.index')->with('success', 'Profile updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
     
 

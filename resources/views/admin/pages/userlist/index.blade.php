@@ -794,7 +794,6 @@
         </script>
     @endif
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('title')

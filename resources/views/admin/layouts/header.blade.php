@@ -36,9 +36,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    @yield('scripts')
     @stack('style')
-    @stack('scripts')
 
     <style>
         :root {
@@ -464,6 +462,7 @@
                 opacity: 0;
                 transform: translateY(-4px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -475,9 +474,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 1;
             }
+
             50% {
                 opacity: 0.7;
             }
@@ -490,7 +492,7 @@
 
 </head>
 
-<body>
+<body class="body-bg-color">
     <div class="container_12">
         <div class="grid_12">
             @php
@@ -505,9 +507,8 @@
                     <!-- Branding Section -->
                     <div class="header-branding-section">
                         <div class="header-logo-container">
-                            <img src="{{ asset('storage/' . optional($data)->logo) }}" 
-                                 alt="Logo" 
-                                 class="header-logo-image" />
+                            <img src="{{ asset('storage/' . optional($data)->logo) }}" alt="Logo"
+                                class="header-logo-image" />
                         </div>
                         <div class="header-branding-text">
                             <h1 class="header-title">{{ optional($data)->title }}</h1>
@@ -540,8 +541,7 @@
                         <div style="position: relative;">
                             <div class="user-profile-card" id="userProfileBtn">
                                 <img src="{{ optional($authUser)->image ? asset('storage/' . $authUser->image) : asset('assets/admin/img/img-profile.jpg') }}"
-                                     alt="Profile Pic"
-                                     class="user-avatar" />
+                                    alt="Profile Pic" class="user-avatar" />
                                 @auth
                                     <div class="user-info">
                                         <span class="user-name">{{ Auth::user()->name }}</span>
@@ -584,7 +584,6 @@
         </div>
     </div>
 
-    @include('admin.layouts.footer')
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -646,6 +645,7 @@
             });
         });
     </script>
-</body>
 
-</html>
+@include('admin.layouts.footer')
+
+

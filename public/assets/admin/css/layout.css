@@ -61,9 +61,13 @@ a:hover {
 
 /* 960 grid system container background
 ----------------------------------------------- */
-.container_12,
+/* .container_12,
 .container_16 {
 	background:#2E5E79;
+} */
+
+.body-bg-color {
+	background-color: #2E5E79;
 }
 
 

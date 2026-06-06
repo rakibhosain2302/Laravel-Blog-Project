@@ -58,7 +58,6 @@
         </div>
     </div>
 
-    @include('admin.layouts.footer')
 
     <script type="text/javascript">
         $(document).ready(function() {

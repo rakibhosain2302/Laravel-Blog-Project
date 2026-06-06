@@ -461,21 +461,18 @@
         </div>
     </div>
 
-    @include('admin.layouts.footer')
 @endsection
 
 @section('scripts')
     {{-- Success Message --}}
     @if (session('success'))
         <script>
-            $(document).ready(function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: @json(session('success')),
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: @json(session('success')),
+                timer: 2000,
+                showConfirmButton: false
             });
         </script>
     @endif
@@ -483,14 +480,12 @@
     {{-- Error Message --}}
     @if (session('error'))
         <script>
-            $(document).ready(function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: @json(session('error')),
-                    timer: 2500,
-                    showConfirmButton: false
-                });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: @json(session('error')),
+                timer: 2500,
+                showConfirmButton: false
             });
         </script>
     @endif
