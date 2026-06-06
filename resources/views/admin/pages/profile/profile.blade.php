@@ -33,6 +33,63 @@
             filter: blur(18px);
         }
 
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .profile-header-title {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-header-title h1 {
+            margin: 0 0 6px;
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.04em;
+        }
+
+        .profile-header-title p {
+            margin: 0;
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .profile-header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            font-weight: 800;
+            text-decoration: none;
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.25);
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(59, 130, 246, 0.35);
+        }
+
         .profile-grid {
             position: relative;
             z-index: 1;
@@ -43,7 +100,6 @@
         }
 
         .profile-card,
-        .profile-form-card,
         .profile-side-card {
             border-radius: 28px;
             border: 1px solid rgba(148, 163, 184, 0.18);
@@ -132,145 +188,6 @@
             text-align: right;
         }
 
-        .profile-form-card__head {
-            padding: 24px 24px 0;
-        }
-
-        .profile-form-card__head h2 {
-            margin: 0 0 6px;
-            font-size: 24px;
-            color: #0f172a;
-            letter-spacing: -0.03em;
-        }
-
-        .profile-form-card__head p {
-            margin: 0;
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .profile-form {
-            padding: 22px 24px 24px;
-        }
-
-        .profile-form__grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .profile-field {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .profile-field--full {
-            grid-column: 1 / -1;
-        }
-
-        .profile-field label {
-            font-size: 13px;
-            font-weight: 800;
-            color: #0f172a;
-        }
-
-        .profile-field input[type="text"],
-        .profile-field input[type="email"],
-        .profile-field input[type="file"] {
-            border: 1px solid #cbd5e1;
-            border-radius: 14px;
-            padding: 13px 14px;
-            background: #fff;
-            color: #0f172a;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-        }
-
-        .profile-field input[type="text"]:focus,
-        .profile-field input[type="email"]:focus,
-        .profile-field input[type="file"]:focus {
-            outline: none;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-        }
-
-        .profile-field input[readonly] {
-            background: #f8fafc;
-            color: #475569;
-            cursor: not-allowed;
-        }
-
-        .profile-avatar-upload {
-            display: grid;
-            gap: 12px;
-        }
-
-        .profile-avatar-upload__preview {
-            width: 108px;
-            height: 108px;
-            border-radius: 28px;
-            object-fit: cover;
-            border: 1px solid #dbe4f0;
-            background: #f8fafc;
-            padding: 4px;
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-        }
-
-        .profile-avatar-upload__hint {
-            color: #64748b;
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .field-error {
-            color: #b91c1c;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .profile-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 22px;
-            flex-wrap: wrap;
-        }
-
-        .btn-back,
-        .btn-save {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 0;
-            border-radius: 14px;
-            padding: 12px 18px;
-            font-weight: 800;
-            text-decoration: none;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-        }
-
-        .btn-back {
-            background: #e2e8f0;
-            color: #0f172a;
-        }
-
-        .btn-back:hover {
-            background: #cbd5e1;
-            transform: translateY(-1px);
-        }
-
-        .btn-save {
-            background: linear-gradient(135deg, #0f172a, #334155);
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-        }
-
-        .btn-save:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
-        }
-
         .profile-side {
             display: grid;
             gap: 20px;
@@ -352,6 +269,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             border-radius: 14px;
             padding: 12px 16px;
             background: linear-gradient(135deg, #2563eb, #4f46e5);
@@ -359,10 +277,43 @@
             font-weight: 800;
             text-decoration: none;
             box-shadow: 0 14px 28px rgba(37, 99, 235, 0.18);
+            margin-top: 12px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
         .profile-security__link:hover {
             transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(37, 99, 235, 0.25);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .profile-stat {
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .profile-stat__value {
+            display: block;
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .profile-stat__label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         @media (max-width: 1100px) {
@@ -372,23 +323,29 @@
         }
 
         @media (max-width: 720px) {
-            .profile-form__grid {
-                grid-template-columns: 1fr;
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-header-title h1 {
+                font-size: 24px;
             }
 
             .profile-card__hero,
             .profile-meta,
-            .profile-form,
-            .profile-form-card__head,
             .profile-side-card {
                 padding-left: 18px;
                 padding-right: 18px;
             }
 
             .profile-card,
-            .profile-form-card,
             .profile-side-card {
                 border-radius: 22px;
+            }
+
+            .btn-edit {
+                width: 100%;
             }
         }
     </style>
@@ -410,20 +367,29 @@
                 <p class="successMsg">{{ session('success') }}</p>
             @endif
 
-            @if ($errors->any())
-                <div class="errorMsg" style="margin-bottom: 16px;">
-                    Please fix the highlighted fields and try again.
+            <!-- Profile Header with Edit Button -->
+            <div class="profile-header">
+                <div class="profile-header-title">
+                    <h1>{{ $user->name }}</h1>
+                    <p>Manage and review your profile information</p>
                 </div>
-            @endif
+                <div class="profile-header-actions">
+                    <a href="{{ route('profile.edit') }}" class="btn-edit">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </div>
+            </div>
 
+            <!-- Profile Content Grid -->
             <div class="profile-grid">
+                <!-- Main Profile Card -->
                 <div class="profile-card">
                     <div class="profile-card__hero">
-                        <div class="profile-badge">Profile overview</div>
-                        <h1 class="profile-title">Welcome, {{ $user->name }}</h1>
+                        <div class="profile-badge">Profile Overview</div>
+                        <h2 class="profile-title">Welcome, {{ $user->name }}</h2>
                         <p class="profile-copy">
-                            Update your account identity, keep your email current, and use the quick links when you need to jump
-                            into password changes or the dashboard.
+                            Here's a complete overview of your profile information. You can update your details by clicking the Edit Profile button above.
                         </p>
                     </div>
 
@@ -440,10 +406,16 @@
                             <span>Role</span>
                             <strong>{{ $roleName }}</strong>
                         </div>
+                        <div class="profile-meta__item">
+                            <span>Member Since</span>
+                            {{-- <strong>{{ $user->created_at->format('M d, Y') }}</strong> --}}
+                        </div>
                     </div>
                 </div>
 
+                <!-- Side Cards -->
                 <div class="profile-side">
+                    <!-- User Profile Card -->
                     <div class="profile-side-card">
                         <div class="profile-user">
                             <img class="profile-user__avatar" src="{{ $profileImage }}" alt="Profile avatar">
@@ -455,85 +427,36 @@
                         <div class="profile-role">{{ $roleName }}</div>
                     </div>
 
+                    <!-- Security & Quick Links Card -->
                     <div class="profile-side-card">
                         <div class="profile-security">
                             <div class="profile-security__item">
-                                <strong>Role summary</strong>
+                                <strong>Role Summary</strong>
                                 <span>{{ $roleDescription }}</span>
                             </div>
                             <div class="profile-security__item">
-                                <strong>Security tip</strong>
-                                <span>Change your password regularly to keep the account secure.</span>
+                                <strong>Security Tip</strong>
+                                <span>Change your password regularly to keep your account secure.</span>
                             </div>
-                            <a href="{{ route('change.pass') }}" class="profile-security__link">Change Password</a>
+                            <a href="{{ route('change.pass') }}" class="profile-security__link">
+                                <i class="fas fa-lock"></i>
+                                <span>Change Password</span>
+                            </a>
                         </div>
                     </div>
-                </div>
 
-                <div class="profile-form-card" style="grid-column: 1 / -1;">
-                    <div class="profile-form-card__head">
-                        <h2>Edit Profile</h2>
-                        <p>Keep your name and email accurate so notifications and admin actions stay consistent.</p>
-                    </div>
-
-                    <div class="profile-form">
-                        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="profile-form__grid">
-                                <div class="profile-field profile-field--full">
-                                    <label for="profile_image">Profile Image</label>
-                                    <div class="profile-avatar-upload">
-                                        <img
-                                            id="profile_image_preview"
-                                            class="profile-avatar-upload__preview"
-                                            src="{{ $profileImage }}"
-                                            alt="Current profile image"
-                                        >
-                                        <input
-                                            id="profile_image"
-                                            type="file"
-                                            name="image"
-                                            accept="image/*"
-                                            onchange="document.querySelector('#profile_image_preview').src = window.URL.createObjectURL(this.files[0]);"
-                                        >
-                                        <div class="profile-avatar-upload__hint">
-                                            JPG, PNG, WEBP. Max 2MB.
-                                        </div>
-                                    </div>
-                                    @error('image')
-                                        <span class="field-error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="profile-field">
-                                    <label for="profile_name">User Name</label>
-                                    <input id="profile_name" type="text" name="name" value="{{ old('name', $user->name) }}" placeholder="Enter your name">
-                                    @error('name')
-                                        <span class="field-error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="profile-field">
-                                    <label for="profile_email">User Email</label>
-                                    <input id="profile_email" type="email" name="email" value="{{ old('email', $user->email) }}" placeholder="Enter your email">
-                                    @error('email')
-                                        <span class="field-error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="profile-field profile-field--full">
-                                    <label for="profile_role">User Role</label>
-                                    <input id="profile_role" type="text" value="{{ $roleName }}" readonly>
-                                </div>
+                    <!-- Profile Stats Card -->
+                    <div class="profile-side-card">
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="profile-stat__value">100%</span>
+                                <span class="profile-stat__label">Profile Complete</span>
                             </div>
-
-                            <div class="profile-actions">
-                                <a class="btn-back" href="{{ route('dashbord') }}">Back</a>
-                                <button class="btn-save" type="submit">Save Changes</button>
+                            <div class="profile-stat">
+                                <span class="profile-stat__value">Active</span>
+                                <span class="profile-stat__label">Account Status</span>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -544,5 +467,5 @@
 @endsection
 
 @section('title')
-    User-Profile
+    User Profile
 @endsection

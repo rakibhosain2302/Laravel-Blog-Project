@@ -528,9 +528,9 @@
                             </button>
 
                             <!-- Settings Button -->
-                            <button class="action-icon-btn" title="Settings" id="settingsBtn">
+                            <a href="{{ route('profile') }}" class="action-icon-btn" title="Settings" id="settingsBtn">
                                 <i class="fas fa-cog"></i>
-                            </button>
+                            </a>
 
                             <!-- Divider -->
                             <div class="divider"></div>
@@ -553,11 +553,11 @@
 
                             <!-- Dropdown Menu -->
                             <div class="dropdown-menu" id="userDropdown">
-                                <a href="#" class="dropdown-menu-item">
+                                <a href="{{ route('profile') }}" class="dropdown-menu-item">
                                     <i class="fas fa-user"></i>
                                     <span>My Profile</span>
                                 </a>
-                                <a href="#" class="dropdown-menu-item">
+                                <a href="{{ route('change.pass') }}" class="dropdown-menu-item">
                                     <i class="fas fa-sliders-h"></i>
                                     <span>Account Settings</span>
                                 </a>

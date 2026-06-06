@@ -50,6 +50,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::controller(SingleUserController::class)->group(function () {
         Route::get('profile', 'showUser')->name('profile');
+        Route::get('profile/edit', 'editProfile')->name('profile.edit');
         Route::put('profile/update', 'infoupdate')->name('profile.update');
         Route::get('profile/changePass', 'changePass')->name('change.pass');
         Route::put('profile/updatePassword', 'changePassword')->name('update.password');

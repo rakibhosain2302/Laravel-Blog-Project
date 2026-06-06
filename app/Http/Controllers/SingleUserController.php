@@ -46,6 +46,11 @@ class SingleUserController extends Controller
         return redirect()->route('profile')->with('success', 'Profile updated successfully.');
     }
 
+    public function editProfile()
+    {
+        return view('admin.pages.profile.edit');
+    }
+
     public function changePass(){
          return view('admin.pages.profile.changpassword');
     }
