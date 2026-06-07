@@ -62,11 +62,6 @@
             line-height: 1.6;
         }
 
-        .profile-header-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
 
         .btn-edit {
             display: inline-flex;
@@ -194,13 +189,20 @@
         }
 
         .profile-side-card {
-            padding: 22px;
+            padding: 16px;
         }
 
         .profile-user {
             display: flex;
-            gap: 16px;
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .profile-user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .profile-user__avatar {
@@ -290,6 +292,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
+            margin-top: 10px;
         }
 
         .profile-stat {
@@ -370,12 +373,7 @@
                     <h1>{{ $user->name }}</h1>
                     <p>Manage and review your profile information</p>
                 </div>
-                <div class="profile-header-actions">
-                    <a href="{{ route('profile.edit') }}" class="btn-edit">
-                        <i class="fas fa-edit"></i>
-                        <span>Edit Profile</span>
-                    </a>
-                </div>
+
             </div>
 
             <!-- Profile Content Grid -->
@@ -416,13 +414,34 @@
                     <!-- User Profile Card -->
                     <div class="profile-side-card">
                         <div class="profile-user">
-                            <img class="profile-user__avatar" src="{{ $profileImage }}" alt="Profile avatar">
-                            <div>
-                                <h3>{{ $user->name }}</h3>
-                                <p>{{ $user->email }}</p>
+                            <div class="profile-user-info">
+                                <img class="profile-user__avatar" src="{{ $profileImage }}" alt="Profile avatar">
+
+                                <div>
+                                    <h3>{{ $user->name }}</h3>
+                                    <p>{{ $user->email }}</p>
+                                </div>
+                            </div>
+
+                            <div class="profile-header-actions">
+                                <a href="{{ route('profile.edit') }}" class="btn-edit">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Edit Profile</span>
+                                </a>
                             </div>
                         </div>
                         <div class="profile-role">{{ $roleName }}</div>
+
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="profile-stat__value">100%</span>
+                                <span class="profile-stat__label">Profile Complete</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="profile-stat__value">Active</span>
+                                <span class="profile-stat__label">Account Status</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Security & Quick Links Card -->
@@ -443,24 +462,10 @@
                         </div>
                     </div>
 
-                    <!-- Profile Stats Card -->
-                    <div class="profile-side-card">
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <span class="profile-stat__value">100%</span>
-                                <span class="profile-stat__label">Profile Complete</span>
-                            </div>
-                            <div class="profile-stat">
-                                <span class="profile-stat__value">Active</span>
-                                <span class="profile-stat__label">Account Status</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
