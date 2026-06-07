@@ -4,7 +4,7 @@
     <style>
         .edit-profile-shell {
             position: relative;
-            padding: 18px 0 28px;
+            padding: 26px 0 18px;
         }
 
         .edit-profile-shell::before {
@@ -329,24 +329,10 @@
 
     <div class="grid_10">
         <div class="edit-profile-shell">
-            <!-- Edit Header with Back Button -->
-            <div class="edit-header">
-                <div class="edit-header-title">
-                    <h1>Edit Profile</h1>
-                    <p>Update your account information and profile details</p>
-                </div>
-                <div class="edit-header-actions">
-                    <a href="{{ route('profile') }}" class="btn-back">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Back to Profile</span>
-                    </a>
-                </div>
-            </div>
-
             <!-- Edit Form Card -->
             <div class="edit-form-card">
                 <div class="edit-form-card__head">
-                    <h2>Profile Information</h2>
+                    <h2>Edit Profile Information</h2>
                     <p>Keep your name and email accurate so notifications and admin actions stay consistent.</p>
                 </div>
 
@@ -423,7 +409,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')

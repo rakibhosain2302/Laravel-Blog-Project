@@ -367,15 +367,7 @@
     <div class="grid_10">
         <div class="profile-shell">
 
-            <!-- Profile Header with Edit Button -->
-            <div class="profile-header">
-                <div class="profile-header-title">
-                    <h1>{{ $user->name }}</h1>
-                    <p>Manage and review your profile information</p>
-                </div>
-
-            </div>
-
+    
             <!-- Profile Content Grid -->
             <div class="profile-grid">
                 <!-- Main Profile Card -->
@@ -411,7 +403,7 @@
 
                 <!-- Side Cards -->
                 <div class="profile-side">
-                    <!-- User Profile Card -->
+                    <!-- User Profile Card with Edit Option -->
                     <div class="profile-side-card">
                         <div class="profile-user">
                             <div class="profile-user-info">

@@ -557,7 +557,7 @@
                                     <i class="fas fa-user"></i>
                                     <span>My Profile</span>
                                 </a>
-                                <a href="{{ route('change.pass') }}" class="dropdown-menu-item">
+                                <a href="{{ route('profile.edit') }}" class="dropdown-menu-item">
                                     <i class="fas fa-sliders-h"></i>
                                     <span>Account Settings</span>
                                 </a>
