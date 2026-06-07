@@ -40,6 +40,39 @@
             gap: 20px;
         }
 
+        .blogtitle-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .blogtitle-toolbar__text h3 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .blogtitle-toolbar__text p {
+            color: #64748b;
+        }
+
+        .btn-add {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #0f172a, #334155);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .blogtitle-hero,
         .blogtitle-table-card,
         .blogtitle-mini-card {
@@ -202,11 +235,12 @@
 
         .blogtitle-table-wrap .dataTables_wrapper {
             color: #334155;
+            overflow-x: auto;
         }
 
         .blogtitle-table-wrap .dataTables_length,
         .blogtitle-table-wrap .dataTables_filter {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .blogtitle-table-wrap .dataTables_length label,
@@ -229,58 +263,65 @@
             min-width: 240px;
         }
 
+        /* Fixed Table Styles - Proper Alignment */
         .blogtitle-table-wrap table.dataTable {
             width: 100% !important;
-            border-collapse: separate !important;
-            border-spacing: 0 12px !important;
+            border-collapse: collapse !important;
+            margin: 0 !important;
         }
 
         .blogtitle-table-wrap table.dataTable thead th {
-            border-bottom: 0;
+            border-bottom: 2px solid #eef2f7;
             color: #64748b;
             font-size: 12px;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 0 16px 10px;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .blogtitle-table-wrap table.dataTable thead th:last-child {
+            text-align: center;
         }
 
         .blogtitle-table-wrap table.dataTable tbody tr {
-            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .blogtitle-table-wrap table.dataTable tbody tr:hover {
+            background: #f8fafc;
         }
 
         .blogtitle-table-wrap table.dataTable tbody td {
             background: #fff;
-            border-top: 1px solid #eef2f7;
-            border-bottom: 1px solid #eef2f7;
             color: #0f172a;
-            font-weight: 600;
+            font-weight: 500;
             padding: 16px;
             vertical-align: middle;
+            border-bottom: 1px solid #eef2f7;
+            text-align: left;
         }
 
         .blogtitle-table-wrap table.dataTable tbody td:first-child {
-            border-left: 1px solid #eef2f7;
-            border-radius: 16px 0 0 16px;
-            width: 88px;
+            font-weight: 700;
             color: #64748b;
-            font-weight: 800;
+            width: 70px;
         }
 
         .blogtitle-table-wrap table.dataTable tbody td:last-child {
-            border-right: 1px solid #eef2f7;
-            border-radius: 0 16px 16px 0;
+            text-align: center;
         }
 
         .blogtitle-logo-cell {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .blogtitle-logo {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
@@ -289,40 +330,43 @@
 
         .blogtitle-slogan {
             max-width: 100%;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #64748b;
             font-size: 14px;
+            font-weight: 400;
+        }
+
+        .blogtitle-actions-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
         }
 
         .blogtitle-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 40px;
-            padding: 0 14px;
-            border-radius: 12px;
+            min-height: 36px;
+            padding: 0 16px;
+            border-radius: 10px;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 600;
             text-decoration: none;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             border: 0;
-        }
-
-        .blogtitle-action:hover {
-            transform: translateY(-1px);
         }
 
         .blogtitle-action--edit {
             background: #0f172a;
             color: #fff;
-            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.12);
         }
 
         .blogtitle-action--edit:hover {
-            background: #0f172a;
-            color: #fff;
-            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16);
+            background: #1e293b;
+            transform: translateY(-1px);
         }
 
         .blogtitle-action--delete {
@@ -330,12 +374,9 @@
             color: #b91c1c;
         }
 
-        .blogtitle-actions-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px
+        .blogtitle-action--delete:hover {
+            background: #fee2e2;
+            transform: translateY(-1px);
         }
 
         .blogtitle-delete-form {
@@ -376,36 +417,41 @@
             font-size: 14px;
         }
 
-        .blogtitle-create {}
+        .blogtitle-create {
+            border: 0;
+            border-radius: 14px;
+            background: #ffffff;
+            padding: 24px;
+            width: min(760px, calc(100vw - 40px));
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+        }
 
         .blogtitle-create__head {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 18px;
         }
 
         .blogtitle-create__head h3 {
-            margin: 0 0 8px;
-            color: #0f172a;
-            font-size: 24px;
-            letter-spacing: -0.03em;
+            font-size: 20px;
+            color: #111827;
+            margin-bottom: 6px;
         }
 
         .blogtitle-create__head p {
-            margin: 0;
             color: #64748b;
-            line-height: 1.6;
-            font-size: 14px;
+            line-height: 1.5;
         }
 
         .blogtitle-create__grid {
             display: grid;
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
         }
 
         .blogtitle-create__field {
-            display: grid;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
@@ -414,41 +460,50 @@
         }
 
         .blogtitle-create__field label {
-            font-size: 13px;
-            font-weight: 800;
-            color: #0f172a;
-            letter-spacing: 0.02em;
+            font-weight: 700;
+            color: #1f2937;
         }
 
-        .blogtitle-create__field input {
-            min-height: 15px;
-            padding: 14px;
-            border-radius: 14px;
-            border: 1px solid #dbe4f0;
-            background: linear-gradient(180deg, #ffffff, #fbfdff);
-            color: #0f172a;
-            font-size: 15px;
-            font-weight: 600;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+        .blogtitle-create__field input[type="text"],
+        .blogtitle-create__field input[type="file"] {
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #fff;
+            color: #111827;
         }
 
-        .blogtitle-create__field input::placeholder {
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        .blogtitle-create__field input:focus {
+        .blogtitle-create__field input[type="text"]:focus,
+        .blogtitle-create__field input[type="file"]:focus {
             outline: none;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-            transform: translateY(-1px);
+            border-color: #94a3b8;
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
         }
 
         .field-error {
             color: #b91c1c;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .blogtitle-create__actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-save {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #111827;
+            color: #fff;
             font-weight: 700;
-            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #1f2937;
         }
 
         .blogtitle-preview {
@@ -586,14 +641,14 @@
             padding: 4px;
         }
 
-        .blogtitle-modal__footer{
+        .blogtitle-modal__footer {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
             margin-top: 24px;
         }
 
-        .blogtitle-modal__btn--cancel{
+        .blogtitle-modal__btn--cancel {
             border: 0;
             border-radius: 12px;
             padding: 12px 20px;
@@ -603,7 +658,7 @@
             cursor: pointer;
         }
 
-        .blogtitle-modal__btn--save{
+        .blogtitle-modal__btn--save {
             border: 0;
             border-radius: 12px;
             padding: 12px 20px;
@@ -613,13 +668,13 @@
             cursor: pointer;
         }
 
-        .blogtitle-create__actions{
+        .blogtitle-create__actions {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
         }
 
-        .btn-save{
+        .btn-save {
             border: 0;
             border-radius: 12px;
             padding: 12px 20px;
@@ -627,6 +682,15 @@
             color: #fff;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        .blogtitle-table-wrap .dataTables_paginate {
+            margin-top: 20px;
+        }
+
+        .blogtitle-table-wrap .dataTables_info {
+            margin-top: 10px;
+            color: #64748b;
         }
 
         @media (max-width: 991px) {
@@ -685,21 +749,25 @@
         <div class="blogtitle-index-shell">
             <div class="blogtitle-index-grid">
                 <section class="blogtitle-hero">
-                    <div class="blogtitle-hero__top">
-                        <div class="blogtitle-kicker">Blog branding</div>
-                        <button type="button" class="blogtitle-create-btn" id="openBlogTitleModal">
-                            @if ($canAdd)
+                    @if ($canAdd)
+                        <div class="blogtitle-toolbar">
+                            <div class="blogtitle-toolbar__text">
+                                <h3>Manage Blog Title</h3>
+                                <p>Create a new site title, slogan, and logo without leaving the list page.</p>
+                            </div>
+
+                            <button type="button" class="btn-add" id="openBlogTitleModal">
                                 + Add Blog Title
-                            @else
-                                + Add New Title
-                            @endif
-                        </button>
-                    </div>
-                    <h1>Configure and manage your blog's branding.</h1>
-                    <p>
-                        Set your blog title, slogan, and logo to create a professional first impression. Keep your branding
-                        consistent and manage everything from one polished admin surface.
-                    </p>
+                            </button>
+                        </div>
+                    @else
+                        <div class="blogtitle-toolbar">
+                            <div class="blogtitle-toolbar__text">
+                                <h3>Blog Title Already Set</h3>
+                                <p>You can update the existing title, slogan, or logo from the action column.</p>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="blogtitle-hero-stats">
                         <div class="blogtitle-stat">
@@ -821,18 +889,7 @@
             @if ($canAdd)
                 <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleModal"
                     aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
-                    <div class="blogtitle-modal__content">
-                        <button type="button" class="blogtitle-modal__close" id="closeBlogTitleModal"
-                            aria-label="Close modal">
-                            &times;
-                        </button>
-                        @include('admin.pages.blogtitle.create')
-                    </div>
-                </div>
-            @else
-                <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleModal"
-                    aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
-                    <div class="blogtitle-modal__content">
+                    <div class="blogtitle-modal__dialog">
                         <button type="button" class="blogtitle-modal__close" id="closeBlogTitleModal"
                             aria-label="Close modal">
                             &times;
