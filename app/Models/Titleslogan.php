@@ -9,11 +9,16 @@ class Titleslogan extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-    
+    public $timestamps = true;
+
     protected $fillable = [
         'title',
         'slogan',
         'logo'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

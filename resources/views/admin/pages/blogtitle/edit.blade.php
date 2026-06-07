@@ -1,15 +1,19 @@
+@php
+    $activeTitle = $data->first();
+@endphp
+
 @if ($data->isNotEmpty())
     <div class="blogtitle-modal {{ $errors->any() ? 'is-open' : '' }}" id="blogTitleEditModal"
         aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
-        <div class="blogtitle-modal__dialog">
+        <div class="blogtitle-modal__content">
             <button type="button" class="blogtitle-modal__close" id="closeBlogTitleEditModal" aria-label="Close modal">
-                &times;
+                ✕
             </button>
 
             <div class="blogtitle-create">
                 <div class="blogtitle-create__head">
                     <h3>Update Blog Title</h3>
-                    <p>Edit the site title, slogan, and logo without leaving the list page.</p>
+                    <p>Modify your site title, slogan, and logo to keep your brand fresh and engaging.</p>
                 </div>
 
                 <form action="{{ route('title.slogan.update', $activeTitle->id) }}" method="POST"
@@ -26,7 +30,7 @@
                                 type="text"
                                 name="title"
                                 value="{{ old('title', $activeTitle->title) }}"
-                                placeholder="Enter website title"
+                                placeholder="Enter your website title"
                             />
                             @error('title')
                                 <span class="field-error">{{ $message }}</span>
@@ -40,7 +44,7 @@
                                 type="text"
                                 name="slogan"
                                 value="{{ old('slogan', $activeTitle->slogan) }}"
-                                placeholder="Enter website slogan"
+                                placeholder="Enter your website slogan"
                             />
                             @error('slogan')
                                 <span class="field-error">{{ $message }}</span>
@@ -53,6 +57,7 @@
                                 id="blogtitle_edit_logo"
                                 type="file"
                                 name="logo"
+                                accept="image/*"
                                 onchange="document.querySelector('#blogtitle_edit_preview').src = window.URL.createObjectURL(this.files[0]); document.querySelector('#blogtitle_edit_preview').style.display = 'block';"
                             />
                             @error('logo')
@@ -80,9 +85,9 @@
                         </div>
                     </div>
 
-                    <div class="blogtitle-modal__actions">
-                        <button type="button" class="btn-cancel" id="cancelBlogTitleEditModal">Cancel</button>
-                        <button type="submit" class="btn-save">Update</button>
+                    <div class="blogtitle-modal__footer">
+                        <button type="button" class="blogtitle-modal__btn blogtitle-modal__btn--cancel" id="cancelBlogTitleEditModal">Cancel</button>
+                        <button type="submit" class="blogtitle-modal__btn blogtitle-modal__btn--save">Update</button>
                     </div>
                 </form>
             </div>
