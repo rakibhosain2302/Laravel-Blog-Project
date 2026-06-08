@@ -1,9 +1,7 @@
 @extends('admin.layouts.header')
 
 @prepend('style')
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -14,12 +12,10 @@
         .social-create::-webkit-scrollbar {
             width: 6px;
         }
-
         .social-create::-webkit-scrollbar-track {
             background: #f1f5f9;
             border-radius: 10px;
         }
-
         .social-create::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 10px;
@@ -212,7 +208,6 @@
                 opacity: 0;
                 transform: scale(0.96) translateY(12px);
             }
-
             to {
                 opacity: 1;
                 transform: scale(1) translateY(0);
@@ -353,7 +348,7 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             color: #475569;
         }
 
@@ -363,8 +358,7 @@
         }
 
         /* status msgs */
-        .successMsg,
-        .errorMsg {
+        .successMsg, .errorMsg {
             padding: 14px 20px;
             border-radius: 40px;
             font-weight: 600;
@@ -429,8 +423,7 @@
 
                 @if ($data->isEmpty())
                     <div class="social-empty">
-                        <i class="fas fa-share-alt"
-                            style="font-size: 48px; color: #facc15; margin-bottom: 16px; display: inline-block;"></i>
+                        <i class="fas fa-share-alt" style="font-size: 48px; color: #facc15; margin-bottom: 16px; display: inline-block;"></i>
                         <h3>No social links added yet</h3>
                         <p>Click “Add links” and connect Facebook, Twitter, LinkedIn & Google to let visitors reach you.</p>
                     </div>
@@ -450,30 +443,22 @@
                             @foreach ($data as $id => $social)
                                 <tr>
                                     <td>{{ ++$id }}</td>
-                                    <td><a href="{{ $social->fblink }}" target="_blank"
-                                            style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->fblink, 35) }}</a>
-                                    </td>
-                                    <td><a href="{{ $social->twlink }}" target="_blank"
-                                            style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->twlink, 35) }}</a>
-                                    </td>
-                                    <td><a href="{{ $social->lnlink }}" target="_blank"
-                                            style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->lnlink, 35) }}</a>
-                                    </td>
-                                    <td><a href="{{ $social->gllink }}" target="_blank"
-                                            style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->gllink, 35) }}</a>
-                                    </td>
+                                    <td><a href="{{ $social->fblink }}" target="_blank" style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->fblink, 35) }}</a></td>
+                                    <td><a href="{{ $social->twlink }}" target="_blank" style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->twlink, 35) }}</a></td>
+                                    <td><a href="{{ $social->lnlink }}" target="_blank" style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->lnlink, 35) }}</a></td>
+                                    <td><a href="{{ $social->gllink }}" target="_blank" style="color:#2563eb; text-decoration: none;">{{ Str::limit($social->gllink, 35) }}</a></td>
                                     <td class="social-actions">
                                         <div class="social-action-group">
                                             <button type="button" class="btn-edit-open js-open-social-edit"
                                                 data-action="{{ route('social.update', $social->id) }}"
-                                                data-id="{{ $social->id }}" data-fblink="{{ e($social->fblink) }}"
+                                                data-id="{{ $social->id }}"
+                                                data-fblink="{{ e($social->fblink) }}"
                                                 data-twlink="{{ e($social->twlink) }}"
                                                 data-lnlink="{{ e($social->lnlink) }}"
                                                 data-gllink="{{ e($social->gllink) }}">
                                                 <i class="fas fa-pen"></i> Update
                                             </button>
-                                            <form action="{{ route('social.destroy', $social->id) }}" method="POST"
-                                                style="display: inline-block;">
+                                            <form action="{{ route('social.destroy', $social->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn-delete" type="submit"
@@ -587,7 +572,7 @@
                 @if ($errors->any())
                     $editModal.addClass('is-open').attr('aria-hidden', 'false');
                     $('body').css('overflow', 'hidden');
-                @elseif (request('edit_id') && $activeSocial)
+                @elseif(request('edit_id') && $activeSocial)
                     $editModal.addClass('is-open').attr('aria-hidden', 'false');
                     $('body').css('overflow', 'hidden');
                 @endif
