@@ -17,4 +17,9 @@ class Social extends Model
         'lnlink',
         'gllink'
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }
