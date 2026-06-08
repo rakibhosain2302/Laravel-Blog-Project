@@ -417,16 +417,6 @@
             font-size: 14px;
         }
 
-        .blogtitle-create {
-            border: 0;
-            border-radius: 14px;
-            background: #ffffff;
-            padding: 24px;
-            width: min(760px, calc(100vw - 40px));
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
-        }
 
         .blogtitle-create__head {
             margin-bottom: 18px;
@@ -785,20 +775,6 @@
                     </div>
                 </section>
 
-                <div class="blogtitle-quick-links">
-                    <div class="blogtitle-mini-card">
-                        <div class="blogtitle-pill">Tip</div>
-                        <h3>Make it memorable</h3>
-                        <p>Use a clear, concise title that reflects your blog's purpose. Your visitors will see this first.
-                        </p>
-                    </div>
-
-                    <div class="blogtitle-mini-card">
-                        <div class="blogtitle-pill">Quick action</div>
-                        <h3>Add a professional logo</h3>
-                        <p>Upload a high-quality logo image to complement your blog's visual identity.</p>
-                    </div>
-                </div>
 
                 <section class="blogtitle-table-card">
                     <div class="blogtitle-table-card__head">
@@ -810,18 +786,6 @@
                     </div>
 
                     <div class="blogtitle-table-wrap">
-                        @if (session('success'))
-                            <div class="blogtitle-pill" style="margin-bottom: 16px; background:#ecfdf5; color:#047857;">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if (session('error'))
-                            <div class="blogtitle-pill" style="margin-bottom: 16px; background:#fee2e2; color:#b91c1c;">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
                         @if ($data->isEmpty())
                             <div class="blogtitle-empty">
                                 No blog title configured yet. Add your first title to personalize your blog.
@@ -912,14 +876,48 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
+
             setupLeftMenu();
+
             if ($('#example').length) {
                 $('#example').dataTable({
                     sDom: 'lfrtip',
                     iDisplayLength: 10
                 });
             }
+
             setSidebarHeight();
+
+            /* ==========================
+               SWEET ALERT NOTIFICATION
+            ========================== */
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if ($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error!',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    confirmButtonText: 'OK'
+                });
+            @endif
 
             var $modal = $('#blogTitleModal');
 
@@ -956,6 +954,7 @@
             });
 
             @if ($data->isNotEmpty())
+
                 var $editModal = $('#blogTitleEditModal');
                 var $editForm = $('#blogTitleEditForm');
                 var $editId = $('#blogTitleEditId');
@@ -968,11 +967,13 @@
                     $editId.val(id);
                     $titleInput.val(title);
                     $sloganInput.val(slogan);
+
                     if (logo) {
                         $logoPreview.attr('src', "{{ asset('storage') }}/" + logo).show();
                     } else {
                         $logoPreview.hide();
                     }
+
                     $editModal.addClass('is-open').attr('aria-hidden', 'false');
                     $('body').css('overflow', 'hidden');
                 }
@@ -1018,13 +1019,14 @@
             @if ($errors->any())
                 openModal();
             @endif
+
         });
 
         function confirmDeleteBlogTitle(button) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'This action cannot be undone!',
-                icon: 'question',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#6b7280',
