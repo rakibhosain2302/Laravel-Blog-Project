@@ -320,12 +320,13 @@
         }
 
         .blogtitle-logo {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
+            margin-top: 10px;
         }
 
         .blogtitle-slogan {
@@ -336,13 +337,6 @@
             font-weight: 400;
         }
 
-        .blogtitle-actions-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin: 0;
-        }
 
         .blogtitle-action {
             display: inline-flex;
@@ -724,6 +718,71 @@
                 margin-top: 10px;
             }
         }
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        font,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td {
+            vertical-align: middle;
+        }
     </style>
 @endprepend
 
@@ -770,7 +829,7 @@
                         </div>
                         <div class="blogtitle-stat">
                             <span>Last updated</span>
-                            <strong>{{ $totalTitles > 0 ? $data->first()->updated_at->format('M d') : 'N/A' }}</strong>
+                            <strong>{{ $totalTitles > 0 ? $data->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
                         </div>
                     </div>
                 </section>

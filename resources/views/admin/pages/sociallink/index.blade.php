@@ -387,7 +387,7 @@
         .social-modal__close {
             position: absolute;
             top: 14px;
-            right: -24px;
+            right: 20px;
             width: 38px;
             height: 38px;
             border-radius: 999px;
