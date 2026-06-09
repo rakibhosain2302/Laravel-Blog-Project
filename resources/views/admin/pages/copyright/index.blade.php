@@ -294,6 +294,139 @@
             text-align: center;
             color: #475569;
         }
+
+        .copyright-create {
+            border: 0;
+            border-radius: 14px;
+            background: #ffffff;
+            padding: 24px;
+            width: min(860px, calc(100vw - 40px));
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+        }
+
+        .copyright-create__head {
+            margin-bottom: 18px;
+        }
+
+        .copyright-create__head h3 {
+            font-size: 20px;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .copyright-create__head p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .copyright-create__field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .copyright-create__field label {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .copyright-create__field input[type="text"] {
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #fff;
+            color: #111827;
+        }
+
+        .copyright-create__field input[type="text"]:focus {
+            outline: none;
+            border-color: #94a3b8;
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
+        }
+
+        .field-error {
+            color: #b91c1c;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .copyright-create__actions,
+        .copyright-modal__actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-save {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #111827;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #1f2937;
+        }
+
+        .btn-cancel {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #e2e8f0;
+            color: #0f172a;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: #cbd5e1;
+        }
+
+        .copyright-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.62);
+            z-index: 9999;
+        }
+
+        .copyright-modal.is-open {
+            display: flex;
+        }
+
+        .copyright-modal__dialog {
+            width: min(860px, calc(100vw - 40px));
+            position: relative;
+        }
+
+        .copyright-modal__close {
+            position: absolute;
+            top: 14px;
+            right: -24px;
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 0;
+            background: #e2e8f0;
+            color: #0f172a;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .copyright-modal__close:hover {
+            background: #cbd5e1;
+        }
     </style>
 @endprepend
 
@@ -340,7 +473,7 @@
                         </div>
                         <div class="copyright-stat">
                             <span>Last updated</span>
-                            <strong>{{ $totalCopyrights > 0 ? $data->first()->updated_at->format('M d') : 'N/A' }}</strong>
+                            <strong>{{ $totalCopyrights > 0 ? $data->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
                         </div>
                     </div>
                 </section>
