@@ -249,6 +249,7 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
+            margin: 8px 0 5px;
         }
 
         .copyright-action {
@@ -411,7 +412,7 @@
         .copyright-modal__close {
             position: absolute;
             top: 14px;
-            right: -24px;
+            right: 20px;
             width: 38px;
             height: 38px;
             border-radius: 999px;
@@ -484,7 +485,8 @@
                             <h2>Copyright List</h2>
                             <p>Review and manage the footer copyright note for your site.</p>
                         </div>
-                        <div class="copyright-pill">{{ $totalCopyrights }} record{{ $totalCopyrights !== 1 ? 's' : '' }}</div>
+                        <div class="copyright-pill">{{ $totalCopyrights }} record{{ $totalCopyrights !== 1 ? 's' : '' }}
+                        </div>
                     </div>
 
                     <div class="copyright-table-wrap">
@@ -509,20 +511,20 @@
                                             <td>{{ $copyright->note }}</td>
                                             <td>
                                                 <div class="copyright-action-group">
-                                                    <button
-                                                        type="button"
+                                                    <button type="button"
                                                         class="copyright-action copyright-action--edit js-open-copyright-edit"
                                                         data-action="{{ route('copyright.update', $copyright->id) }}"
                                                         data-id="{{ $copyright->id }}"
-                                                        data-note="{{ e($copyright->note) }}"
-                                                    >
+                                                        data-note="{{ e($copyright->note) }}">
                                                         Update
                                                     </button>
-                                                    <form action="{{ route('copyright.destroy', $copyright->id) }}" method="POST">
+                                                    <form action="{{ route('copyright.destroy', $copyright->id) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="copyright-action copyright-action--delete" type="submit"
-                                                            onclick="return confirm('Are you sure you want to delete this copyright text?');">
+                                                        <button class="copyright-action copyright-action--delete"
+                                                            type="submit"
+                                                            onclick="event.preventDefault(); confirmDeleteCopyright(this);">
                                                             Delete
                                                         </button>
                                                     </form>
@@ -541,7 +543,8 @@
                 <div class="copyright-modal {{ $errors->any() ? 'is-open' : '' }}" id="copyrightModal"
                     aria-hidden="{{ $errors->any() ? 'false' : 'true' }}">
                     <div class="copyright-modal__dialog">
-                        <button type="button" class="copyright-modal__close" id="closeCopyrightModal" aria-label="Close modal">
+                        <button type="button" class="copyright-modal__close" id="closeCopyrightModal"
+                            aria-label="Close modal">
                             &times;
                         </button>
                         @include('admin.pages.copyright.create')
@@ -564,6 +567,33 @@
             setupLeftMenu();
             $('.datatable').dataTable();
             setSidebarHeight();
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if ($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error!',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    confirmButtonText: 'OK'
+                });
+            @endif
 
             @if ($data->isNotEmpty())
                 var $editModal = $('#copyrightEditModal');
@@ -612,7 +642,7 @@
                 @if ($errors->any())
                     $editModal.addClass('is-open').attr('aria-hidden', 'false');
                     $('body').css('overflow', 'hidden');
-                @elseif(request('edit_id') && $activeCopyright)
+                @elseif (request('edit_id') && $activeCopyright)
                     $editModal.addClass('is-open').attr('aria-hidden', 'false');
                     $('body').css('overflow', 'hidden');
                 @endif
@@ -658,5 +688,22 @@
                 @endif
             @endif
         });
+
+        function confirmDeleteCopyright(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
     </script>
 @endsection
