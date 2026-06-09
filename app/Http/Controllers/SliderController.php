@@ -13,7 +13,7 @@ class SliderController extends Controller
     public function index()
     {
         $sliderData = Slider::latest()->get();
-        return view('admin.pages.sliderlist', compact('sliderData'));
+        return view('admin.pages.slider.index', compact('sliderData'));
     }
 
     /**
@@ -21,7 +21,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.addslider');
+        return view('admin.pages.slider.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class SliderController extends Controller
     public function edit(string $id)
     {
         $updateSlider = Slider::findOrFail($id);
-        return view('admin.pages.sliderupdate', compact('updateSlider'));
+        return view('admin.pages.slider.edit', compact('updateSlider'));
     }
 
     /**

@@ -3,6 +3,34 @@
         .modern-sidebar-wrap {
             position: sticky;
             top: 18px;
+            max-height: calc(100vh - 36px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 6px;
+        }
+
+        .modern-sidebar-wrap::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modern-sidebar-wrap::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modern-sidebar-wrap::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.24);
+            border-radius: 999px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .modern-sidebar-wrap:hover::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.38);
+        }
+
+        .modern-sidebar-wrap {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(148, 163, 184, 0.24) transparent;
         }
 
         .modern-sidebar {
@@ -226,6 +254,15 @@
             transition: transform 0.18s ease;
         }
 
+        .sidebar-menu>li>.menuitem.is-active {
+            background: rgba(59, 130, 246, 0.16);
+            color: #fff;
+        }
+
+        .sidebar-menu>li>.menuitem.is-active::after {
+            color: #fff;
+        }
+
         .sidebar-menu>li.ui-accordion-header-active>.menuitem::after {
             transform: rotate(180deg);
         }
@@ -372,50 +409,56 @@
             <ul class="section menu sidebar-menu">
 
                 @if ($canManageSite)
-                    <li>
-                        <a class="menuitem">Category Option</a>
+                    <li class="{{ Request::routeIs('categories.*') ? 'ui-accordion-header-active' : '' }}">
+
+                                        <a class="menuitem {{ Request::routeIs('categories.*') ? 'is-active' : '' }}">Category Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('categories.create') }}">Add Category</a></li>
-                            <li><a href="{{ route('categories.index') }}">Category List</a></li>
+                            <li><a href="{{ route('categories.create') }}" class="{{ Request::routeIs('categories.create') ? 'active' : '' }}">Add Category</a></li>
+                            <li><a href="{{ route('categories.index') }}" class="{{ Request::routeIs('categories.index') ? 'active' : '' }}">Category List</a></li>
                         </ul>
                     </li>
                 @endif
 
-                <li>
-                    <a class="menuitem">Post Option</a>
+                <li class="{{ Request::routeIs('posts.*') ? 'ui-accordion-header-active' : '' }}">
+
+
+                                    <a class="menuitem {{ Request::routeIs('posts.*') ? 'is-active' : '' }}">Post Option</a>
                     <ul class="submenu">
-                        <li><a href="{{ route('posts.create') }}">Add Post</a></li>
-                        <li><a href="{{ route('posts.index') }}">Post List</a></li>
+                        <li><a href="{{ route('posts.create') }}" class="{{ Request::routeIs('posts.create') ? 'active' : '' }}">Add Post</a></li>
+                        <li><a href="{{ route('posts.index') }}" class="{{ Request::routeIs('posts.index') ? 'active' : '' }}">Post List</a></li>
                     </ul>
                 </li>
 
                 @if ($canManageSite)
-                    <li>
-                        <a class="menuitem">Pages Option</a>
+                    <li class="{{ Request::routeIs('page.*') ? 'ui-accordion-header-active' : '' }}">
+
+                                        <a class="menuitem {{ Request::routeIs('page.*') ? 'is-active' : '' }}">Pages Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('page.create') }}">Add New Page</a></li>
-                            <li><a href="{{ route('page.index') }}">Page List</a></li>
+                            <li><a href="{{ route('page.create') }}" class="{{ Request::routeIs('page.create') ? 'active' : '' }}">Add New Page</a></li>
+                            <li><a href="{{ route('page.index') }}" class="{{ Request::routeIs('page.index') ? 'active' : '' }}">Page List</a></li>
                         </ul>
                     </li>
                 @endif
 
                 @if ($canManageSite)
-                    <li>
-                        <a class="menuitem">Slider Option</a>
+                    <li class="{{ Request::routeIs('slider.*') ? 'ui-accordion-header-active' : '' }}">
+
+                                        <a class="menuitem {{ Request::routeIs('slider.*') ? 'is-active' : '' }}">Slider Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('slider.create') }}">Add New Slider</a></li>
-                            <li><a href="{{ route('slider.index') }}">Slider List</a></li>
+                            <li><a href="{{ route('slider.create') }}" class="{{ Request::routeIs('slider.create') ? 'active' : '' }}">Add New Slider</a></li>
+                            <li><a href="{{ route('slider.index') }}" class="{{ Request::routeIs('slider.index') ? 'active' : '' }}">Slider List</a></li>
                         </ul>
                     </li>
                 @endif
 
                 @if ($canManageSite)
-                    <li>
-                        <a class="menuitem">Site Option</a>
+                    <li class="{{ Request::routeIs('blog.title.*') || Request::routeIs('social.*') || Request::routeIs('copyright.*') ? 'ui-accordion-header-active' : '' }}">
+
+                                        <a class="menuitem {{ Request::routeIs('blog.title.*') || Request::routeIs('social.*') || Request::routeIs('copyright.*') ? 'is-active' : '' }}">Site Option</a>
                         <ul class="submenu">
-                            <li><a href="{{ route('blog.title.index') }}">Title &amp; Slogan</a></li>
-                            <li><a href="{{ route('social.index') }}">Social Media</a></li>
-                            <li><a href="{{ route('copyright.index') }}">Copyright</a></li>
+                            <li><a href="{{ route('blog.title.index') }}" class="{{ Request::routeIs('blog.title.*') ? 'active' : '' }}">Title &amp; Slogan</a></li>
+                            <li><a href="{{ route('social.index') }}" class="{{ Request::routeIs('social.*') ? 'active' : '' }}">Social Media</a></li>
+                            <li><a href="{{ route('copyright.index') }}" class="{{ Request::routeIs('copyright.*') ? 'active' : '' }}">Copyright</a></li>
                         </ul>
                     </li>
                 @endif
