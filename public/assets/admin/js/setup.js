@@ -1,15 +1,22 @@
 ﻿function setSidebarHeight(){
-	setTimeout(function(){
-var height = $(document).height();
-    $('.grid_12').each(function () {
-        height -= $(this).outerHeight();
-    });
-    height -= $('#site_info').outerHeight();
-	height-=1;
-	//salert(height);
-    $('.sidemenu').css('height', height);					   
-						},100);
+        setTimeout(function(){
+            var $sidebar = $('.modern-sidebar-wrap');
+            if ($sidebar.length) {
+                var headerOffset = $('.admin-header-wrapper').outerHeight() || 0;
+                var topOffset = 18;
+                var bottomGap = 18;
+                var height = $(window).height() - headerOffset - topOffset - bottomGap;
+                if (height < 320) {
+                    height = 320;
+                }
+                $sidebar.css({
+                    height: height + 'px',
+                    'max-height': height + 'px'
+                });
+            }
+        },100);
 }
+
 
 //Dashboard chart
 function setupDashboardChart(containerElementId) {

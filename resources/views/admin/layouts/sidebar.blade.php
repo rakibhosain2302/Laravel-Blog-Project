@@ -2,8 +2,8 @@
     <style>
         .modern-sidebar-wrap {
             position: sticky;
-            top: 18px;
-            max-height: calc(100vh - 36px);
+            top: calc(72px + 18px);
+            max-height: calc(100vh - 108px);
             overflow-y: auto;
             overflow-x: hidden;
             padding-right: 6px;

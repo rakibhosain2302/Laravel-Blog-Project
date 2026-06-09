@@ -590,6 +590,7 @@
             // Setup existing functionality
             setupLeftMenu();
             setSidebarHeight();
+            window.addEventListener('resize', setSidebarHeight);
 
             // Modern header interactions
             const userProfileBtn = document.getElementById('userProfileBtn');
