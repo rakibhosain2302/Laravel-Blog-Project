@@ -2,147 +2,318 @@
 
 @prepend('style')
     <style>
-        .slider-create-shell {
-            padding: 24px 0;
+        .page-create-shell {
+            position: relative;
+            padding: 18px 0 34px;
         }
 
-        .slider-create-card {
-            background: rgba(15, 23, 42, 0.92);
-            border: 1px solid rgba(148, 163, 184, 0.16);
-            border-radius: 28px;
-            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.24);
-            padding: 32px;
+        .page-create-shell::before,
+        .page-create-shell::after {
+            content: "";
+            position: fixed;
+            pointer-events: none;
+            border-radius: 999px;
+            filter: blur(24px);
+            opacity: 0.9;
         }
 
-        .slider-create-head {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 18px;
-            align-items: flex-start;
-            margin-bottom: 22px;
+        .page-create-shell::before {
+            top: 86px;
+            right: -90px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0));
         }
 
-        .slider-create-head h2 {
-            margin: 0;
-            font-size: 1.85rem;
-            font-weight: 800;
-            color: #f8fafc;
-            line-height: 1.1;
+        .page-create-shell::after {
+            bottom: -90px;
+            left: -70px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.16), rgba(168, 85, 247, 0));
         }
 
-        .slider-create-head p {
-            margin: 0;
-            max-width: 620px;
-            color: #94a3b8;
-            font-size: 0.98rem;
-            line-height: 1.8;
-        }
-
-        .slider-create-grid {
+        .page-create-grid {
+            position: relative;
+            z-index: 1;
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 20px;
         }
 
-        .slider-create-field {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .slider-create-field--full {
-            grid-column: 1 / -1;
-        }
-
-        .slider-create-field label {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .slider-create-field input[type="text"],
-        .slider-create-field input[type="file"] {
-            width: 100%;
-            min-height: 50px;
-            padding: 14px 16px;
-            border-radius: 16px;
+        .page-hero,
+        .page-form-card {
+            border-radius: 28px;
             border: 1px solid rgba(148, 163, 184, 0.18);
-            background: rgba(255, 255, 255, 0.04);
-            color: #f8fafc;
-            font-size: 0.96rem;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 22px 56px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
         }
 
-        .slider-create-field input[type="text"]:focus,
-        .slider-create-field input[type="file"]:focus {
-            border-color: rgba(59, 130, 246, 0.8);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-            outline: none;
+        .page-hero {
+            padding: 30px;
+            color: #fff;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.32), transparent 34%),
+                radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.22), transparent 28%),
+                linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.92));
         }
 
-        .slider-create-field .field-error {
-            color: #fca5a5;
-            font-size: 0.88rem;
-            margin-top: 4px;
-        }
-
-        .form-alert {
-            margin-bottom: 20px;
-            padding: 14px 18px;
-            border-radius: 16px;
-            background: rgba(248, 113, 113, 0.12);
-            border: 1px solid rgba(248, 113, 113, 0.22);
-            color: #fee2e2;
-        }
-
-        .slider-create-actions {
+        .page-hero__top {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
             flex-wrap: wrap;
+        }
+
+        .page-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+            color: #e2e8f0;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-kicker::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
+        }
+
+        .page-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.18s ease, background 0.18s ease;
+        }
+
+        .page-back-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .page-hero h1 {
+            margin: 18px 0 10px;
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+        }
+
+        .page-hero p {
+            margin: 0;
+            max-width: 62ch;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .page-hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
-            justify-content: flex-start;
             margin-top: 24px;
         }
 
-        .slider-create-actions .btn-save,
-        .slider-create-actions .btn-cancel {
-            min-width: 140px;
+        .page-stat {
+            padding: 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+        }
+
+        .page-stat span {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-stat strong {
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            letter-spacing: -0.03em;
+        }
+
+        .page-form-card__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 24px 24px 0;
+        }
+
+        .page-form-card__head h2 {
+            margin: 0;
+            color: #0f172a;
+            font-size: 26px;
+            letter-spacing: -0.04em;
+        }
+
+        .page-form-card__head p {
+            margin: 6px 0 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .page-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
             border-radius: 999px;
-            padding: 14px 24px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .page-form-wrap {
+            padding: 20px 24px 24px;
+        }
+
+        .page-form-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .page-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .page-form-group label {
+            color: #0f172a;
             font-weight: 700;
-            border: none;
+            font-size: 14px;
+        }
+
+        .page-form-input {
+            padding: 12px 16px;
+            border: 1px solid #dbe4f0;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fff;
+            color: #0f172a;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .page-form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .page-form-input.is-invalid {
+            border-color: #ef4444;
+        }
+
+        .page-textarea {
+            min-height: 80px;
+            padding: 14px 16px;
+            border: 1px solid #dbe4f0;
+            border-radius: 14px;
+            font-size: 15px;
+            background: #fff;
+            color: #0f172a;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .page-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .page-textarea.is-invalid {
+            border-color: #ef4444;
+        }
+
+        .page-error {
+            color: #dc2626;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .page-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 999px;
+            background: #0f172a;
+            border: 1px solid transparent;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
         }
 
-        .slider-create-actions .btn-save {
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-            color: #ffffff;
-        }
-
-        .slider-create-actions .btn-save:hover {
+        .page-submit-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 18px 30px rgba(59, 130, 246, 0.24);
+            background: #1e293b;
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.16);
         }
 
-        .slider-create-actions .btn-cancel {
-            background: rgba(255, 255, 255, 0.08);
-            color: #cbd5e1;
-            border: 1px solid rgba(148, 163, 184, 0.24);
-            text-decoration: none;
+        .page-author-display {
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
         }
 
-        .slider-create-actions .btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        @media (max-width: 900px) {
-            .slider-create-grid {
+        @media (max-width: 991px) {
+            .page-hero-stats {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .slider-create-head {
-                flex-direction: column;
+        @media (max-width: 767px) {
+            .page-create-shell {
+                padding-top: 14px;
+            }
+
+            .page-hero,
+            .page-form-card__head,
+            .page-form-wrap {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .page-back-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -152,45 +323,81 @@
     @include('admin.layouts.sidebar')
 
     <div class="grid_10">
-        <div class="slider-create-shell">
-            <div class="slider-create-card">
-                <div class="slider-create-head">
-                    <div>
-                        <h2>Add New Slider</h2>
-                        <p>Use this form to create a fresh slider item for your homepage. Upload a strong image and add a concise title for the slide.</p>
+        <div class="page-create-shell">
+            <div class="page-create-grid">
+                <section class="page-hero">
+                    <div class="page-hero__top">
+                        <div class="page-kicker">Slider</div>
+                        <a class="page-back-btn" href="{{ route('slider.index') }}">← Back to Sliders</a>
                     </div>
-                </div>
+                    <h1>Create a new slider item.</h1>
+                    <p>Fill in the details below to add a fresh slide. Upload a strong image and provide a short display title for the slider.</p>
 
-                @if (session('error'))
-                    <div class="form-alert">{{ session('error') }}</div>
-                @endif
-
-                <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="slider-create-grid">
-                        <div class="slider-create-field">
-                            <label for="slider_title">Slider Title</label>
-                            <input id="slider_title" type="text" name="title" placeholder="Enter slider title..." value="{{ old('title') }}" />
-                            @error('title')
-                                <span class="field-error">{{ $message }}</span>
-                            @enderror
+                    <div class="page-hero-stats">
+                        <div class="page-stat">
+                            <span>Total sliders</span>
+                            <strong>{{ \App\Models\Slider::count() ?? 0 }}</strong>
                         </div>
-
-                        <div class="slider-create-field slider-create-field--full">
-                            <label for="slider_image">Upload Image</label>
-                            <input id="slider_image" type="file" name="image" accept="image/png, image/jpeg, image/jpg" />
-                            @error('image')
-                                <span class="field-error">{{ $message }}</span>
-                            @enderror
+                        <div class="page-stat">
+                            <span>Your role</span>
+                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
+                        </div>
+                        <div class="page-stat">
+                            <span>Author</span>
+                            <strong>{{ Auth::user()->name }}</strong>
                         </div>
                     </div>
+                </section>
 
-                    <div class="slider-create-actions">
-                        <a href="{{ route('slider.index') }}" class="btn-cancel">Cancel</a>
-                        <button type="submit" class="btn-save">Save Slider</button>
+                <section class="page-form-card">
+                    <div class="page-form-card__head">
+                        <div>
+                            <h2>Add New Slider</h2>
+                            <p>Enter a title and choose an image to publish a new slider entry.</p>
+                        </div>
+                        <div class="page-pill">New slider</div>
                     </div>
-                </form>
+
+                    <div class="page-form-wrap">
+                        @if (session('success'))
+                            <div class="page-pill" style="margin-bottom: 16px; background:#ecfdf5; color:#047857;">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="page-form-grid">
+                                <div class="page-form-group">
+                                    <label for="title">Slider Title</label>
+                                    <input type="text" id="title" name="title" placeholder="Enter slider title..." class="page-form-input @error('title') is-invalid @enderror" value="{{ old('title') }}" />
+                                    @error('title')
+                                        <span class="page-error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="page-form-group">
+                                    <label for="image">Slider Image</label>
+                                    <input type="file" id="image" name="image" class="page-form-input @error('image') is-invalid @enderror" accept="image/png, image/jpeg, image/jpg" />
+                                    @error('image')
+                                        <span class="page-error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="page-form-group">
+                                    <label>Author</label>
+                                    <div class="page-author-display">
+                                        {{ Auth::user()->name }} ({{ Auth::user()->role->name ?? 'User' }})
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button class="page-submit-btn" type="submit">Save Slider</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
