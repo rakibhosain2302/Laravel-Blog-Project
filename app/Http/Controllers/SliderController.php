@@ -31,7 +31,7 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'required|max:60',
-            'image' => 'required|mimes:jpg,jpeg'
+            'image' => 'required|mimes:jpg,jpeg,png'
         ]);
 
         if ($request->hasFile('image')) {
@@ -74,7 +74,7 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:60',
-            'image' => 'nullable|mimes:jpg,jpeg'
+            'image' => 'nullable|mimes:jpg,jpeg,png'
         ]);
 
         // Find the post
