@@ -33,7 +33,39 @@
             scrollbar-color: rgba(148, 163, 184, 0.24) transparent;
         }
 
-        .modern-sidebar {
+                .grid_10 {
+            position: relative;
+            max-height: calc(100vh - 108px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 6px;
+        }
+
+        .grid_10::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .grid_10::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .grid_10::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.24);
+            border-radius: 999px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .grid_10:hover::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.38);
+        }
+
+        .grid_10 {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(148, 163, 184, 0.24) transparent;
+        }
+
+.modern-sidebar {
             position: relative;
             overflow: hidden;
             border-radius: 28px;
