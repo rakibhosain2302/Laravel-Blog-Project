@@ -3,7 +3,6 @@
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.92));
         border-top: 1px solid rgba(148, 163, 184, 0.12);
         padding: 20px 0;
-        margin-top: 40px;
     }
 
     .modern-footer p {

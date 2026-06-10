@@ -33,12 +33,13 @@
             scrollbar-color: rgba(148, 163, 184, 0.24) transparent;
         }
 
-                .grid_10 {
+        .grid_10 {
             position: relative;
             max-height: calc(100vh - 108px);
             overflow-y: auto;
             overflow-x: hidden;
             padding-right: 6px;
+            box-sizing: border-box;
         }
 
         .grid_10::-webkit-scrollbar {

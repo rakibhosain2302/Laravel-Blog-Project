@@ -4,7 +4,7 @@
     <style>
         .dashboard-shell {
             position: relative;
-            padding: 18px 0 28px;
+            padding: 18px 0 0;
             font-family: "Avenir Next", "Nunito Sans", "Segoe UI", sans-serif;
         }
 
