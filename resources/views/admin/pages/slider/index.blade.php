@@ -330,7 +330,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            margin-top: 8px
+            margin-top: 24px
         }
 
         .page-delete-form {
@@ -410,7 +410,7 @@
             display: block;
             max-width: 220px;
             max-height: 84px;
-            width: auto;
+            width: 500px;
             height: auto;
             border-radius: 12px;
             border: 1px solid rgba(148, 163, 184, 0.24);
