@@ -520,8 +520,8 @@
                             <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="page-stat">
-                            <span>Status</span>
-                            <strong>Active</strong>
+                            <span>Last updated</span>
+                            <strong>{{ $sliderData->count() > 0 ? $sliderData->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
                         </div>
                     </div>
                 </section>

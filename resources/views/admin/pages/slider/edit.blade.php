@@ -99,6 +99,7 @@
         .slider-back-btn:hover {
             transform: translateY(-1px);
             background: rgba(15, 23, 42, 0.12);
+            color: #fff;
         }
 
         .slider-hero h1 {
@@ -269,10 +270,11 @@
             transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
         }
 
-        
+
         .slider-form-actions .btn-save:hover {
             transform: translateY(-1px);
             box-shadow: 0 18px 30px rgba(59, 130, 246, 0.24);
+            color: #fff;
         }
 
 
@@ -319,16 +321,16 @@
 
                     <div class="slider-hero-stats">
                         <div class="slider-stat">
-                            <span>Total sliders</span>
-                            <strong>{{ \App\Models\Slider::count() ?? 0 }}</strong>
-                        </div>
-                        <div class="slider-stat">
                             <span>Slide ID</span>
                             <strong>#{{ $updateSlider->id }}</strong>
                         </div>
                         <div class="slider-stat">
                             <span>Your role</span>
                             <strong>{{ auth()->user()->role->name ?? 'User' }}</strong>
+                        </div>
+                        <div class="slider-stat">
+                            <span>Last updated</span>
+                            <strong>{{ $updateSlider->updated_at->format('M d, Y') }}</strong>
                         </div>
                     </div>
                 </section>
