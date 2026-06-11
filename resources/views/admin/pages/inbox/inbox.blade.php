@@ -620,10 +620,6 @@
                         </label>
                     </div>
 
-                    @if (session('mtoseen'))
-                        <div class="inbox-success">{{ session('mtoseen') }}</div>
-                    @endif
-
                     <div class="inbox-table-wrap">
                         <table id="unreadTable" class="inbox-table data display datatable" data-table-id="unreadTable">
                             <thead>
@@ -664,7 +660,7 @@
                                         <td>
                                             <form action="{{ route('messages.seen', $message->id) }}" method="POST">
                                                 @csrf
-                                                <button class="message-btn message-btn--seen" type="submit">Seen</button>
+                                                <button class="message-btn message-btn--seen" onclick="event.preventDefault(); confirmSeen(this)" type="submit">Seen</button>
                                             </form>
                                         </td>
                                         <td>
@@ -674,7 +670,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7">
+                                        <td colspan="8">
                                             <div class="inbox-empty">
                                                 <strong>No unread messages</strong>
                                                 Everything is up to date in the inbox.
@@ -718,10 +714,6 @@
                         </label>
                     </div>
 
-                    @if (session('success'))
-                        <div class="inbox-success">{{ session('success') }}</div>
-                    @endif
-
                     <div class="inbox-table-wrap">
                         <table id="seenTable" class="inbox-table data display datatable" data-table-id="seenTable">
                             <thead>
@@ -764,7 +756,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="message-btn message-btn--delete" type="submit"
-                                                    onclick="return confirm('Are you sure you want to delete this record?');">
+                                                    onclick="event.preventDefault(); confirmDelete(this);">
                                                     Delete
                                                 </button>
                                             </form>
@@ -772,7 +764,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <div class="inbox-empty">
                                                 <strong>No seen messages</strong>
                                                 Seen messages will appear here after you mark them reviewed.
@@ -787,7 +779,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -800,18 +791,22 @@
                 "bLengthChange": false,
                 "bInfo": true,
                 "bPaginate": true,
+                "bAutoWidth": false,
                 "iDisplayLength": 10,
-                "sDom": 'rtip'
+                "sDom": 'rtip',
+                "aoColumns": [{}, {}, {}, {}, {}, {}, {}, {}]
             });
 
             var seenTable = $('#seenTable').dataTable({
                 "bDestroy": true,
-                "lengthChange": false,
-                "searching": true,
-                "info": true,
-                "paging": true,
-                "pageLength": 10,
-                "dom": 'rtip'
+                "bFilter": true,
+                "bLengthChange": false,
+                "bInfo": true,
+                "bPaginate": true,
+                "bAutoWidth": false,
+                "iDisplayLength": 10,
+                "sDom": 'rtip',
+                "aoColumns": [{}, {}, {}, {}, {}, {}, {}]
             });
 
             $('#seenLength').on('change', function() {
@@ -842,7 +837,69 @@
                 }
             });
 
+            @if (session('mtoseen'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('mtoseen') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    background: '#f0fdf4',
+                    color: '#065f46'
+                });
+            @endif
+
+            @if (session('success'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    background: '#f0fdf4',
+                    color: '#065f46'
+                });
+            @endif
+
         });
+
+        function confirmSeen(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This message will be marked as seen and moved to the Seen list.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, mark as seen!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
+
+        function confirmDelete(button) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This message will be permanently deleted and cannot be recovered!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
     </script>
 @endsection
 

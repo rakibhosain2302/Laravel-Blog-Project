@@ -83,6 +83,7 @@
         .btn-edit:hover {
             transform: translateY(-2px);
             box-shadow: 0 16px 32px rgba(59, 130, 246, 0.35);
+            color: #fff;
         }
 
         .profile-grid {
@@ -286,6 +287,7 @@
         .profile-security__link:hover {
             transform: translateY(-1px);
             box-shadow: 0 16px 32px rgba(37, 99, 235, 0.25);
+            color: #fff;
         }
 
         .profile-stats {
