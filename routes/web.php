@@ -38,9 +38,9 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('admin', 'admin')->name('admin');
-    Route::get('showregister', 'showRegister')->name('auth.register');
+    Route::get('showregister', 'showRegister')->name('auth.register')->middleware('guest');
     Route::post('register', 'registerStore')->name('register.store');
-    Route::get('login', 'showLogin')->name('auth.login');
+    Route::get('login', 'showLogin')->name('auth.login')->middleware('guest');
     Route::post('loginmatch', 'loginUser')->name('login.match');
     Route::get('dashbord','dashboard')->middleware('auth.check')->name('dashbord');
     Route::get('logout', 'logout')->name('logout');
