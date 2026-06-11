@@ -9,6 +9,13 @@ class Contract extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['firstname','lastname','email','message','is_seen'];
+    public $timestamps = true;
 
+    protected $fillable = ['firstname', 'lastname', 'email', 'message', 'is_seen'];
+
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

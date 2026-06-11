@@ -37,13 +37,13 @@ class ContractController extends Controller
     {
 
         $viweMsg = Contract::findOrFail($id);
-        return view('admin.pages.viewmsg',compact('viweMsg'));        
+        return view('admin.pages.inbox.show',compact('viweMsg'));        
     }
 
     public function edit(string $id)
     {
         $replyMsg = Contract::findOrFail($id);
-        return view('admin.pages.msgreply', compact('replyMsg'));
+        return view('admin.pages.inbox.reply', compact('replyMsg'));
     }
 
 
