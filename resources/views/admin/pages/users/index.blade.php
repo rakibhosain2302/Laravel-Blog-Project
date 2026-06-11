@@ -374,6 +374,7 @@
             color: #fff;
             box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
         }
+
         .user-btn--edit:hover {
             color: #fff;
         }
@@ -665,10 +666,7 @@
                 </div>
 
                 <div class="userlist-body">
-                    @if (session('success'))
-                        <div class="success-banner">{{ session('success') }}</div>
-                    @endif
-
+                    
                     <div class="user-table-wrap">
                         <table class="user-table data display datatable" id="example">
                             <thead>
@@ -724,10 +722,12 @@
                                         </td>
                                         @if (auth()->user()->role->name === 'Admin')
                                             <td>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="user-delete-form">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    class="user-delete-form">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="user-btn user-btn--delete" type="submit" onclick="event.preventDefault(); confirmDelete(this);">
+                                                    <button class="user-btn user-btn--delete" type="submit"
+                                                        onclick="event.preventDefault(); confirmDelete(this);">
                                                         Delete
                                                     </button>
                                                 </form>
@@ -751,7 +751,7 @@
             </div>
         </div>
 
-        @include('admin.pages.userlist.edit')
+        @include('admin.pages.users.edit')
     </div>
 
     <script type="text/javascript">
@@ -761,6 +761,33 @@
                 dom: 'rtip'
             });
             setSidebarHeight();
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true
+                });
+            @endif
+
+            @if ($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error!',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    confirmButtonText: 'OK'
+                });
+            @endif
         });
 
         function confirmDelete(button) {
@@ -793,7 +820,6 @@
             });
         </script>
     @endif
-
 @endsection
 
 @section('title')

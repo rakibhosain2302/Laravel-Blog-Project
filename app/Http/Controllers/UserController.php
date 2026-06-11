@@ -21,7 +21,7 @@ class UserController extends Controller
             ? User::with('role')->findOrFail(request('edit_id'))
             : null;
 
-        return view('admin.pages.userlist.index', compact('users', 'userCount', 'roles', 'editUser'));
+        return view('admin.pages.users.index', compact('users', 'userCount', 'roles', 'editUser'));
     }
 
     /**

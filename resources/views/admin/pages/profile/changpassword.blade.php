@@ -172,7 +172,7 @@
         }
 
         .password-input-wrap input {
-            width: 96%;
+            width: 100%;
             min-height: 30px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
