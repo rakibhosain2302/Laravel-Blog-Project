@@ -468,9 +468,9 @@
                             <span>Configured copyright</span>
                             <strong>{{ $totalCopyrights }}</strong>
                         </div>
-                        <div class="copyright-stat">
-                            <span>Status</span>
-                            <strong>{{ $canAdd ? 'Pending' : 'Active' }}</strong>
+                         <div class="copyright-stat">
+                            <span>Your role</span>
+                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="copyright-stat">
                             <span>Last updated</span>

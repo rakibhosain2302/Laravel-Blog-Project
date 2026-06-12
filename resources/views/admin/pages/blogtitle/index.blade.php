@@ -824,8 +824,8 @@
                             <strong>{{ $totalTitles }}</strong>
                         </div>
                         <div class="blogtitle-stat">
-                            <span>Status</span>
-                            <strong>{{ $canAdd ? 'Pending' : 'Active' }}</strong>
+                            <span>Your role</span>
+                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="blogtitle-stat">
                             <span>Last updated</span>

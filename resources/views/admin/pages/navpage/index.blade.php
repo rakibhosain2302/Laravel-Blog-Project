@@ -347,12 +347,7 @@
             text-align: center;
         }
 
-        .page-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
+       
         .page-mini-card {
             padding: 20px;
         }
@@ -369,14 +364,6 @@
             color: #64748b;
             line-height: 1.65;
             font-size: 14px;
-        }
-
-        @media (max-width: 991px) {
-
-            .page-hero-stats,
-            .page-quick-links {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 767px) {
@@ -441,25 +428,11 @@
                             <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="page-stat">
-                            <span>Status</span>
-                            <strong>Active</strong>
+                            <span>Last updated</span>
+                            <strong>{{ $pages->count() > 0 ? $pages->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
                         </div>
                     </div>
                 </section>
-
-                <div class="page-quick-links">
-                    <div class="page-mini-card">
-                        <div class="page-pill">Writing tip</div>
-                        <h3>Clear page structure</h3>
-                        <p>Organize your static pages with meaningful names for easier navigation.</p>
-                    </div>
-
-                    <div class="page-mini-card">
-                        <div class="page-pill">Quick action</div>
-                        <h3>Need a new page?</h3>
-                        <p>Use the add button above to create a page without leaving this page's context.</p>
-                    </div>
-                </div>
 
                 <section class="page-table-card">
                     <div class="page-table-card__head">

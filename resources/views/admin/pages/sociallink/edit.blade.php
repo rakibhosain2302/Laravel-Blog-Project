@@ -71,13 +71,13 @@
                         </div>
 
                         <div class="social-create__field">
-                            <label for="social_edit_gg">Google</label>
+                            <label for="social_edit_gg">Github</label>
                             <input
                                 id="social_edit_gg"
                                 type="url"
                                 name="gllink"
                                 value="{{ old('gllink', $activeSocial->gllink) }}"
-                                placeholder="https://google.com/"
+                                placeholder="https://github.com/your-username"
                             >
                             @error('gllink')
                                 <span class="field-error">{{ $message }}</span>

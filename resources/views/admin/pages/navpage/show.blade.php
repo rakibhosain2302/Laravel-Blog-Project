@@ -246,11 +246,6 @@
             text-align: right;
         }
 
-        .page-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
 
         .page-mini-card {
             padding: 20px;
@@ -271,8 +266,7 @@
         }
 
         @media (max-width: 991px) {
-            .page-hero-stats,
-            .page-quick-links {
+            .page-hero-stats,{
                 grid-template-columns: 1fr;
             }
         }
@@ -324,25 +318,12 @@
                             <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="page-stat">
-                            <span>Status</span>
-                            <strong>Active</strong>
+                            <span>Last updated</span>
+                            <strong>{{ $showData->updated_at->format('M d, Y') }}</strong>
                         </div>
                     </div>
                 </section>
 
-                <div class="page-quick-links">
-                    <div class="page-mini-card">
-                        <div class="page-pill">Quick tip</div>
-                        <h3>Want to make changes?</h3>
-                        <p>Use the edit page to update this page content.</p>
-                    </div>
-
-                    <div class="page-mini-card">
-                        <div class="page-pill">Navigation</div>
-                        <h3>Back to list</h3>
-                        <p>Use the back button above to return to the pages overview.</p>
-                    </div>
-                </div>
 
                 <section class="page-details-card">
                     <div class="page-details-card__head">
