@@ -306,12 +306,6 @@
             font-weight: 600;
         }
 
-        .post-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
         .post-mini-card {
             padding: 20px;
         }
@@ -331,8 +325,7 @@
         }
 
         @media (max-width: 991px) {
-            .post-hero-stats,
-            .post-quick-links {
+            .post-hero-stats,{
                 grid-template-columns: 1fr;
             }
         }
@@ -393,20 +386,6 @@
                         </div>
                     </div>
                 </section>
-
-                <div class="post-quick-links">
-                    <div class="post-mini-card">
-                        <div class="post-pill">Pro tip</div>
-                        <h3>Use descriptive titles</h3>
-                        <p>Clear, searchable titles help your audience find your content faster.</p>
-                    </div>
-
-                    <div class="post-mini-card">
-                        <div class="post-pill">Quick note</div>
-                        <h3>Need a new category?</h3>
-                        <p>Visit the categories page to create one before saving this post.</p>
-                    </div>
-                </div>
 
                 <section class="post-form-card">
                     <div class="post-form-card__head">

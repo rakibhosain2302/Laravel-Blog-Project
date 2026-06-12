@@ -305,12 +305,6 @@
             font-weight: 600;
         }
 
-        .post-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
         .post-mini-card {
             padding: 20px;
         }
@@ -339,8 +333,7 @@
 
         @media (max-width: 991px) {
 
-            .post-hero-stats,
-            .post-quick-links {
+            .post-hero-stats, {
                 grid-template-columns: 1fr;
             }
         }
@@ -388,33 +381,20 @@
 
                     <div class="post-hero-stats">
                         <div class="post-stat">
-                            <span>Total categories</span>
-                            <strong>{{ $totalCategories }}</strong>
-                        </div>
-                        <div class="post-stat">
-                            <span>Your role</span>
-                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
-                        </div>
-                        <div class="post-stat">
                             <span>Post ID</span>
                             <strong>#{{ $updatePost->id }}</strong>
                         </div>
+                        <div class="post-stat">
+                            <span>Category</span>
+                            <strong>{{ $updatePost->category->name ?? 'N/A' }}</strong>
+                        </div>
+                        <div class="post-stat">
+                            <span>Author</span>
+                            <strong>{{ $updatePost->user->name ?? 'Unknown' }}</strong>
+                        </div>
                     </div>
+
                 </section>
-
-                <div class="post-quick-links">
-                    <div class="post-mini-card">
-                        <div class="post-pill">Editing tip</div>
-                        <h3>Make it better</h3>
-                        <p>Review your post title and content before hitting save to ensure quality.</p>
-                    </div>
-
-                    <div class="post-mini-card">
-                        <div class="post-pill">Need help?</div>
-                        <h3>New category needed?</h3>
-                        <p>Visit the categories page if you need to create one for this post.</p>
-                    </div>
-                </div>
 
                 <section class="post-form-card">
                     <div class="post-form-card__head">

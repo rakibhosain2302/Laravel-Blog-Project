@@ -270,11 +270,6 @@
             text-align: right;
         }
 
-        .post-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
 
         .post-mini-card {
             padding: 20px;
@@ -295,10 +290,11 @@
         }
 
         @media (max-width: 991px) {
+
             .post-hero-stats,
-            .post-quick-links {
-                grid-template-columns: 1fr;
-            }
+            {
+            grid-template-columns: 1fr;
+        }
         }
 
         @media (max-width: 767px) {
@@ -340,6 +336,10 @@
 
                     <div class="post-hero-stats">
                         <div class="post-stat">
+                            <span>Post ID</span>
+                            <strong>#{{ $viewPost->id }}</strong>
+                        </div>
+                        <div class="post-stat">
                             <span>Category</span>
                             <strong>{{ $viewPost->category->name ?? 'N/A' }}</strong>
                         </div>
@@ -347,26 +347,9 @@
                             <span>Author</span>
                             <strong>{{ $viewPost->user->name ?? 'Unknown' }}</strong>
                         </div>
-                        <div class="post-stat">
-                            <span>Post ID</span>
-                            <strong>#{{ $viewPost->id }}</strong>
-                        </div>
                     </div>
                 </section>
 
-                <div class="post-quick-links">
-                    <div class="post-mini-card">
-                        <div class="post-pill">Quick tip</div>
-                        <h3>Want to make changes?</h3>
-                        <p>Head to the edit page to update this post content or metadata.</p>
-                    </div>
-
-                    <div class="post-mini-card">
-                        <div class="post-pill">Navigation</div>
-                        <h3>Back to list</h3>
-                        <p>Use the back button above to return to the posts overview.</p>
-                    </div>
-                </div>
 
                 <section class="post-details-card">
                     <div class="post-details-card__head">
@@ -394,7 +377,8 @@
                             <tr>
                                 <th style="vertical-align: top; padding-top: 16px;">Images</th>
                                 <td>
-                                    <img class="post-image-preview" src="{{ asset('storage/' . $viewPost->images) }}" alt="Post Image">
+                                    <img class="post-image-preview" src="{{ asset('storage/' . $viewPost->images) }}"
+                                        alt="Post Image">
                                 </td>
                             </tr>
                             <tr>
@@ -404,9 +388,9 @@
                             <tr>
                                 <th>Tags</th>
                                 <td>
-                                    @if($viewPost->tags)
+                                    @if ($viewPost->tags)
                                         <div class="post-tags-list">
-                                            @foreach(explode(',', $viewPost->tags) as $tag)
+                                            @foreach (explode(',', $viewPost->tags) as $tag)
                                                 <span class="post-tag">{{ trim($tag) }}</span>
                                             @endforeach
                                         </div>

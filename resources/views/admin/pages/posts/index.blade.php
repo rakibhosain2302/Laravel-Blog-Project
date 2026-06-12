@@ -347,12 +347,7 @@
             text-align: center;
         }
 
-        .post-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
+       
         .post-mini-card {
             padding: 20px;
         }
@@ -381,8 +376,7 @@
 
         @media (max-width: 991px) {
 
-            .post-hero-stats,
-            .post-quick-links {
+            .post-hero-stats,{
                 grid-template-columns: 1fr;
             }
         }
@@ -450,29 +444,15 @@
                             <strong>{{ $totalPosts }}</strong>
                         </div>
                         <div class="post-stat">
-                            <span>Total authors</span>
-                            <strong>{{ $totalAuthors }}</strong>
-                        </div>
-                        <div class="post-stat">
                             <span>Your role</span>
                             <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
+                        <div class="post-stat">
+                            <span>Last updated</span>
+                            <strong>{{ $totalPosts > 0 ? $posts->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
+                        </div>
                     </div>
                 </section>
-
-                <div class="post-quick-links">
-                    <div class="post-mini-card">
-                        <div class="post-pill">Writing tip</div>
-                        <h3>Engage your readers</h3>
-                        <p>Start with a strong headline and keep paragraphs focused on one main idea each.</p>
-                    </div>
-
-                    <div class="post-mini-card">
-                        <div class="post-pill">Quick action</div>
-                        <h3>Create new content?</h3>
-                        <p>Use the add button above to create a post without leaving this page's context.</p>
-                    </div>
-                </div>
 
                 <section class="post-table-card">
                     <div class="post-table-card__head">
