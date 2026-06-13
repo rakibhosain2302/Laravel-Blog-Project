@@ -390,7 +390,7 @@
                 <section class="post-form-card">
                     <div class="post-form-card__head">
                         <div>
-                            <h2>Add New Post</h2>
+                            <h2>Create New Post</h2>
                             <p>Enter your post details and publish.</p>
                         </div>
                         <div class="post-pill">New post</div>

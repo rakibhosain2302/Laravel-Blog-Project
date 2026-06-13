@@ -354,12 +354,6 @@
             text-align: center;
         }
 
-        .category-quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
         .category-mini-card {
             padding: 20px;
         }
@@ -380,8 +374,7 @@
 
         @media (max-width: 991px) {
 
-            .category-hero-stats,
-            .category-quick-links {
+            .category-hero-stats,{
                 grid-template-columns: 1fr;
             }
         }
@@ -595,7 +588,6 @@
     @php
         $totalCategories = $catData->count();
         $totalPosts = $catData->sum('posts_count');
-        $topCategory = $catData->sortByDesc('posts_count')->first();
     @endphp
 
     <div class="grid_10">
@@ -617,30 +609,18 @@
                             <span>Total categories</span>
                             <strong>{{ $totalCategories }}</strong>
                         </div>
+
                         <div class="category-stat">
-                            <span>Total posts</span>
-                            <strong>{{ $totalPosts }}</strong>
+                            <span>Author</span>
+                            <strong>{{ Auth::user()->name }}</strong>
                         </div>
+
                         <div class="category-stat">
-                            <span>Top category</span>
-                            <strong>{{ optional($topCategory)->name ?? 'N/A' }}</strong>
+                            <span>Last updated</span>
+                            <strong>{{ $totalCategories > 0 ? $catData->first()->updated_at->format('M d, Y') : 'N/A' }}</strong>
                         </div>
                     </div>
                 </section>
-
-                <div class="category-quick-links">
-                    <div class="category-mini-card">
-                        <div class="category-pill">Workflow tip</div>
-                        <h3>Keep category names meaningful</h3>
-                        <p>Short, clear labels make it easier to scan, filter, and reuse your category structure later.</p>
-                    </div>
-
-                    <div class="category-mini-card">
-                        <div class="category-pill">Quick action</div>
-                        <h3>Need a new category?</h3>
-                        <p>Use the add button above to create a category without leaving this page's context.</p>
-                    </div>
-                </div>
 
                 <section class="category-table-card">
                     <div class="category-table-card__head">

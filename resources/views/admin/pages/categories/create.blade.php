@@ -37,7 +37,6 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
             gap: 22px;
             align-items: start;
         }
@@ -55,6 +54,7 @@
         }
 
         .category-hero-panel {
+            width: 100%;
             padding: 30px;
             color: #fff;
             background:
@@ -132,28 +132,7 @@
             line-height: 1.8;
         }
 
-        .category-hero-note {
-            margin-top: 18px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 14px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(226, 232, 240, 0.12);
-            color: #dbeafe;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .category-hero-note::before {
-            content: "";
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #38bdf8, #60a5fa);
-            box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.14);
-        }
+        
 
         .category-hero-metrics {
             display: grid;
@@ -296,11 +275,6 @@
             box-shadow: 0 16px 28px rgba(15, 23, 42, 0.18);
         }
 
-        .category-side {
-            display: grid;
-            gap: 16px;
-        }
-
         .category-note,
         .category-tip-panel {
             padding: 22px;
@@ -397,6 +371,10 @@
 @section('content')
     @include('admin.layouts.sidebar')
 
+     @php
+        $totalCategories = $categories->count();
+    @endphp
+
     <div class="grid_10">
         <div class="category-create-shell">
             <div class="category-create-grid">
@@ -407,52 +385,30 @@
                     </div>
                     <h1>Create a category that feels clean, modern, and easy to manage.</h1>
                     <p>
-                        A good category name keeps your blog organized, your admin panel easy to scan, and your workflow fast as content grows.
+                        A good category name keeps your blog organized, your admin panel easy to scan, and your workflow
+                        fast as content grows.
                     </p>
-                    <div class="category-hero-note">Use a short, clear label so future posts are easier to organize.</div>
 
                     <div class="category-hero-metrics">
                         <div class="category-metric">
-                            <span>Goal</span>
-                            <strong>Clear naming</strong>
+                            <span>Total categories</span>
+                            <strong>{{ $totalCategories }}</strong>
                         </div>
                         <div class="category-metric">
-                            <span>Flow</span>
-                            <strong>Fast setup</strong>
+                            <span>Your role</span>
+                            <strong>{{ Auth::user()->role->name ?? 'User' }}</strong>
                         </div>
                         <div class="category-metric">
-                            <span>Result</span>
-                            <strong>Easy filtering</strong>
+                            <span>Author</span>
+                            <strong>{{ Auth::user()->name }}</strong>
                         </div>
                     </div>
                 </section>
 
-                <aside class="category-side">
-                    <div class="category-note">
-                        <div class="category-chip">Tip</div>
-                        <h3>Keep names short and meaningful</h3>
-                        <p>
-                            Short labels make your category list easier to read and help you avoid overlap later.
-                        </p>
-                        <ul>
-                            <li>Use one to three words.</li>
-                            <li>Avoid duplicate meanings.</li>
-                            <li>Match the tone of your content.</li>
-                        </ul>
-                    </div>
-
-                    <div class="category-tip-panel">
-                        <div class="category-chip">Workflow</div>
-                        <h3>Save now, organize faster later</h3>
-                        <p>
-                            Every clear category improves filtering, reporting, and content organization across the dashboard.
-                        </p>
-                    </div>
-                </aside>
 
                 <section class="category-form-panel" style="grid-column: 1 / -1;">
                     <div class="category-form-head">
-                        <h2>Add New Category</h2>
+                        <h2>Create New Category</h2>
                         <p>Enter a simple category name and save it into your content structure.</p>
                     </div>
 
@@ -463,14 +419,8 @@
                             <div class="category-field">
                                 <label for="name">Category Name</label>
                                 <div class="category-input-wrap">
-                                    <input
-                                        id="name"
-                                        type="text"
-                                        name="name"
-                                        placeholder="Enter category name..."
-                                        value="{{ old('name') }}"
-                                        autocomplete="off"
-                                    >
+                                    <input id="name" type="text" name="name" placeholder="Enter category name..."
+                                        value="{{ old('name') }}" autocomplete="off">
                                 </div>
                                 <div class="category-helper">Example: News, Tutorials, Reviews, Tips, Features.</div>
                                 @error('name')
@@ -479,7 +429,8 @@
                             </div>
 
                             <div class="category-actions">
-                                <a class="category-btn category-btn--back" href="{{ route('categories.index') }}">Back to List</a>
+                                <a class="category-btn category-btn--back" href="{{ route('categories.index') }}">Back to
+                                    List</a>
                                 <button class="category-btn category-btn--save" type="submit">Save Category</button>
                             </div>
                         </form>
@@ -488,7 +439,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('title')
