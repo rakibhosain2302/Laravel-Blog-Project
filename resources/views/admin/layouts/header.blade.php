@@ -540,7 +540,7 @@
                         <!-- User Profile Card with Dropdown -->
                         <div style="position: relative;">
                             <div class="user-profile-card" id="userProfileBtn">
-                                <img src="{{ optional($authUser)->image ? asset('storage/' . $authUser->image) : asset('assets/admin/img/img-profile.jpg') }}"
+                                <img src="{{ optional($authUser)->image ? asset('storage/' . $authUser->image) : asset('assets/admin/img/profile.png') }}"
                                     alt="Profile Pic" class="user-avatar" />
                                 @auth
                                     <div class="user-info">

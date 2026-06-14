@@ -188,7 +188,7 @@
             height: 120px;
             border-radius: 20px;
             object-fit: cover;
-            border: 2px solid #dbe4f0;
+            border: 2px solid #33dd88;
             background: #f8fafc;
             padding: 4px;
             box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
