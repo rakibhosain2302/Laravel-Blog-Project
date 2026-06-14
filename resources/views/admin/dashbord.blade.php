@@ -637,7 +637,7 @@
                         <div class="dashboard-card">
                             <div class="dashboard-profile">
                                 <img class="dashboard-avatar"
-                                    src="{{ $user->image ? asset('storage/' . $user->image) : asset('assets/admin/img/img-profile.jpg') }}"
+                                    src="{{ $user->image ? asset('storage/' . $user->image) : asset('assets/admin/img/profile.png') }}"
                                     alt="Profile">
                                 <div>
                                     <h3>{{ $user->name }}</h3>
