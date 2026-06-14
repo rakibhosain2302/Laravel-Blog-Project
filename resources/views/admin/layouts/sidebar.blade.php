@@ -382,7 +382,9 @@
                 $postCount = \App\Models\Post::count();
                 $pageCount = \App\Models\Page::count();
                 $unreadCount = \App\Models\Contract::where('is_seen', false)->count();
-                $canManageSite = in_array($roleName, ['Admin', 'Editor']);
+                $canCreateOwnPosts = in_array($roleName, ['User', 'Editor', 'Admin']);
+                $canManageContent = in_array($roleName, ['Editor', 'Admin']);
+                $isAdmin = $roleName === 'Admin';
             @endphp
 
             <div class="sidebar-brand">
@@ -401,15 +403,33 @@
                     </div>
                     <span class="sidebar-quicklink__arrow">→</span>
                 </a>
-                <a href="{{ route('profile') }}"
-                    class="sidebar-quicklink {{ Request::routeIs('profile') ? 'is-active' : '' }}">
+                <a href="{{ route('home') }}"
+                    class="sidebar-quicklink {{ Request::routeIs('home') ? 'is-active' : '' }}">
                     <div>
-                        <span class="sidebar-quicklink__label">Profile</span>
-                        <span class="sidebar-quicklink__hint">Your account settings</span>
+                        <span class="sidebar-quicklink__label">Public Site</span>
+                        <span class="sidebar-quicklink__hint">View the blog front page</span>
                     </div>
                     <span class="sidebar-quicklink__arrow">→</span>
                 </a>
-                @if ($canManageSite)
+                @if ($roleName !== 'Guest')
+                    <a href="{{ route('profile') }}"
+                        class="sidebar-quicklink {{ Request::routeIs('profile') ? 'is-active' : '' }}">
+                        <div>
+                            <span class="sidebar-quicklink__label">Profile</span>
+                            <span class="sidebar-quicklink__hint">Your account settings</span>
+                        </div>
+                        <span class="sidebar-quicklink__arrow">→</span>
+                    </a>
+                    <a href="{{ route('change.pass') }}"
+                        class="sidebar-quicklink {{ Request::routeIs('change.pass') ? 'is-active' : '' }}">
+                        <div>
+                            <span class="sidebar-quicklink__label">Password</span>
+                            <span class="sidebar-quicklink__hint">Keep your account secure</span>
+                        </div>
+                        <span class="sidebar-quicklink__arrow">→</span>
+                    </a>
+                @endif
+                @if ($isAdmin)
                     <a href="{{ route('users.index') }}"
                         class="sidebar-quicklink {{ Request::routeIs('users.index') ? 'is-active' : '' }}">
                         <div>
@@ -418,16 +438,6 @@
                         </div>
                         <span class="sidebar-quicklink__arrow">→</span>
                     </a>
-                @endif
-                <a href="{{ route('change.pass') }}"
-                    class="sidebar-quicklink {{ Request::routeIs('change.pass') ? 'is-active' : '' }}">
-                    <div>
-                        <span class="sidebar-quicklink__label">Password</span>
-                        <span class="sidebar-quicklink__hint">Keep your account secure</span>
-                    </div>
-                    <span class="sidebar-quicklink__arrow">→</span>
-                </a>
-                @if ($roleName === 'Admin')
                     <a href="{{ route('message.index') }}"
                         class="sidebar-quicklink {{ Request::routeIs('message.index') ? 'is-active' : '' }}">
                         <div>
@@ -441,10 +451,9 @@
 
             <ul class="section menu sidebar-menu">
 
-                @if ($canManageSite)
+                @if ($canManageContent)
                     <li class="{{ Request::routeIs('categories.*') ? 'ui-accordion-header-active' : '' }}">
-
-                                        <a class="menuitem {{ Request::routeIs('categories.*') ? 'is-active' : '' }}">Category Option</a>
+                        <a class="menuitem {{ Request::routeIs('categories.*') ? 'is-active' : '' }}">Category Option</a>
                         <ul class="submenu">
                             <li><a href="{{ route('categories.create') }}" class="{{ Request::routeIs('categories.create') ? 'active' : '' }}">Add Category</a></li>
                             <li><a href="{{ route('categories.index') }}" class="{{ Request::routeIs('categories.index') ? 'active' : '' }}">Category List</a></li>
@@ -452,42 +461,35 @@
                     </li>
                 @endif
 
-                <li class="{{ Request::routeIs('posts.*') ? 'ui-accordion-header-active' : '' }}">
+                @if ($canCreateOwnPosts)
+                    <li class="{{ Request::routeIs('posts.*') ? 'ui-accordion-header-active' : '' }}">
+                        <a class="menuitem {{ Request::routeIs('posts.*') ? 'is-active' : '' }}">Post Option</a>
+                        <ul class="submenu">
+                            <li><a href="{{ route('posts.create') }}" class="{{ Request::routeIs('posts.create') ? 'active' : '' }}">Add Post</a></li>
+                            <li><a href="{{ route('posts.index') }}" class="{{ Request::routeIs('posts.index') ? 'active' : '' }}">{{ $roleName === 'User' ? 'My Posts' : 'Post List' }}</a></li>
+                        </ul>
+                    </li>
+                @endif
 
-
-                                    <a class="menuitem {{ Request::routeIs('posts.*') ? 'is-active' : '' }}">Post Option</a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('posts.create') }}" class="{{ Request::routeIs('posts.create') ? 'active' : '' }}">Add Post</a></li>
-                        <li><a href="{{ route('posts.index') }}" class="{{ Request::routeIs('posts.index') ? 'active' : '' }}">Post List</a></li>
-                    </ul>
-                </li>
-
-                @if ($canManageSite)
+                @if ($canManageContent)
                     <li class="{{ Request::routeIs('page.*') ? 'ui-accordion-header-active' : '' }}">
-
-                                        <a class="menuitem {{ Request::routeIs('page.*') ? 'is-active' : '' }}">Pages Option</a>
+                        <a class="menuitem {{ Request::routeIs('page.*') ? 'is-active' : '' }}">Pages Option</a>
                         <ul class="submenu">
                             <li><a href="{{ route('page.create') }}" class="{{ Request::routeIs('page.create') ? 'active' : '' }}">Add New Page</a></li>
                             <li><a href="{{ route('page.index') }}" class="{{ Request::routeIs('page.index') ? 'active' : '' }}">Page List</a></li>
                         </ul>
                     </li>
-                @endif
 
-                @if ($canManageSite)
                     <li class="{{ Request::routeIs('slider.*') ? 'ui-accordion-header-active' : '' }}">
-
-                                        <a class="menuitem {{ Request::routeIs('slider.*') ? 'is-active' : '' }}">Slider Option</a>
+                        <a class="menuitem {{ Request::routeIs('slider.*') ? 'is-active' : '' }}">Slider Option</a>
                         <ul class="submenu">
                             <li><a href="{{ route('slider.create') }}" class="{{ Request::routeIs('slider.create') ? 'active' : '' }}">Add New Slider</a></li>
                             <li><a href="{{ route('slider.index') }}" class="{{ Request::routeIs('slider.index') ? 'active' : '' }}">Slider List</a></li>
                         </ul>
                     </li>
-                @endif
 
-                @if ($canManageSite)
                     <li class="{{ Request::routeIs('blog.title.*') || Request::routeIs('social.*') || Request::routeIs('copyright.*') ? 'ui-accordion-header-active' : '' }}">
-
-                                        <a class="menuitem {{ Request::routeIs('blog.title.*') || Request::routeIs('social.*') || Request::routeIs('copyright.*') ? 'is-active' : '' }}">Site Option</a>
+                        <a class="menuitem {{ Request::routeIs('blog.title.*') || Request::routeIs('social.*') || Request::routeIs('copyright.*') ? 'is-active' : '' }}">Site Option</a>
                         <ul class="submenu">
                             <li><a href="{{ route('blog.title.index') }}" class="{{ Request::routeIs('blog.title.*') ? 'active' : '' }}">Title &amp; Slogan</a></li>
                             <li><a href="{{ route('social.index') }}" class="{{ Request::routeIs('social.*') ? 'active' : '' }}">Social Media</a></li>
