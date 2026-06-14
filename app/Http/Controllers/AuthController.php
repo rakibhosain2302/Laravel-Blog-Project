@@ -52,7 +52,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => 1,
+            'role_id' => 0,
         ]);
 
         return redirect()->route('auth.login')->with('success', 'Registration successful! Please login.');
@@ -80,70 +80,172 @@ class AuthController extends Controller
         $roleName = optional($user->role)->name ?? 'Guest';
         $siteBrand = Titleslogan::first();
 
-        $dashboardStats = [
-            [
-                'label' => 'Total Posts',
-                'value' => Post::count(),
-                'note' => 'Published articles across the site',
-                'accent' => 'linear-gradient(135deg, #0ea5e9, #22d3ee)',
-                'dot' => '#0ea5e9',
-            ],
-            [
-                'label' => 'Categories',
-                'value' => Category::count(),
-                'note' => 'Content groups and topics',
-                'accent' => 'linear-gradient(135deg, #8b5cf6, #d946ef)',
-                'dot' => '#8b5cf6',
-            ],
-            [
-                'label' => 'Pages',
-                'value' => Page::count(),
-                'note' => 'Static information pages',
-                'accent' => 'linear-gradient(135deg, #f59e0b, #fb923c)',
-                'dot' => '#f59e0b',
-            ],
-            [
-                'label' => 'Users',
-                'value' => User::count(),
-                'note' => 'Registered admin and editors',
-                'accent' => 'linear-gradient(135deg, #10b981, #2dd4bf)',
-                'dot' => '#10b981',
-            ],
-            [
-                'label' => 'Unread Messages',
-                'value' => Contract::where('is_seen', false)->count(),
-                'note' => 'Pending inbox conversations',
-                'accent' => 'linear-gradient(135deg, #f43f5e, #fb7185)',
-                'dot' => '#f43f5e',
-            ],
-            [
-                'label' => 'Branding Items',
-                'value' => collect([
-                    Titleslogan::count(),
-                    Social::count(),
-                    Slider::count(),
-                ])->sum(),
-                'note' => 'Title, socials, and sliders',
-                'accent' => 'linear-gradient(135deg, #1e293b, #64748b)',
-                'dot' => '#1e293b',
-            ],
-        ];
+        // Role Check
+        $isAdmin = $roleName == 'Admin';
+        $isEditor = $roleName == 'Editor';
+        $isUser = $roleName == 'User';
 
-        $recentPosts = Post::with(['user', 'category'])
-            ->latest()
-            ->take(4)
-            ->get();
+        /*
+    |--------------------------------------------------------------------------
+    | Dashboard Stats
+    |--------------------------------------------------------------------------
+    */
 
-        $recentMessages = Contract::latest()
-            ->take(4)
-            ->get();
+        $dashboardStats = [];
 
-        $quickActions = [
-            ['label' => 'Add Post', 'route' => route('posts.create'), 'tone' => 'primary'],
-            ['label' => 'View Inbox', 'route' => route('message.index'), 'tone' => 'dark'],
-            ['label' => 'Manage Users', 'route' => route('users.index'), 'tone' => 'soft'],
-            ['label' => 'Site Settings', 'route' => route('blog.title.index'), 'tone' => 'ghost'],
-        ];
+        // Admin
+        if ($isAdmin) {
+
+            $dashboardStats = [
+                [
+                    'label' => 'Total Posts',
+                    'value' => Post::count(),
+                    'note' => 'Published articles across the site',
+                    'accent' => 'linear-gradient(135deg, #0ea5e9, #22d3ee)',
+                    'dot' => '#0ea5e9',
+                ],
+                [
+                    'label' => 'Categories',
+                    'value' => Category::count(),
+                    'note' => 'Content groups and topics',
+                    'accent' => 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                    'dot' => '#8b5cf6',
+                ],
+                [
+                    'label' => 'Pages',
+                    'value' => Page::count(),
+                    'note' => 'Static information pages',
+                    'accent' => 'linear-gradient(135deg, #f59e0b, #fb923c)',
+                    'dot' => '#f59e0b',
+                ],
+                [
+                    'label' => 'Users',
+                    'value' => User::count(),
+                    'note' => 'Registered users',
+                    'accent' => 'linear-gradient(135deg, #10b981, #2dd4bf)',
+                    'dot' => '#10b981',
+                ],
+                [
+                    'label' => 'Unread Messages',
+                    'value' => Contract::where('is_seen', false)->count(),
+                    'note' => 'Pending inbox conversations',
+                    'accent' => 'linear-gradient(135deg, #f43f5e, #fb7185)',
+                    'dot' => '#f43f5e',
+                ],
+                [
+                    'label' => 'Branding Items',
+                    'value' => Titleslogan::count() + Social::count() + Slider::count(),
+                    'note' => 'Title, Social & Slider',
+                    'accent' => 'linear-gradient(135deg, #1e293b, #64748b)',
+                    'dot' => '#1e293b',
+                ],
+            ];
+        }
+
+        // Editor
+        elseif ($isEditor) {
+
+            $dashboardStats = [
+                [
+                    'label' => 'Total Posts',
+                    'value' => Post::count(),
+                    'note' => 'Published articles across the site',
+                    'accent' => 'linear-gradient(135deg, #0ea5e9, #22d3ee)',
+                    'dot' => '#0ea5e9',
+                ],
+                [
+                    'label' => 'Categories',
+                    'value' => Category::count(),
+                    'note' => 'Content groups and topics',
+                    'accent' => 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                    'dot' => '#8b5cf6',
+                ],
+                [
+                    'label' => 'Pages',
+                    'value' => Page::count(),
+                    'note' => 'Static information pages',
+                    'accent' => 'linear-gradient(135deg, #f59e0b, #fb923c)',
+                    'dot' => '#f59e0b',
+                ],
+            ];
+        }
+
+        // User
+        else {
+
+            $dashboardStats = [
+                [
+                    'label' => 'My Posts',
+                    'value' => Post::where('user_id', $user->id)->count(),
+                    'note' => 'Your published articles',
+                    'accent' => 'linear-gradient(135deg, #10b981, #2dd4bf)',
+                    'dot' => '#10b981',
+                ],
+            ];
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Recent Posts
+    |--------------------------------------------------------------------------
+    */
+
+        if ($isAdmin || $isEditor) {
+            $recentPosts = Post::with(['user', 'category'])
+                ->latest()
+                ->take(4)
+                ->get();
+        } else {
+            $recentPosts = Post::with(['category'])
+                ->where('user_id', $user->id)
+                ->latest()
+                ->take(4)
+                ->get();
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Recent Messages
+    |--------------------------------------------------------------------------
+    */
+
+        if ($isAdmin) {
+            $recentMessages = Contract::latest()
+                ->take(4)
+                ->get();
+        } else {
+            $recentMessages = collect();
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Quick Actions
+    |--------------------------------------------------------------------------
+    */
+
+        if ($isAdmin) {
+
+            $quickActions = [
+                ['label' => 'Add Post', 'route' => route('posts.create'), 'tone' => 'primary'],
+                ['label' => 'View Inbox', 'route' => route('message.index'), 'tone' => 'dark'],
+                ['label' => 'Manage Users', 'route' => route('users.index'), 'tone' => 'soft'],
+                ['label' => 'Site Settings', 'route' => route('blog.title.index'), 'tone' => 'ghost'],
+            ];
+        } elseif ($isEditor) {
+
+            $quickActions = [
+                ['label' => 'Add Post', 'route' => route('posts.create'), 'tone' => 'primary'],
+                ['label' => 'Category', 'route' => route('categories.index'), 'tone' => 'dark'],
+                ['label' => 'Pages', 'route' => route('page.index'), 'tone' => 'soft'],
+            ];
+        } else {
+
+            $quickActions = [
+                ['label' => 'Add Post', 'route' => route('posts.create'), 'tone' => 'primary'],
+                ['label' => 'My Posts', 'route' => route('posts.index'), 'tone' => 'soft'],
+                ['label' => 'Profile', 'route' => route('profile'), 'tone' => 'ghost'],
+            ];
+        }
 
         return view('admin.dashbord', compact(
             'user',

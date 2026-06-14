@@ -560,6 +560,7 @@
         }
 
         @media (max-width: 1100px) {
+
             .dashboard-hero,
             .dashboard-grid,
             .dashboard-subgrid {
@@ -572,6 +573,7 @@
         }
 
         @media (max-width: 720px) {
+
             .dashboard-stats,
             .dashboard-hero__meta,
             .quick-actions {
@@ -591,6 +593,13 @@
 @section('content')
     @include('admin.layouts.sidebar')
 
+    @php
+        $roleName = optional(auth()->user()->role)->name ?? 'Guest';
+        $canCreateOwnPosts = in_array($roleName, ['User', 'Editor', 'Admin']);
+        $canManageContent = in_array($roleName, ['Editor', 'Admin']);
+        $isAdmin = $roleName === 'Admin';
+    @endphp
+
     <div class="grid_10">
         <div class="dashboard-shell">
             <div class="dashboard-content">
@@ -603,7 +612,9 @@
                         </h1>
                         <p class="dashboard-hero__copy">
                             You are signed in as <strong>{{ $roleName }}</strong>.
-                            {{ optional($user->role)->description ?? 'Your admin permissions and workspace tools are ready here.' }}
+                            {{ optional($user->role)->description ??
+                                'Your admin permissions and workspace tools are ready
+                                                                                here.' }}
                         </p>
 
                         <div class="dashboard-hero__meta">
@@ -625,11 +636,9 @@
                     <div class="dashboard-side">
                         <div class="dashboard-card">
                             <div class="dashboard-profile">
-                                <img
-                                    class="dashboard-avatar"
+                                <img class="dashboard-avatar"
                                     src="{{ $user->image ? asset('storage/' . $user->image) : asset('assets/admin/img/img-profile.jpg') }}"
-                                    alt="Profile"
-                                >
+                                    alt="Profile">
                                 <div>
                                     <h3>{{ $user->name }}</h3>
                                     <p>{{ $user->email }}</p>
@@ -642,14 +651,14 @@
 
                         <div class="dashboard-card">
                             <div class="dashboard-brand">
-                                <img
-                                    class="dashboard-brand__logo"
+                                <img class="dashboard-brand__logo"
                                     src="{{ optional($siteBrand)->logo ? asset('storage/' . $siteBrand->logo) : asset('assets/admin/img/img-profile.jpg') }}"
-                                    alt="Site logo"
-                                >
+                                    alt="Site logo">
                                 <div>
-                                    <p class="dashboard-brand__title">{{ optional($siteBrand)->title ?? 'Site Branding' }}</p>
-                                    <p class="dashboard-brand__slogan">{{ optional($siteBrand)->slogan ?? 'Your branding controls live here.' }}</p>
+                                    <p class="dashboard-brand__title">{{ optional($siteBrand)->title ?? 'Site Branding' }}
+                                    </p>
+                                    <p class="dashboard-brand__slogan">
+                                        {{ optional($siteBrand)->slogan ?? 'Your branding controls live here.' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -745,7 +754,8 @@
                                                 {{ optional($post->user)->name ?? 'Unknown author' }} •
                                                 {{ optional($post->created_at)->diffForHumans() }}
                                             </p>
-                                            <p class="activity-snippet">{{ \Illuminate\Support\Str::limit($post->discription, 120) }}</p>
+                                            <p class="activity-snippet">
+                                                {{ \Illuminate\Support\Str::limit($post->discription, 120) }}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -756,7 +766,7 @@
                             </div>
                         @endif
                     </div>
-
+                    <!-- #region -->
                     <div class="panel-card">
                         <div class="section-title">
                             <div>
@@ -766,32 +776,38 @@
                             <span class="section-pill">Today</span>
                         </div>
 
-                        <div class="mini-list">
-                            <div class="mini-item">
-                                <div class="mini-item__badge">U</div>
-                                <div>
-                                    <strong>{{ $dashboardStats[3]['value'] }} users in the system</strong>
-                                    <span>Keep roles and access up to date for a cleaner workflow.</span>
+                        @if ($roleName == 'Admin')
+                            <div class="mini-list">
+                                <div class="mini-item">
+                                    <div class="mini-item__badge">U</div>
+                                    <div>
+                                        <strong>{{ $dashboardStats[3]['value'] }} users in the system</strong>
+                                        <span>Keep roles and access up to date for a cleaner workflow.</span>
+                                    </div>
+                                </div>
+
+                                <div class="mini-item">
+                                    <div class="mini-item__badge">I</div>
+                                    <div>
+                                        <strong>{{ $dashboardStats[4]['value'] }} unread messages</strong>
+                                        <span>There are visitor conversations waiting for attention.</span>
+                                    </div>
+                                </div>
+
+                                <div class="mini-item">
+                                    <div class="mini-item__badge">S</div>
+                                    <div>
+                                        <strong>{{ $dashboardStats[5]['value'] }} branding items</strong>
+                                        <span>Title, slogan, socials and sliders are ready to shape the site
+                                            identity.</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mini-item">
-                                <div class="mini-item__badge">I</div>
-                                <div>
-                                    <strong>{{ $dashboardStats[4]['value'] }} unread messages</strong>
-                                    <span>There are visitor conversations waiting for attention.</span>
-                                </div>
-                            </div>
-                            <div class="mini-item">
-                                <div class="mini-item__badge">S</div>
-                                <div>
-                                    <strong>{{ $dashboardStats[5]['value'] }} branding items</strong>
-                                    <span>Title, slogan, socials and sliders are ready to shape the site identity.</span>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
 
                         <div class="dashboard-footer-note">
-                            This dashboard is designed to stay clean on desktop and mobile, while still giving you a quick operational view of the site.
+                            Manage posts, categories, pages, and site content from a clean and responsive dashboard designed
+                            for efficient blog administration.
                         </div>
                     </div>
                 </div>
