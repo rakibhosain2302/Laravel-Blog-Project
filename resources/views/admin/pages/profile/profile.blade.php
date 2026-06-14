@@ -363,7 +363,7 @@
         $user = $userInfo ?? Auth::user();
         $roleName = optional($user->role)->name ?? 'Guest';
         $roleDescription = optional($user->role)->description ?? 'No role description available.';
-        $profileImage = $user->image ? asset('storage/' . $user->image) : asset('assets/admin/img/img-profile.jpg');
+        $profileImage = $user->image ? asset('storage/' . $user->image) : asset('assets/admin/img/profile.png');
     @endphp
 
     <div class="grid_10">
