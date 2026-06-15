@@ -10,12 +10,35 @@ class ContractController extends Controller
 
     public function index()
     {
-        $unreadCount = Contract::where('is_seen', 0)->count();
-        $messages = Contract::where('is_seen', false)->latest()->get();
-        $seenMessages = Contract::where('is_seen', true)->latest()->get();
-        $seenCount = $seenMessages->count(); // Seen messages count
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
 
-        return view('admin.pages.inbox.inbox', compact('messages', 'seenMessages', 'unreadCount', 'seenCount'));
+        if (in_array($roleName, ['Admin', 'Editor'])) {
+
+            // Admin & Editor -> All Messages
+            $messages = Contract::where('is_seen', false)->latest()->get();
+            $seenMessages = Contract::where('is_seen', true)->latest()->get();
+        } else {
+
+            // User -> Only Own Messages
+            $messages = Contract::where('user_id', $user->id)
+                ->where('is_seen', false)
+                ->latest()
+                ->get();
+
+            $seenMessages = Contract::where('user_id', $user->id)
+                ->where('is_seen', true)
+                ->latest()
+                ->get();
+        }
+
+        $unreadCount = $messages->count();
+        $seenCount = $seenMessages->count();
+
+        return view(
+            'admin.pages.inbox.inbox',
+            compact('messages', 'seenMessages', 'unreadCount', 'seenCount')
+        );
     }
 
 
@@ -37,7 +60,7 @@ class ContractController extends Controller
     {
 
         $viweMsg = Contract::findOrFail($id);
-        return view('admin.pages.inbox.show',compact('viweMsg'));        
+        return view('admin.pages.inbox.show', compact('viweMsg'));
     }
 
     public function edit(string $id)
@@ -47,20 +70,18 @@ class ContractController extends Controller
     }
 
 
-    public function seenMsg(string $id){
+    public function seenMsg(string $id)
+    {
         $viweMsg = Contract::findOrFail($id);
 
         if (!$viweMsg->is_seen) {
             $viweMsg->update(['is_seen' => true]);
         }
 
-        return redirect()->back()->with('mtoseen','Message moved to seen message box.');
+        return redirect()->back()->with('mtoseen', 'Message moved to seen message box.');
     }
 
-    public function update(Request $request, string $id)
-    {
-        
-    }
+    public function update(Request $request, string $id) {}
 
     public function destroy(string $id)
     {
@@ -77,4 +98,19 @@ class ContractController extends Controller
         return redirect()->back()->with('success', 'Message moved back to Inbox.');
     }
 
+
+    public function personalMsg()
+    {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin can access Personal Messages
+        if ($roleName !== 'Admin') {
+            abort(403, 'Unauthorized Access');
+        }
+
+        $personalMessages = Contract::where('is_seen', false)->latest()->get();
+
+        return view('admin.pages.inbox.inbox', compact('personalMessages'));
+    }
 }

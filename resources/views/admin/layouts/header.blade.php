@@ -499,6 +499,7 @@
                 $data = \App\Models\Titleslogan::first();
                 $authUser = Auth::user();
                 $userRole = optional($authUser)->role;
+                $unreadCount = \App\Models\Contract::where('is_seen', false)->count();
             @endphp
 
             <!-- Modern Admin Header -->
@@ -523,10 +524,10 @@
                     <div class="header-user-section">
                         <div class="header-actions">
                             <!-- Notifications Button -->
-                            <button class="action-icon-btn" title="Notifications" id="notificationBtn">
+                            <a href="{{ route('message.index') }}" class="action-icon-btn" title="Notifications" id="notificationBtn">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge">3</span>
-                            </button>
+                                <span class="notification-badge">{{ $unreadCount }}</span>
+                            </a>
 
                             <!-- Settings Button -->
                             <a href="{{ route('profile') }}" class="action-icon-btn" title="Settings" id="settingsBtn">
