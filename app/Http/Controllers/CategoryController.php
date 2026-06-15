@@ -13,6 +13,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin and Editor can access Inbox
+        if (!in_array($roleName, ['Admin', 'Editor'])) {
+            return response()->view('admin.pages.error.404', [], 404);
+        }
+
         $catData = Category::withCount('posts')->latest()->get();
         $editCategory = request()->filled('edit_id') ? Category::find(request('edit_id')) : null;
 
@@ -24,6 +32,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin and Editor can access Inbox
+        if (!in_array($roleName, ['Admin', 'Editor'])) {
+            return response()->view('admin.pages.error.404', [], 404);
+        }
+
         return view('admin.pages.categories.create');
     }
 
@@ -46,16 +62,21 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin and Editor can access Inbox
+        if (!in_array($roleName, ['Admin', 'Editor'])) {
+            return response()->view('admin.pages.error.404', [], 404);
+        }
+
         return redirect()->route('categories.index', ['edit_id' => $id]);
     }
 
@@ -64,6 +85,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin and Editor can access Inbox
+        if (!in_array($roleName, ['Admin', 'Editor'])) {
+            return response()->view('admin.pages.error.404', [], 404);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:categories,name,' . $id,
         ], [
@@ -92,10 +121,17 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = auth()->user();
+        $roleName = optional($user->role)->name ?? 'Guest';
+
+        // Only Admin and Editor can access Inbox
+        if (!in_array($roleName, ['Admin', 'Editor'])) {
+            return response()->view('admin.pages.error.404', [], 404);
+        }
+
         $category = Category::findOrFail($id);
         $category->delete();
 
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
     }
-
 }
