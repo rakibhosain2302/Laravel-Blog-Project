@@ -497,9 +497,11 @@
         <div class="grid_12">
             @php
                 $data = \App\Models\Titleslogan::first();
+                $roleName = optional(auth()->user()->role)->name ?? 'Guest';
                 $authUser = Auth::user();
                 $userRole = optional($authUser)->role;
                 $unreadCount = \App\Models\Contract::where('is_seen', false)->count();
+                $canManageContent = in_array($roleName, ['Editor', 'Admin']);
             @endphp
 
             <!-- Modern Admin Header -->
@@ -524,10 +526,15 @@
                     <div class="header-user-section">
                         <div class="header-actions">
                             <!-- Notifications Button -->
-                            <a href="{{ route('message.index') }}" class="action-icon-btn" title="Notifications" id="notificationBtn">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-badge">{{ $unreadCount }}</span>
-                            </a>
+                            @if ($canManageContent)
+                                <a href="{{ route('message.index') }}" class="action-icon-btn" title="Notifications"
+                                    id="notificationBtn">
+                                    <i class="fas fa-bell"></i>
+                                    @if ($unreadCount > 0)
+                                        <div class="notification-badge">{{ $unreadCount }}</div>
+                                    @endif
+                                </a>
+                            @endif
 
                             <!-- Settings Button -->
                             <a href="{{ route('profile') }}" class="action-icon-btn" title="Settings" id="settingsBtn">
@@ -648,6 +655,4 @@
         });
     </script>
 
-@include('admin.layouts.footer')
-
-
+    @include('admin.layouts.footer')
