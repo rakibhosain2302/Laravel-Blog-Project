@@ -11,67 +11,103 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| PUBLIC ROUTES (Guest + All Users)
+|--------------------------------------------------------------------------
+*/
+
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index')->name('home'); // Home page
-    Route::get('blog-title', 'titleSlogan')->name('blog.title.index');
-    Route::post('blog-title', 'titleSloganStore')->name('blog.title.store');
-    Route::delete('blog-title/{id}', 'titleSloganDelete')->name('blog.title.destroy');
-    Route::get('social-link', 'socialIndex')->name('social.index');
-    Route::post('social-link', 'socialStore')->name('social.store');
-    Route::delete('social-link/{id}', 'socialDelete')->name('social.destroy');
+    Route::get('/', 'index')->name('home');
+
     Route::get('post/{id}', 'show')->name('showPost');
     Route::get('category/{id}', 'categoryFilter')->name('category.filter');
-    Route::get('titleslogan/{id}', 'getTitleSlogan')->name('title.slogan');
-    Route::put('titleslogan/update/{id}', 'titleSloganUpdate')->name('title.slogan.update');
-    Route::get('social/{id}', 'getSocialLink')->name('social');
-    Route::put('social/update/{id}', 'socialUpdate')->name('social.update');
-    Route::get('copyright', 'copyrightIndex')->name('copyright.index');
-    Route::post('copyright', 'copyrightStore')->name('copyright.store');
-    Route::get('copyright/{id}', 'getCopynote')->name('copyright.edit');
-    Route::put('copyright/update/{id}', 'CopyNoteUpdate')->name('copyright.update');
-    Route::delete('copyright/{id}', 'copyrightDelete')->name('copyright.destroy');
     Route::get('pages/{id}', 'singlePage')->name('single.page');
-    Route::get('contract', 'contractPage')->name('contract');
+
     Route::get('search', 'search')->name('search');
+    Route::get('contract', 'contractPage')->name('contract');
+
+    // Blog Settings (public view only)
+    Route::get('blog-title', 'titleSlogan')->name('blog.title.index');
+    Route::get('social-link', 'socialIndex')->name('social.index');
+    Route::get('copyright', 'copyrightIndex')->name('copyright.index');
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| AUTH ROUTES (Login/Register)
+|--------------------------------------------------------------------------
+*/
 Route::controller(AuthController::class)->group(function () {
+
     Route::get('admin', 'admin')->name('admin');
-    Route::get('showregister', 'showRegister')->name('auth.register')->middleware('guest');
+
+    Route::get('showregister', 'showRegister')
+        ->name('auth.register')
+        ->middleware('guest');
+
     Route::post('register', 'registerStore')->name('register.store');
-    Route::get('login', 'showLogin')->name('auth.login')->middleware('guest');
+
+    Route::get('login', 'showLogin')
+        ->name('auth.login')
+        ->middleware('guest');
+
     Route::post('loginmatch', 'loginUser')->name('login.match');
-    Route::get('dashbord','dashboard')->middleware('auth.check')->name('dashbord');
+
+    Route::get('dashbord', 'dashboard')
+        ->middleware('auth.check')
+        ->name('dashbord');
+
     Route::get('logout', 'logout')->name('logout');
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| USER PROFILE ROUTES (All Auth Users)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
+
     Route::controller(SingleUserController::class)->group(function () {
+
         Route::get('profile', 'showUser')->name('profile');
         Route::get('profile/edit', 'editProfile')->name('profile.edit');
         Route::put('profile/update', 'infoupdate')->name('profile.update');
+
         Route::get('profile/changePass', 'changePass')->name('change.pass');
         Route::put('profile/updatePassword', 'changePassword')->name('update.password');
     });
 });
 
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+/*
+|--------------------------------------------------------------------------
+| ADMIN PANEL (ONLY Admin + Editor)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role.access'])->prefix('admin')->group(function () {
+
     Route::resource('users', UserController::class);
-
-    Route::resource('posts', PostController::class);
-
     Route::resource('categories', CategoryController::class);
-
     Route::resource('page', PageController::class);
-
     Route::resource('slider', SliderController::class);
-
     Route::resource('message', ContractController::class);
 });
+Route::resource('posts', PostController::class);
 
-Route::post('/message/{id}/seenMsg', [ContractController::class, 'seenMsg'])->name('messages.seen');
 
-Route::post('/message/{id}/undo', [ContractController::class, 'undo'])->name('messages.undo');
+/*
+|--------------------------------------------------------------------------
+| MESSAGE ACTION ROUTES (Admin + Editor)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role.access'])->group(function () {
+
+    Route::post('/message/{id}/seenMsg', [ContractController::class, 'seenMsg'])
+        ->name('messages.seen');
+
+    Route::post('/message/{id}/undo', [ContractController::class, 'undo'])
+        ->name('messages.undo');
+});

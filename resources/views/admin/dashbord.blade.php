@@ -489,6 +489,15 @@
             box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
         }
 
+        .panel-card-user {
+            border-radius: 24px;
+            padding: 22px;
+            background: #fff;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+            height: 185px;
+        }
+
         .panel-card__head {
             margin-bottom: 16px;
         }
@@ -616,7 +625,7 @@
                             You are signed in as <strong>{{ $roleName }}</strong>.
                             {{ optional($user->role)->description ??
                                 'Your admin permissions and workspace tools are ready
-                                                                                                            here.' }}
+                                                                                                                                                                                                                                                                                                                here.' }}
                         </p>
 
                         <div class="dashboard-hero__meta">
@@ -667,154 +676,199 @@
                     </div>
                 </div>
 
-                <div class="dashboard-stats">
-                    @foreach ($dashboardStats as $stat)
-                        <div class="stat-card" style="color: {{ $stat['dot'] }};">
-                            <div class="stat-card__accent" style="background: {{ $stat['accent'] }};"></div>
-                            <div class="stat-card__label">
-                                <span>{{ $stat['label'] }}</span>
-                                <span class="section-pill">Live</span>
+                @if ($canManageContent)
+                    <div class="dashboard-stats">
+                        @foreach ($dashboardStats as $stat)
+                            <div class="stat-card" style="color: {{ $stat['dot'] }};">
+                                <div class="stat-card__accent" style="background: {{ $stat['accent'] }};"></div>
+                                <div class="stat-card__label">
+                                    <span>{{ $stat['label'] }}</span>
+                                    <span class="section-pill">Live</span>
+                                </div>
+                                <span class="stat-card__value">{{ $stat['value'] }}</span>
+                                <p class="stat-card__note">{{ $stat['note'] }}</p>
                             </div>
-                            <span class="stat-card__value">{{ $stat['value'] }}</span>
-                            <p class="stat-card__note">{{ $stat['note'] }}</p>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
 
-                <div class="dashboard-grid">
-                    <div class="panel-card">
-                        <div class="section-title">
-                            <div>
-                                <h3>Quick Actions</h3>
-                                <p>Fast access to the admin areas you use most.</p>
+                    <div class="dashboard-grid">
+                        <div class="panel-card">
+                            <div class="section-title">
+                                <div>
+                                    <h3>Quick Actions</h3>
+                                    <p>Fast access to the admin areas you use most.</p>
+                                </div>
+                                <span class="section-pill">One click</span>
                             </div>
-                            <span class="section-pill">One click</span>
+
+                            <div class="quick-actions">
+                                @foreach ($quickActions as $action)
+                                    <a href="{{ $action['route'] }}"
+                                        class="action-link action-link--{{ $action['tone'] }}">
+                                        <div class="action-link__text">
+                                            <strong>{{ $action['label'] }}</strong>
+                                            <span>Jump straight to this workspace.</span>
+                                        </div>
+                                        <span class="action-link__arrow">→</span>
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
 
-                        <div class="quick-actions">
-                            @foreach ($quickActions as $action)
-                                <a href="{{ $action['route'] }}" class="action-link action-link--{{ $action['tone'] }}">
-                                    <div class="action-link__text">
-                                        <strong>{{ $action['label'] }}</strong>
-                                        <span>Jump straight to this workspace.</span>
+
+                        <div class="panel-card">
+                            <div class="section-title">
+                                <div>
+                                    <h3>Recent Messages</h3>
+                                    <p>Latest inbox activity from your visitors.</p>
+                                </div>
+                                <span class="section-pill">{{ $recentMessages->count() }} shown</span>
+                            </div>
+
+                            @if ($recentMessages->isNotEmpty())
+                                <div class="mini-list">
+                                    @foreach ($recentMessages as $message)
+                                        <div class="mini-item">
+                                            <div class="mini-item__badge">M</div>
+                                            <div>
+                                                <strong>{{ $message->firstname }} {{ $message->lastname }}</strong>
+                                                <span>{{ $message->email }}</span>
+                                                <span>{{ \Illuminate\Support\Str::limit($message->message, 92) }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="activity-empty">
+                                    No messages yet. Once visitors start writing, their latest messages will appear here.
+                                </div>
+                            @endif
+                        </div>
+                    @elseif ($roleName === 'User')
+                        <div class="dashboard-grid" style="margin-bottom: 0px;">
+                            <div class="panel-card-user">
+                                <div class="section-title">
+                                    <div>
+                                        <h3>Quick Actions</h3>
+                                        <p>Fast access to your workspace.</p>
                                     </div>
-                                    <span class="action-link__arrow">→</span>
-                                </a>
+                                    <span class="section-pill">User</span>
+                                </div>
+
+                                <div class="quick-actions">
+                                    @foreach ($quickActions as $action)
+                                        <a href="{{ $action['route'] }}"
+                                            class="action-link action-link--{{ $action['tone'] }}">
+                                            <div class="action-link__text">
+                                                <strong>{{ $action['label'] }}</strong>
+                                                <span>Quick navigation.</span>
+                                            </div>
+                                            <span class="action-link__arrow">→</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="dashboard-stats" style="display: inline-block;">
+                                @foreach ($dashboardStats as $stat)
+                                    <div class="panel-card-user" style="color: {{ $stat['dot'] }};">
+                                        <div class="stat-card__accent" style="background: {{ $stat['accent'] }};">
+                                        </div>
+                                        <div class="stat-card__label">
+                                            <span>{{ $stat['label'] }}</span>
+                                            <span class="section-pill">Live</span>
+                                        </div>
+                                        <span class="stat-card__value">{{ $stat['value'] }}</span>
+                                        <p class="stat-card__note">{{ $stat['note'] }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                @endif
+            </div>
+
+            <div class="dashboard-subgrid">
+                <div class="panel-card">
+                    <div class="section-title">
+                        <div>
+                            <h3>Recent Posts</h3>
+                            <p>Your latest published or draft content at a glance.</p>
+                        </div>
+                        <span class="section-pill">{{ $recentPosts->count() }} shown</span>
+                    </div>
+
+                    @if ($recentPosts->isNotEmpty())
+                        <div class="activity-list">
+                            @foreach ($recentPosts as $post)
+                                <div class="activity-item">
+                                    <div class="activity-icon">P</div>
+                                    <div>
+                                        <p class="activity-title">{{ $post->title }}</p>
+                                        <p class="activity-meta">
+                                            {{ optional($post->category)->name ?? 'No Category' }} •
+                                            {{ optional($post->user)->name ?? 'Unknown author' }} •
+                                            {{ optional($post->created_at)->diffForHumans() }}
+                                        </p>
+                                        <p class="activity-snippet">
+                                            {{ \Illuminate\Support\Str::limit($post->discription, 120) }}</p>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
-                    </div>
-
-                    <div class="panel-card">
-                        <div class="section-title">
-                            <div>
-                                <h3>Recent Messages</h3>
-                                <p>Latest inbox activity from your visitors.</p>
-                            </div>
-                            <span class="section-pill">{{ $recentMessages->count() }} shown</span>
+                    @else
+                        <div class="activity-empty">
+                            No posts yet. Add your first article to populate this panel.
                         </div>
-
-                        @if ($recentMessages->isNotEmpty())
-                            <div class="mini-list">
-                                @foreach ($recentMessages as $message)
-                                    <div class="mini-item">
-                                        <div class="mini-item__badge">M</div>
-                                        <div>
-                                            <strong>{{ $message->firstname }} {{ $message->lastname }}</strong>
-                                            <span>{{ $message->email }}</span>
-                                            <span>{{ \Illuminate\Support\Str::limit($message->message, 92) }}</span>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="activity-empty">
-                                No messages yet. Once visitors start writing, their latest messages will appear here.
-                            </div>
-                        @endif
-                    </div>
+                    @endif
                 </div>
-
-                <div class="dashboard-subgrid">
-                    <div class="panel-card">
-                        <div class="section-title">
-                            <div>
-                                <h3>Recent Posts</h3>
-                                <p>Your latest published or draft content at a glance.</p>
-                            </div>
-                            <span class="section-pill">{{ $recentPosts->count() }} shown</span>
+                <!-- #region -->
+                <div class="panel-card">
+                    <div class="section-title">
+                        <div>
+                            <h3>Workspace Snapshot</h3>
+                            <p>Some useful signals from the admin area.</p>
                         </div>
-
-                        @if ($recentPosts->isNotEmpty())
-                            <div class="activity-list">
-                                @foreach ($recentPosts as $post)
-                                    <div class="activity-item">
-                                        <div class="activity-icon">P</div>
-                                        <div>
-                                            <p class="activity-title">{{ $post->title }}</p>
-                                            <p class="activity-meta">
-                                                {{ optional($post->category)->name ?? 'No Category' }} •
-                                                {{ optional($post->user)->name ?? 'Unknown author' }} •
-                                                {{ optional($post->created_at)->diffForHumans() }}
-                                            </p>
-                                            <p class="activity-snippet">
-                                                {{ \Illuminate\Support\Str::limit($post->discription, 120) }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="activity-empty">
-                                No posts yet. Add your first article to populate this panel.
-                            </div>
-                        @endif
+                        <span class="section-pill">Today</span>
                     </div>
-                    <!-- #region -->
-                    <div class="panel-card">
-                        <div class="section-title">
-                            <div>
-                                <h3>Workspace Snapshot</h3>
-                                <p>Some useful signals from the admin area.</p>
-                            </div>
-                            <span class="section-pill">Today</span>
-                        </div>
 
-                        @if ($roleName == 'Admin')
-                            <div class="mini-list">
-                                <div class="mini-item">
-                                    <div class="mini-item__badge">U</div>
-                                    <div>
-                                        <strong>{{ $dashboardStats[3]['value'] }} users in the system</strong>
-                                        <span>Keep roles and access up to date for a cleaner workflow.</span>
-                                    </div>
-                                </div>
-
-                                <div class="mini-item">
-                                    <div class="mini-item__badge">I</div>
-                                    <div>
-                                        <strong>{{ $dashboardStats[4]['value'] }} unread messages</strong>
-                                        <span>There are visitor conversations waiting for attention.</span>
-                                    </div>
-                                </div>
-
-                                <div class="mini-item">
-                                    <div class="mini-item__badge">S</div>
-                                    <div>
-                                        <strong>{{ $dashboardStats[5]['value'] }} branding items</strong>
-                                        <span>Title, slogan, socials and sliders are ready to shape the site
-                                            identity.</span>
-                                    </div>
+                    @if ($roleName == 'Admin')
+                        <div class="mini-list">
+                            <div class="mini-item">
+                                <div class="mini-item__badge">U</div>
+                                <div>
+                                    <strong>{{ $dashboardStats[3]['value'] }} users in the system</strong>
+                                    <span>Keep roles and access up to date for a cleaner workflow.</span>
                                 </div>
                             </div>
-                        @endif
 
-                        <div class="dashboard-footer-note">
-                            Manage posts, categories, pages, and site content from a clean and responsive dashboard designed
-                            for efficient blog administration.
+                            <div class="mini-item">
+                                <div class="mini-item__badge">I</div>
+                                <div>
+                                    <strong>{{ $dashboardStats[4]['value'] }} unread messages</strong>
+                                    <span>There are visitor conversations waiting for attention.</span>
+                                </div>
+                            </div>
+
+                            <div class="mini-item">
+                                <div class="mini-item__badge">S</div>
+                                <div>
+                                    <strong>{{ $dashboardStats[5]['value'] }} branding items</strong>
+                                    <span>Title, slogan, socials and sliders are ready to shape the site
+                                        identity.</span>
+                                </div>
+                            </div>
                         </div>
+                    @endif
+
+                    <div class="dashboard-footer-note">
+                        Manage posts, categories, pages, and site content from a clean and responsive dashboard designed
+                        for efficient blog administration.
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection

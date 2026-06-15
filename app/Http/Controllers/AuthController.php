@@ -243,7 +243,6 @@ class AuthController extends Controller
             $quickActions = [
                 ['label' => 'Add Post', 'route' => route('posts.create'), 'tone' => 'primary'],
                 ['label' => 'My Posts', 'route' => route('posts.index'), 'tone' => 'soft'],
-                ['label' => 'Profile', 'route' => route('profile'), 'tone' => 'ghost'],
             ];
         }
 
