@@ -529,7 +529,7 @@
                             @if ($canManageContent)
                                 <a href="{{ route('message.index') }}" class="action-icon-btn" title="Notifications"
                                     id="notificationBtn">
-                                    <i class="fas fa-bell"></i>
+                                    <i class="fas fa-envelope"></i>
                                     @if ($unreadCount > 0)
                                         <div class="notification-badge">{{ $unreadCount }}</div>
                                     @endif
