@@ -625,7 +625,7 @@
                             You are signed in as <strong>{{ $roleName }}</strong>.
                             {{ optional($user->role)->description ??
                                 'Your admin permissions and workspace tools are ready
-                                                                                                                                                                                                                                                                                                                here.' }}
+                                                                                                                                                                                                                                                                                                                                            here.' }}
                         </p>
 
                         <div class="dashboard-hero__meta">
@@ -727,13 +727,13 @@
 
                             @if ($recentMessages->isNotEmpty())
                                 <div class="mini-list">
-                                    @foreach ($recentMessages as $message)
+                                    @foreach ($recentMessages->take(2) as $message)
                                         <div class="mini-item">
                                             <div class="mini-item__badge">M</div>
                                             <div>
                                                 <strong>{{ $message->firstname }} {{ $message->lastname }}</strong>
                                                 <span>{{ $message->email }}</span>
-                                                <span>{{ \Illuminate\Support\Str::limit($message->message, 92) }}</span>
+                                                <span>{{ \Illuminate\Support\Str::limit($message->message, 70) }}</span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -800,7 +800,7 @@
 
                     @if ($recentPosts->isNotEmpty())
                         <div class="activity-list">
-                            @foreach ($recentPosts as $post)
+                            @foreach ($recentPosts->take(3) as $post)
                                 <div class="activity-item">
                                     <div class="activity-icon">P</div>
                                     <div>
