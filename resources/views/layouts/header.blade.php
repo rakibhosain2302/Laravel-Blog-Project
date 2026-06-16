@@ -57,9 +57,6 @@
                     <a href="{{ $link->lnlink }}" target="_blank"><i class="fa fa-linkedin"></i></a>
                     <a href="{{ $link->gllink }}" target="_blank"><i class="fa fa-google-plus"></i></a>
                 @endforeach
-                <div class="login-btn">
-                    <a href="{{ Route('auth.login') }}">Login</a>
-                </div>
             </div>
             <div class="searchbtn clear">
                 <form action="{{ route('search') }}" method="get">
