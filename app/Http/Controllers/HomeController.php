@@ -59,6 +59,7 @@ class HomeController extends Controller
     }
 
 
+
     public function titleSlogan()
     {
         $data = Titleslogan::orderByDesc('id')->get();

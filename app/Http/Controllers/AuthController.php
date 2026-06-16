@@ -36,7 +36,10 @@ class AuthController extends Controller
             return redirect()->route('dashbord');
         }
 
-        return view('auth.login');
+        $data = Titleslogan::latest()->first();
+
+
+        return view('auth.login', compact('data'));
     }
 
     public function registerStore(Request $request)
