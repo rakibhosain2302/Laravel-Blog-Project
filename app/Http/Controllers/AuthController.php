@@ -27,7 +27,8 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        return view('auth.register');
+        $data = Titleslogan::latest()->first();
+        return view('auth.register', compact('data'));
     }
 
     public function showLogin()

@@ -69,7 +69,7 @@
                 </div>
             </form>
 
-            <p class="login-note">Training with live project</p>
+            <p class="login-note">{{ $data->title ?? 'Your Blog Website' }}</p>
         </div>
     </div>
     <script>
