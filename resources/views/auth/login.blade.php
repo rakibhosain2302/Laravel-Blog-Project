@@ -16,7 +16,8 @@
                     <p class="errorMsg">{{ session('error') }}</p>
                 @endif
                 <div>
-                    <input type="email" class=" @error('email') is-invalid @enderror " placeholder="User Email" value="{{ old('email') }}" name="email" />
+                    <input type="email" class=" @error('email') is-invalid @enderror " placeholder="User Email"
+                        value="{{ old('email') }}" name="email" />
                     <span class="text-danger">
                         @error('email')
                             {{ $message }}
@@ -24,7 +25,8 @@
                     </span>
                 </div>
                 <div>
-                    <input type="password" class=" @error('password') is-invalid @enderror" placeholder="Password" name="password" />
+                    <input type="password" class=" @error('password') is-invalid @enderror" placeholder="Password"
+                        name="password" />
                     <span class="text-danger">
                         @error('password')
                             {{ $message }}
