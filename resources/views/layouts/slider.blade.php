@@ -4,5 +4,4 @@
         <a href="#"><img src=" {{ asset('storage/'. $sliderData->image) }}" alt="nature 1" title="{{ $sliderData->title }}" /></a>
         @endforeach
     </div>
-
 </div>
