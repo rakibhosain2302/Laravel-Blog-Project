@@ -8,6 +8,7 @@
     <meta name="keywords" content="blog,cms blog">
     <meta name="author" content="Delowar">
     <link rel="stylesheet" href="{{ asset('assets/fonts/font-awesome-4.5.0/css/font-awesome.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/nivo-slider-css/nivo-slider.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
