@@ -296,7 +296,9 @@
     </header>
 
     @hasSection('content')
-        @yield('content')
+        <div class="container">
+            @yield('content')
+        </div>
     @else
         <h2 class="text-danger">Content Not Pound</h2>
     @endif

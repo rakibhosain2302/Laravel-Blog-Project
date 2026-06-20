@@ -232,7 +232,8 @@ textarea {
 .contentsection {
     background: #ffffff none repeat scroll 0 0;
     border: 1px solid #ca932f;
-    padding: 15px;
+    padding: 24px !important;
+    width: 100%;
 }
 .maincontent {
     background: #fef4e5 none repeat scroll 0 0;

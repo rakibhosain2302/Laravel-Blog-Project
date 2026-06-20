@@ -77,6 +77,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            padding: 20px;
             border-radius: 24px;
             border: 1px solid rgba(15, 23, 42, 0.08);
             background: #ffffff;
@@ -113,7 +114,7 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            padding: 24px;
+            padding-top: 20px;
         }
 
         .post-category {
