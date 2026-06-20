@@ -1,6 +1,6 @@
 <aside class="sidebar">
     <div class="widget widget-categories">
-        <div class="widget-title">Categories</div>
+        <div class="widget-title"><span class="title-body">Categories</span></div>
         <ul class="category-list">
             @foreach ($categories as $category)
                 <li><a href="{{ route('category.filter', $category->id) }}">{{ $category->name }}</a></li>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="widget widget-latest-posts">
-        <div class="widget-title">Latest Articles</div>
+        <div class="widget-title"><span class="title-body">Latest Articles</span></div>
         @foreach ($latestPosts as $post)
             <article class="recent-post">
                 <a href="{{ route('showPost', $post->id) }}">

@@ -229,6 +229,18 @@ textarea {
     top: 0;
 }
 
+.title-body {
+    display: inline-flex;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    width: fit-content;
+}
+
 .contentsection {
     background: #ffffff none repeat scroll 0 0;
     border: 1px solid #ca932f;
@@ -408,7 +420,9 @@ textarea {
     color: #334155;
     background: #f8fafc;
     border-radius: 16px;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
     text-decoration: none;
 }
 .category-list li a:hover {
@@ -423,7 +437,9 @@ textarea {
     padding: 16px;
     background: #f8fafc;
     border-radius: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 .widget-latest-posts .recent-post:last-child {
     margin-bottom: 0;
@@ -489,13 +505,13 @@ textarea {
 .footermenu::after {
     content: "";
     display: block;
-    width: 25%; 
-    height: 4px; 
+    width: 25%;
+    height: 4px;
     border-radius: 2px;
-    background: #FFF; 
-    margin-top: 6px; 
-    margin-left: auto; 
-    margin-right: auto; 
+    background: #fff;
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .fixedicon {

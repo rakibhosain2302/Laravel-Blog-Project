@@ -5,7 +5,7 @@
         .contentsection.modern-layout {
             display: grid;
             grid-template-columns: minmax(0, 1fr) 320px;
-            gap: 26px;
+            gap: 20px;
             padding: 24px 0;
         }
 
@@ -126,6 +126,7 @@
             font-size: 0.82rem;
             font-weight: 700;
             letter-spacing: 0.02em;
+            width: fit-content;
         }
 
         .post-card h2 {
@@ -169,7 +170,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.95rem 1.3rem;
+            padding: 6px 20px;
             border-radius: 999px;
             background: #2563eb;
             color: #ffffff;
@@ -257,8 +258,8 @@
         <div class="maincontent clear modern">
             <div class="page-header">
                 <div>
-                    <span class="eyebrow">{{ isset($category) ? 'Category' : 'Latest' }}</span>
-                    <h1>{{ isset($category) ? 'Posts in "' . $category->name . '"' : 'All Posts' }}</h1>
+                    <span class="eyebrow">{{ isset($category) ? 'Category' : 'Latest Posts' }}</span>
+                    <h1>{{ isset($category) ? 'Posts in "' . $category->name . '"' : '' }}</h1>
                 </div>
 
                 @if (isset($category))
@@ -284,7 +285,7 @@
                                 <span>•</span>
                                 <span>{{ $post->user->name }}</span>
                             </div>
-                            <p>{{ Str::words($post->discription, 28, '...') }}</p>
+                            <p>{{ Str::words($post->discription, 70, '...') }}</p>
                             <div class="post-actions">
                                 <a href="{{ route('showPost', $post->id) }}" class="btn-primary">Read More</a>
                             </div>
