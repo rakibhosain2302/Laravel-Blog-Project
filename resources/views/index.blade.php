@@ -81,13 +81,7 @@
             border-radius: 24px;
             border: 1px solid rgba(15, 23, 42, 0.08);
             background: #ffffff;
-            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .post-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
         }
 
         .post-card-image {
@@ -328,8 +322,8 @@
         </div>
 
         @include('layouts.sidebar')
-        @include('layouts.footer')
     </div>
+    @include('layouts.footer')
 @endsection
 
 @section('title')
