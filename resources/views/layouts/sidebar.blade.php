@@ -12,13 +12,12 @@
         <div class="widget-title"><span class="title-body">Latest Articles</span></div>
         @foreach ($latestPosts as $post)
             <article class="recent-post">
+                <div class="recent-post__body">
+                    <h3 class="recent-post__title ms-1"><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h3>
+                </div>
                 <a href="{{ route('showPost', $post->id) }}">
                     <img class="recent-post__thumb" src="{{ asset('storage/' . $post->images) }}" alt="{{ $post->title }}" loading="lazy" />
                 </a>
-                <div class="recent-post__body">
-                    <h3 class="recent-post__title"><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h3>
-                    <p class="recent-post__excerpt">{{ Str::limit($post->discription, 135) }}</p>
-                </div>
             </article>
         @endforeach
     </div>
