@@ -1,5 +1,5 @@
 <footer class="site-footer">
-    <div class="footer-top">
+    <div class="footer-top container">
         <div class="footer-brand">
             @if (!empty($titleslogan) && count($titleslogan) > 0)
                 @foreach ($titleslogan as $footerData)
