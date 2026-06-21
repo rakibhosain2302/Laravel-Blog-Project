@@ -302,3 +302,6 @@
     @else
         <h2 class="text-danger">Content Not Pound</h2>
     @endif
+
+
+    @yield('footer')

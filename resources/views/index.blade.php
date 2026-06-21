@@ -323,9 +323,11 @@
 
         @include('layouts.sidebar')
     </div>
+    
+@endsection
+@section('footer')
     @include('layouts.footer')
 @endsection
-
 @section('title')
     Home
 @endsection
