@@ -9,7 +9,6 @@
     <meta name="author" content="Delowar">
     <link rel="stylesheet" href="{{ asset('assets/fonts/font-awesome-4.5.0/css/font-awesome.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/nivo-slider-css/nivo-slider.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
@@ -216,29 +215,7 @@
     </style>
 
     <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/jquery.nivo.slider.js') }}" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(window).load(function() {
-            $('#slider').nivoSlider({
-                effect: 'random',
-                slices: 10,
-                animSpeed: 500,
-                pauseTime: 5000,
-                startSlide: 0, //Set starting Slide (0 index)
-                directionNav: false,
-                directionNavHide: false, //Only show on hover
-                controlNav: false, //1,2,3...
-                controlNavThumbs: false, //Use thumbnails for Control Nav
-                pauseOnHover: true, //Stop animation while hovering
-                manualAdvance: false, //Force manual transitions
-                captionOpacity: 0.8, //Universal caption opacity
-                beforeChange: function() {},
-                afterChange: function() {},
-                slideshowEnd: function() {} //Triggers after all slides have been shown
-            });
-        });
-    </script>
+    <script src="{{ asset('assets/js/custom-slider.js') }}" defer></script>
     @stack('style')
 </head>
 
@@ -266,42 +243,51 @@
                 </div>
 
                 <form class="header-search" action="{{ route('search') }}" method="get">
-                    <input type="text" name="keyword" placeholder="Search keyword..." value="{{ request('keyword') }}" />
+                    <input type="text" name="keyword" placeholder="Search keyword..."
+                        value="{{ request('keyword') }}" />
                     <button type="submit">Search</button>
                 </form>
             </div>
         </div>
 
         <nav class="main-nav">
-            <ul>
-                <li>
-                    <a href="{{ Route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">
-                        Home
-                    </a>
-                </li>
-                @foreach ($navPage as $nav)
+            <div class="container">
+                <ul>
                     <li>
-                        <a href="{{ Route('single.page', $nav->id) }}" class="{{ Request::routeIs('single.page') && request()->route('id') == $nav->id ? 'active' : '' }}">
-                            {{ $nav->name }}
+                        <a href="{{ Route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">
+                            Home
                         </a>
                     </li>
-                @endforeach
-                <li>
-                    <a href="{{ Route('contract') }}" class="{{ Request::is('contract') ? 'active' : '' }}">
-                        Contact Us
-                    </a>
-                </li>
-            </ul>
+                    @foreach ($navPage as $nav)
+                        <li>
+                            <a href="{{ Route('single.page', $nav->id) }}"
+                                class="{{ Request::routeIs('single.page') && request()->route('id') == $nav->id ? 'active' : '' }}">
+                                {{ $nav->name }}
+                            </a>
+                        </li>
+                    @endforeach
+                    <li>
+                        <a href="{{ Route('contract') }}" class="{{ Request::is('contract') ? 'active' : '' }}">
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
 
-    @hasSection('content')
-        <div class="container">
+    <main class="container pt-0">
+
+        @hasSection('content')
             @yield('content')
-        </div>
-    @else
-        <h2 class="text-danger">Content Not Pound</h2>
-    @endif
+        @else
+            <div class="alert alert-danger">
+                Content Not Found
+            </div>
+        @endif
 
+    </main>
 
-    @yield('footer')
+    <footer>
+        @include('layouts.footer')
+    </footer>
