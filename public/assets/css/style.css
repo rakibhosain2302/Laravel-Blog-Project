@@ -640,7 +640,7 @@ textarea {
     position: relative;
     overflow: hidden;
     min-height: 500px;
-    border-radius: 20px;
+    border-radius: 14px 14px 0 0;
     background: #111;
     box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
 }
@@ -709,7 +709,7 @@ textarea {
 }
 .slider-indicators {
     position: absolute;
-    left: 50%;
+    right: 0;
     bottom: 1rem;
     transform: translateX(-50%);
     display: flex;
