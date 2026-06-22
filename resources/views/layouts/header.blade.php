@@ -116,13 +116,14 @@
         }
 
         .site-header .header-search button {
-            padding: 0.88rem 1.2rem;
+            padding: 17px;
             border: 0;
             color: #ffffff;
             background: #2563eb;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease;
+            width: 100px;
         }
 
         .site-header .header-search button:hover {
