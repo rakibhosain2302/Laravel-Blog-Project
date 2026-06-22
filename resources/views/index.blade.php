@@ -67,11 +67,11 @@
             transform: translateY(-1px);
         }
 
-        .post-grid {
+        /* .post-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 22px;
-        }
+        } */
 
         .post-card {
             display: flex;
