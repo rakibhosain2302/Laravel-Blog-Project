@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
