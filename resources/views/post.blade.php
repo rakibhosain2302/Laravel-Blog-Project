@@ -25,9 +25,6 @@
                 </div>
             </div>
         </div>
-        @include('layouts.sidebar')
-
-        @include('layouts.footer')
     @endsection
     @section('title')
     Post-Details

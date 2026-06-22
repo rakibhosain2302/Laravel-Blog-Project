@@ -77,6 +77,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            height: 750px;
             padding: 20px;
             border-radius: 24px;
             border: 1px solid rgba(15, 23, 42, 0.08);

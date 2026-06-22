@@ -9,10 +9,6 @@
 			<p>{{ $singlePages->body }}</p>
 		</div>
 	</div>
-
-	@include('layouts.sidebar')
-
-    @include('layouts.footer')
 @endsection
 
 @section('title')
