@@ -2,31 +2,78 @@
 
 @prepend('style')
     <style>
-        input[type="text"],
-        input[type="email"] {
-            border: 1px solid #cfc5b6;
-            border-radius: 3px;
-            margin-bottom: 5px;
-            padding: 6px;
-            width: 450px;
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 40px;
+            background: #f9f9f9;
+            border-radius: 10px;
         }
 
-        textarea {
-            height: 200px;
-            margin-bottom: 10px;
-            padding: 6px;
-            width: 450px;
-            border: 1px solid #cfc5b6;
+        .contact-form {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        input[type="submit"] {
-            background: #b7801c none repeat scroll 0 0;
-            border: 1px solid #e6af4b;
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #b7801c;
+            outline: none;
+        }
+
+        .contact-form input[type="submit"] {
+            background: #b7801c;
+            border: none;
             color: #fff;
             cursor: pointer;
-            border-radius: 3px;
-            font-size: 20px;
-            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            padding: 10px 20px;
+            transition: 0.3s;
+        }
+
+        .contact-form input[type="submit"]:hover {
+            background: #e6af4b;
+        }
+
+        .contact-info {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 15px;
+            color: #b7801c;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+            }
         }
     </style>
 @endprepend
@@ -35,89 +82,71 @@
     <div class="contentsection contemplete clear">
         <div class="maincontent clear">
             <div class="about">
-                <h2>Contact us</h2>
-                <form action="{{ Route('message.store') }}" method="POST">
-                    @csrf
-                    <table>
-                        <tr>
-                            <td>Your First Name:</td>
-                            <td>
-                                <input type="text" name="firstname" class=" @error('firstname') is-invalid @enderror"
-                                    value="{{ old('firstname') }}" placeholder="Enter first name" />
-                                <span class="text-danger">
-                                    @error('firstname')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Your Last Name:</td>
-                            <td>
-                                <input type="text" name="lastname" class=" @error('firstname') is-invalid @enderror"
-                                    value="{{ old('firstname') }}" placeholder="Enter Last name" />
-                                <span class="text-danger">
-                                    @error('lastname')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </td>
-                        </tr>
+                <h2>Contact Us</h2>
+                <div class="contact-container">
 
-                        <tr>
-                            <td>Your Email Address:</td>
-                            <td>
-                                <input type="email" name="email" class=" @error('firstname') is-invalid @enderror"
-                                    value="{{ old('firstname') }}" placeholder="Enter Email Address" />
-                                <span class="text-danger">
-                                    @error('email')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Your Message:</td>
-                            <td>
-                                <textarea name="message" class="@error('message') is-invalid @enderror">{{ old('message') }}</textarea>
-                                <span class="text-danger">
-                                    @error('message')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <input type="submit" name="submit" value="Send" />
-                            </td>
-                        </tr>
-                    </table>
-                    <form>
+                    <!-- Left Side Form -->
+                    <form action="{{ Route('message.store') }}" method="POST" class="contact-form">
+                        @csrf
+                        <input type="text" name="firstname" placeholder="First Name" value="{{ old('firstname') }}">
+                        <span class="text-danger">
+                            @error('firstname')
+                                {{ $message }}
+                            @enderror
+                        </span>
+
+                        <input type="text" name="lastname" placeholder="Last Name" value="{{ old('lastname') }}">
+                        <span class="text-danger">
+                            @error('lastname')
+                                {{ $message }}
+                            @enderror
+                        </span>
+
+                        <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}">
+                        <span class="text-danger">
+                            @error('email')
+                                {{ $message }}
+                            @enderror
+                        </span>
+
+                        <textarea name="message" placeholder="Your Message">{{ old('message') }}</textarea>
+                        <span class="text-danger">
+                            @error('message')
+                                {{ $message }}
+                            @enderror
+                        </span>
+
+                        <input type="submit" value="Send">
+                    </form>
+
+                    <!-- Right Side Info -->
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p><strong>Email:</strong> anasahibve@gmail.com</p>
+                        <p><strong>Phone:</strong> +88 01601-139968</p>
+                        <p><strong>Location:</strong> Hathazari, Chattogram, Bangladesh</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-        @include('layouts.sidebar')
-
-        @if (session('success'))
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    Swal.fire({
-                        title: "Success!",
-                        text: "{{ session('success') }}",
-                        icon: "success",
-                        confirmButtonText: "OK"
-                    });
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Success!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "OK"
                 });
-            </script>
-        @endif
+            });
+        </script>
+    @endif
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endsection
 
-        @include('layouts.footer')
-    @endsection
-
-    @section('title')
-        Contract-us
-    @endsection
+@section('title')
+    Contact Us
+@endsection
