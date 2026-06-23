@@ -254,7 +254,7 @@ textarea {
 }
 .about img {
     background: #fff none repeat scroll 0 0;
-    border: 1px solid #b7801c;
+    border: 1px solid #2563eb;
     float: left;
     height: 190px;
     margin-right: 10px;
@@ -284,8 +284,8 @@ textarea {
 }
 
 .relatedpost h2 {
-    background: #e6af4b none repeat scroll 0 0;
-    border-bottom: 2px solid #b7801c !important;
+    background: rgb(37, 99, 235, 0.15) none repeat scroll 0 0;
+    border-bottom: 1px solid #2563eb !important;
     color: #000 !important;
     margin-bottom: 8px !important;
     margin-top: 15px;
@@ -295,10 +295,27 @@ textarea {
     height: 150px;
     margin-bottom: 10px;
     width: 240px;
+    transition: all 0.4s ease;
 }
 .relatedpost img:hover {
-    opacity: 0.4;
+    opacity: 0.8;
 }
+
+.relatedpost-item {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid #2563eb; */
+}
+
+.relatedpost-item h4 {
+    margin-top: 10px;
+}
+
+.relatedpost-item h4 a {
+    text-decoration: none;
+    color: #333;
+}
+
 .samepost {
     font-weight: normal;
     font-size: 16px;
@@ -307,19 +324,19 @@ textarea {
 }
 .samepost h2,
 .about h2 {
-    color: #2563eb;
+    color: #000;
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 0px;
 }
 
-.about .post-header {
+.post-header {
     border-bottom: 1px solid #2563eb;
     padding-bottom: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 20px;
 }
 
-.about .post-header h4 {
+.post-crated {
     font-size: 18px;
     margin-bottom: 4px;
 }
@@ -340,8 +357,8 @@ textarea {
     color: #3399ff;
 }
 .samepost img {
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid #ebb450;
+    background: rgb(37, 99, 235, 0.12) none repeat scroll 0 0;
+    border: 1px solid #2563eb;
     float: left;
     margin-right: 10px;
     padding: 5px;
@@ -358,7 +375,7 @@ textarea {
 }
 .readmore a {
     background: #fff none repeat scroll 0 0;
-    border: 1px solid #b7801c;
+    border: 1px solid #2563eb;
     border-radius: 3px;
     color: #b7801c;
     display: block;
