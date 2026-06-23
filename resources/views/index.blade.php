@@ -68,10 +68,10 @@
         }
 
         /* .post-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 22px;
-        } */
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 22px;
+            } */
 
         .post-card {
             display: flex;
@@ -322,9 +322,8 @@
             @endif
         </div>
 
-        @if (Request::is('/'))
-            @include('layouts.sidebar')
-        @endif
+
+        @include('layouts.sidebar')
 
     </div>
 

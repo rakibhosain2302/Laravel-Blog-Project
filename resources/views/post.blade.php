@@ -5,10 +5,13 @@
         <div class="maincontent clear">
 
             <div class="about">
-                <h2>{{ $post->title }}</h2>
+                <div class="post-header">
+                    <h2>{{ $post->title }}</h2>
+                    <h4>{{ $post->created_at->format('d M, Y h:i A') }}, By <a href="#">{{ $post->user->name }}</a>
+                    </h4>
+                </div>
                 <img src="{{ asset('storage/' . $post->images) }}" alt="MyImage" />
-                <h4>{{ $post->created_at->format('d M, Y h:i A') }}, By <a href="#">{{ $post->user->name }}</a></h4>
-                <hr>
+                {{-- <hr> --}}
                 <p>{{ $post->discription }}</p>
 
                 <div class="relatedpost clear">
@@ -27,5 +30,5 @@
         </div>
     @endsection
     @section('title')
-    Post-Details
+        Post-Details
     @endsection

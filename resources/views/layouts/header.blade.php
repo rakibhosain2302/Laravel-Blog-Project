@@ -41,7 +41,7 @@
             object-fit: cover;
             border-radius: 18px;
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-            border: 1px solid rgba(15, 23, 42, 0.08);
+            border: 1px solid #CCC;
         }
 
         .site-header .brand-text h2 {
@@ -76,6 +76,7 @@
             justify-content: center;
             width: 42px;
             height: 42px;
+            border: 1px solid #CCC;
             border-radius: 50%;
             background: #f3f4f7;
             color: #1f2937;
