@@ -10,26 +10,29 @@
 
                 @if ($posts->count() > 0)
                     @foreach ($posts as $post)
-                        <h2><a href="{{ route('showPost',$post->id) }}">{{ $post->title }}</a></h2>
+                        <h2><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h2>
                         <h4>{{ $post->created_at->format('d M, Y h:i A') }}, By <a href="#">{{ $post->user->name }}</a>
                         </h4>
-                        <a href="{{ route('showPost',$post->id) }}"><img src="{{ asset('storage/' . $post->images) }}" alt="post image" /></a>
+                        <a href="{{ route('showPost', $post->id) }}"><img src="{{ asset('storage/' . $post->images) }}"
+                                alt="post image" /></a>
                         <p>{{ Str::words($post->discription, 60, '.....') }}</p>
                         <div class="readmore clear">
                             <a href="{{ route('showPost', $post->id) }}">Read More</a>
                         </div>
                     @endforeach
                 @else
-                    <p>No results found.</p>
+                    <div class="py-4 text-center text-muted">
+                        <h4 class="mb-2">No Related Post</h4>
+                        <p class="mb-0">Try exploring other articles from the homepage.</p>
+                    </div>
                 @endif
             </div>
         </div>
 
         @include('layouts.sidebar')
 
-        @include('layouts.footer')
     @endsection
 
     @section('title')
-    Search results for {{ $search }}
+        Search results for {{ $search }}
     @endsection

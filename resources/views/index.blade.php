@@ -80,6 +80,7 @@
             height: 750px;
             padding: 20px;
             border-radius: 24px;
+            margin-bottom: 20px;
             border: 1px solid rgba(15, 23, 42, 0.08);
             background: #ffffff;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -95,7 +96,7 @@
 
         .post-card-image img {
             width: 100%;
-            height: 100%;
+            height: 400px;
             object-fit: cover;
             display: block;
             transition: transform 0.35s ease;
@@ -264,7 +265,7 @@
 
             <div class="post-grid">
                 @php
-                    $items = isset($category) ? $category->posts : $posts;
+                    $items = $posts;
                 @endphp
 
                 @foreach ($items as $post)
@@ -289,30 +290,26 @@
                 @endforeach
             </div>
 
-            @php
-                $totalPages = ceil($totalPosts / $perPage);
-            @endphp
-
-            @if ($totalPages > 1)
+            @if ($posts->lastPage() > 1)
                 <nav class="pagination">
                     <ul>
-                        <li class="{{ $page > 1 ? '' : 'disabled' }}">
-                            @if ($page > 1)
-                                <a href="?page={{ $page - 1 }}">Previous</a>
+                        <li class="{{ $posts->onFirstPage() ? 'disabled' : '' }}">
+                            @if (!$posts->onFirstPage())
+                                <a href="{{ $posts->previousPageUrl() }}">Previous</a>
                             @else
                                 <span>Previous</span>
                             @endif
                         </li>
 
-                        @for ($i = 1; $i <= $totalPages; $i++)
-                            <li class="{{ $i == $page ? 'active' : '' }}">
-                                <a href="?page={{ $i }}">{{ $i }}</a>
+                        @for ($i = 1; $i <= $posts->lastPage(); $i++)
+                            <li class="{{ $i == $posts->currentPage() ? 'active' : '' }}">
+                                <a href="{{ $posts->url($i) }}">{{ $i }}</a>
                             </li>
                         @endfor
 
-                        <li class="{{ $page < $totalPages ? '' : 'disabled' }}">
-                            @if ($page < $totalPages)
-                                <a href="?page={{ $page + 1 }}">Next</a>
+                        <li class="{{ $posts->hasMorePages() ? '' : 'disabled' }}">
+                            @if ($posts->hasMorePages())
+                                <a href="{{ $posts->nextPageUrl() }}">Next</a>
                             @else
                                 <span>Next</span>
                             @endif

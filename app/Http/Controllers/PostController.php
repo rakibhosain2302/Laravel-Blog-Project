@@ -47,10 +47,10 @@ class PostController extends Controller
     {
         // Validate incoming request
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|string|max:50',
             'images' => 'required|mimes:png,jpg,jpeg|max:2048',
-            'discription' => 'required',
-            'tags' => 'required|max:50',
+            'discription' => 'required|string',
+            'tags' => 'required|string|max:50',
             'category_id' => 'required|exists:categories,id',
             'user_id' => 'required|exists:users,id'
         ]);
@@ -104,7 +104,7 @@ class PostController extends Controller
     {
         // Validate request data
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:50',
             'images' => 'nullable|mimes:png,jpg,jpeg|max:2048', // Optional image
             'discription' => 'required|string',
             'tags' => 'required|string|max:50',

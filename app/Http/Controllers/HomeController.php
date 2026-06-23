@@ -16,20 +16,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $perPage = 3;
-        $page = request()->query('page', 1);
-        $skip = ($page - 1) * $perPage;
-        $totalPosts = 0;
-        $posts = collect();
+        $perPage = 2;
 
         try {
-            $totalPosts = Post::count();
-            $posts = Post::with(['user', 'category'])->skip($skip)->take($perPage)->get();
+            $posts = Post::with(['user', 'category'])->paginate($perPage);
         } catch (\Throwable $e) {
-            // Fall back to an empty homepage when the database is unavailable.
+            $posts = collect();
         }
 
-        return view('index', compact('posts', 'page', 'perPage', 'totalPosts'));
+        return view('index', compact('posts', 'perPage'));
     }
 
 
@@ -50,12 +45,13 @@ class HomeController extends Controller
     public function categoryFilter($id)
     {
         $perPage = 3;
-        $page = request()->query('page', 1);
-        $skip = ($page - 1) * $perPage;
-        $totalPosts = Post::where('category_id', $id)->count();
-        $posts = Post::where('category_id', $id)->skip($skip)->take($perPage)->get();
-        $category = Category::with('posts')->findOrFail($id);
-        return view('index', compact('posts', 'category', 'page', 'perPage', 'totalPosts'));
+
+        $category = Category::findOrFail($id);
+        $posts = Post::with(['user', 'category'])
+            ->where('category_id', $id)
+            ->paginate($perPage);
+
+        return view('index', compact('posts', 'category', 'perPage'));
     }
 
 
