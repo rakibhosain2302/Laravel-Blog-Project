@@ -68,10 +68,10 @@
         }
 
         /* .post-grid {
-                            display: grid;
-                            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                            gap: 22px;
-                        } */
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                                gap: 22px;
+                            } */
 
         .post-card {
             display: flex;
@@ -208,7 +208,7 @@
         <div class="maincontent clear modern">
             <div class="page-header">
                 <div>
-                    <span class="eyebrow">{{ isset($category) ? 'Category' : 'Latest Posts' }}</span>
+                    <span class="eyebrow">{{ isset($category) ? $category->name : 'Latest Posts' }}</span>
                     {{-- <h1>{{ isset($category) ? 'Posts in "' . $category->name . '"' : '' }}</h1> --}}
                 </div>
 
