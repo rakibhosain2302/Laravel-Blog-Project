@@ -25,7 +25,7 @@
             gap: 18px;
             margin-bottom: 24px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            border-bottom: 2px solid rgba(37, 99, 235, 0.12);
         }
 
         .page-header .eyebrow {
@@ -81,7 +81,7 @@
             padding: 20px;
             border-radius: 24px;
             margin-bottom: 20px;
-            border: 1px solid rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.12);
             background: #ffffff;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
@@ -200,7 +200,7 @@
         .pagination li {
             border-radius: 999px;
             overflow: hidden;
-            border: 1px solid #d1d5db;
+            border: 1px solid rgba(37, 99, 235, 0.22);
         }
 
         .pagination li a,
