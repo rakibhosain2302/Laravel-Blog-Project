@@ -127,6 +127,24 @@ textarea {
     border: 2px solid #000;
     color: #fff;
 }
+
+.search-results {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgb(37, 99, 235, 0.15);
+}
+
+.search-term{
+    color: #1d4ed8;
+}
+
+.searchresults .card-bdy {
+    border: 1px solid rgba(37, 99, 235, 0.22);
+}
+
 .myicon {
     margin: 0 auto;
     width: 280px;
@@ -342,9 +360,16 @@ textarea {
 }
 
 .samepost h2 a {
-    color: #ac7511;
+    color: #000;
+    font-size: 24px;
     text-decoration: none;
+    transition: all 0.4s ease;
 }
+
+.samepost h2 a:hover {
+    color: #3399ff;
+}
+
 .samepost h4,
 .about h4 {
     font-weight: normal;
@@ -369,23 +394,23 @@ textarea {
     line-height: 23px;
     text-align: justify;
 }
-.readmore {
-    float: right;
-    margin-top: 10px;
-}
+
 .readmore a {
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid #2563eb;
-    border-radius: 3px;
-    color: #b7801c;
-    display: block;
-    font-size: 17px;
-    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 20px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #ffffff;
     text-decoration: none;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
 }
-.readmore a:hover {
-    color: #e16525;
-}
+
 .sidebar {
     float: right;
     width: 100%;
@@ -789,11 +814,57 @@ textarea {
     }
 }
 
-.search-results{
+.searchresults .post-img img {
+    background: none;
+    border: none;
+    width: 100% !important;
+    height: 400px !important;
+    object-fit: cover;
+}
+
+.pagination {
+    margin-top: 34px;
     display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pagination li {
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(37, 99, 235, 0.22);
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 1.5rem;
-    margin-bottom: 24px;
-    border-bottom: 1px solid rgb(37, 99, 235, 0.15);
+    justify-content: center;
+    min-width: 46px;
+    height: 44px;
+    padding: 0 14px;
+    color: #334155;
+    text-decoration: none;
+    background: #ffffff;
+    font-weight: 600;
+}
+
+.pagination li.active a {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.pagination li.disabled span {
+    color: #94a3b8;
+    background: #f8fafc;
 }

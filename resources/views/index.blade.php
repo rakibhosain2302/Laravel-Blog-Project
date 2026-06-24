@@ -68,10 +68,10 @@
         }
 
         /* .post-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                        gap: 22px;
-                    } */
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                            gap: 22px;
+                        } */
 
         .post-card {
             display: flex;
@@ -181,52 +181,6 @@
             transform: translateY(-1px);
         }
 
-        .pagination {
-            margin-top: 34px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .pagination ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .pagination li {
-            border-radius: 999px;
-            overflow: hidden;
-            border: 1px solid rgba(37, 99, 235, 0.22);
-        }
-
-        .pagination li a,
-        .pagination li span {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 46px;
-            height: 44px;
-            padding: 0 14px;
-            color: #334155;
-            text-decoration: none;
-            background: #ffffff;
-            font-weight: 600;
-        }
-
-        .pagination li.active a {
-            background: #2563eb;
-            color: #ffffff;
-            border-color: #2563eb;
-        }
-
-        .pagination li.disabled span {
-            color: #94a3b8;
-            background: #f8fafc;
-        }
 
         @media (max-width: 1080px) {
             .contentsection.modern-layout {
@@ -335,9 +289,9 @@
                     <ul>
                         <li class="{{ $posts->onFirstPage() ? 'disabled' : '' }}">
                             @if (!$posts->onFirstPage())
-                                <a href="{{ $posts->previousPageUrl() }}">Previous</a>
+                                <a href="{{ $posts->previousPageUrl() }}">« Previous</a>
                             @else
-                                <span>Previous</span>
+                                <span>« Previous</span>
                             @endif
                         </li>
 
@@ -349,14 +303,15 @@
 
                         <li class="{{ $posts->hasMorePages() ? '' : 'disabled' }}">
                             @if ($posts->hasMorePages())
-                                <a href="{{ $posts->nextPageUrl() }}">Next</a>
+                                <a href="{{ $posts->nextPageUrl() }}">Next »</a>
                             @else
-                                <span>Next</span>
+                                <span>Next »</span>
                             @endif
                         </li>
                     </ul>
                 </nav>
             @endif
+
         </div>
 
 

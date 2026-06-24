@@ -11,21 +11,28 @@ use App\Models\Social;
 use App\Models\Titleslogan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
         $perPage = 2;
 
         try {
-            $posts = Post::with(['user', 'category'])->paginate($perPage);
+            $posts = Post::with(['user', 'category'])
+                ->orderBy('id', 'desc') // 👈 last post first
+                ->paginate($perPage);
         } catch (\Throwable $e) {
-            $posts = collect();
+            $posts = new LengthAwarePaginator([], 0, $perPage, 1);
         }
 
         return view('index', compact('posts', 'perPage'));
     }
+
+
+
 
 
     public function show(string $id)
@@ -316,16 +323,19 @@ class HomeController extends Controller
             return redirect()->route('home');
         }
 
-        $posts = Post::with(['user', 'categories'])
+        $posts = Post::with(['user', 'category'])
             ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('discription', 'LIKE', "%{$search}%")
             ->orWhereHas('user', function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
             })
-            ->orWhereHas('categories', function ($query) use ($search) {
+            ->orWhereHas('category', function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
             })
-            ->get();
+            ->orderBy('created_at', 'desc') // 👈 newest post first
+            ->paginate(2);
+
+        $posts->appends(['keyword' => $search]);
 
         return view('search', compact('posts', 'search'));
     }
