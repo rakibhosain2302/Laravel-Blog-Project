@@ -9,7 +9,7 @@ body {
     font-size: 14px;
     line-height: 18px;
     color: #000;
-    background: url("../images/bg.png") repeat fixed 0 0 #fff;
+    background: repeat fixed 0 0 #fff;
 }
 
 .templete {
@@ -260,6 +260,7 @@ textarea {
     background: #ffffff none repeat scroll 0 0;
     padding: 24px !important;
     width: 100%;
+    border: 1px solid rgb(37, 99, 235, 0.15);
 }
 .maincontent {
     padding: 8px 15px;
