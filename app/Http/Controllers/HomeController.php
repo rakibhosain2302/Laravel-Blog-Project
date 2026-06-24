@@ -27,10 +27,13 @@ class HomeController extends Controller
         } catch (\Throwable $e) {
             $posts = new LengthAwarePaginator([], 0, $perPage, 1);
         }
+        $latestPosts = Post::with(['user', 'category'])
+            ->orderBy('id', 'desc')
+            ->limit(5)
+            ->get();
 
-        return view('index', compact('posts', 'perPage'));
+        return view('index', compact('posts', 'perPage', 'latestPosts'));
     }
-
 
 
 

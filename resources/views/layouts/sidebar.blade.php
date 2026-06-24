@@ -10,6 +10,7 @@
 
     <div class="widget widget-latest-posts">
         <div class="widget-title"><span class="title-body">Latest Articles</span></div>
+
         @foreach ($latestPosts as $post)
             <article class="recent-post">
                 <a href="{{ route('showPost', $post->id) }}">
