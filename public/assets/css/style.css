@@ -331,7 +331,7 @@ textarea {
 }
 
 .post-header {
-    border-bottom: 1px solid #2563eb;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.22);
     padding-bottom: 4px;
     margin-bottom: 20px;
 }

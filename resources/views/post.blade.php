@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-12">
-                    <div class="post-card shadow-sm rounded-4 overflow-hidden border-0">
+                    <div class="post-card shadow-sm overflow-hidden border-0">
                         <div class="post-card-body p-4 p-lg-5">
                             <div class="d-flex flex-column">
                                 <div class="post-header">
@@ -28,8 +28,8 @@
                 </div>
 
                 <div class="col-12">
-                    <div class="relatedpost-card p-4 rounded-4 bg-white shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="relatedpost-card p-4 bg-white shadow-sm">
+                        <div class="relatedpost-header d-flex justify-content-between align-items-center mb-4">
                             <h2 class="h4 mb-0">Related articles</h2>
                             <span class="title-body">{{ isset($relatedPost) ? $relatedPost->count() : 0 }} found</span>
                         </div>
@@ -39,7 +39,7 @@
                                 @foreach ($relatedPost as $related)
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <a href="{{ route('showPost', $related->id) }}" class="relatedpost-item d-block text-decoration-none text-dark">
-                                            <div class="card h-100 border-1 shadow-sm overflow-hidden">
+                                            <div class="card card-by h-100 border-1 shadow-sm overflow-hidden">
                                                 <div class="ratio ratio-4x3">
                                                     <img src="{{ asset('storage/' . $related->images) }}" alt="{{ $related->title }}" class="card-img-top object-fit-cover" />
                                                 </div>
@@ -76,11 +76,19 @@
 
             .post-card-body {
                 background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+                border: 1px solid rgba(37, 99, 235, 0.12);
+                border-radius: 10px;
             }
 
             .relatedpost-card {
                 min-height: 220px;
-                border: 1px solid #ccc;
+                border: 1px solid rgba(37, 99, 235, 0.12);
+                border-radius: 10px;
+            }
+            
+            .relatedpost-header{
+                border-bottom: 2px solid rgba(37, 99, 235, 0.12);
+                padding-bottom: 10px;
             }
 
             .relatedpost-item:hover .card {
@@ -90,6 +98,11 @@
 
             .relatedpost-item .card {
                 transition: transform 0.25s ease, box-shadow 0.25s ease;
+            }
+
+            .card-by {
+                border: 1px solid rgba(37, 99, 235, 0.22);
+                border-radius: 10px;
             }
 
             .card-title {
