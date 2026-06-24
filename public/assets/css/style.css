@@ -788,3 +788,12 @@ textarea {
         font-size: 1.15rem;
     }
 }
+
+.search-results{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgb(37, 99, 235, 0.15);
+}

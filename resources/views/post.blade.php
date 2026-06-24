@@ -58,7 +58,7 @@
                             </div>
                         @else
                             <div class="py-4 text-center text-muted">
-                                <h4 class="mb-2">No Related Post</h4>
+                                <h4 class="mb-2">No Related Content</h4>
                                 <p class="mb-0">Try exploring other articles from the homepage.</p>
                             </div>
                         @endif

@@ -41,8 +41,8 @@
         }
 
         .page-header h1 {
-            margin: 0;
-            font-size: clamp(2rem, 2.5vw, 2.8rem);
+            margin-top: 10px;
+            font-size: 18px;
             line-height: 1.05;
             color: #0f172a;
         }
@@ -68,10 +68,10 @@
         }
 
         /* .post-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 22px;
-            } */
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                        gap: 22px;
+                    } */
 
         .post-card {
             display: flex;
@@ -255,7 +255,7 @@
             <div class="page-header">
                 <div>
                     <span class="eyebrow">{{ isset($category) ? 'Category' : 'Latest Posts' }}</span>
-                    <h1>{{ isset($category) ? 'Posts in "' . $category->name . '"' : '' }}</h1>
+                    {{-- <h1>{{ isset($category) ? 'Posts in "' . $category->name . '"' : '' }}</h1> --}}
                 </div>
 
                 @if (isset($category))
@@ -268,27 +268,67 @@
                     $items = $posts;
                 @endphp
 
-                @foreach ($items as $post)
-                    <article class="post-card">
-                        <div class="post-card-image">
-                            <img src="{{ asset('storage/' . $post->images) }}" alt="{{ $post->title }}" />
+                {{-- Category check --}}
+                @if (isset($category))
+                    @if ($items->count() > 0)
+                        @foreach ($items as $post)
+                            <article class="post-card">
+                                <div class="post-card-image">
+                                    <img src="{{ asset('storage/' . $post->images) }}" alt="{{ $post->title }}" />
+                                </div>
+                                <div class="post-card-body">
+                                    <span class="post-category">{{ optional($post->category)->name ?? 'Blog' }}</span>
+                                    <h2><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h2>
+                                    <div class="post-meta">
+                                        <span>{{ $post->created_at->format('d M, Y') }}</span>
+                                        <span>•</span>
+                                        <span>{{ $post->user->name }}</span>
+                                    </div>
+                                    <p>{{ Str::words($post->discription, 70, '...') }}</p>
+                                    <div class="post-actions">
+                                        <a href="{{ route('showPost', $post->id) }}" class="btn-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
+                    @else
+                        <div class="py-4 text-center text-muted">
+                            <h4 class="mb-2">No {{ $category->name }} Content</h4>
+                            <p class="mb-0 text-center">Try exploring other articles from the homepage.</p>
                         </div>
-                        <div class="post-card-body">
-                            <span class="post-category">{{ optional($post->category)->name ?? 'Blog' }}</span>
-                            <h2><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h2>
-                            <div class="post-meta">
-                                <span>{{ $post->created_at->format('d M, Y') }}</span>
-                                <span>•</span>
-                                <span>{{ $post->user->name }}</span>
-                            </div>
-                            <p>{{ Str::words($post->discription, 70, '...') }}</p>
-                            <div class="post-actions">
-                                <a href="{{ route('showPost', $post->id) }}" class="btn-primary">Read More</a>
-                            </div>
+                    @endif
+                @else
+                    {{-- No category, show all posts --}}
+                    @if ($items->count() > 0)
+                        @foreach ($items as $post)
+                            <article class="post-card">
+                                <div class="post-card-image">
+                                    <img src="{{ asset('storage/' . $post->images) }}" alt="{{ $post->title }}" />
+                                </div>
+                                <div class="post-card-body">
+                                    <span class="post-category">{{ optional($post->category)->name ?? 'Blog' }}</span>
+                                    <h2><a href="{{ route('showPost', $post->id) }}">{{ $post->title }}</a></h2>
+                                    <div class="post-meta">
+                                        <span>{{ $post->created_at->format('d M, Y') }}</span>
+                                        <span>•</span>
+                                        <span>{{ $post->user->name }}</span>
+                                    </div>
+                                    <p>{{ Str::words($post->discription, 70, '...') }}</p>
+                                    <div class="post-actions">
+                                        <a href="{{ route('showPost', $post->id) }}" class="btn-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
+                    @else
+                        <div class="py-4 text-center text-muted">
+                            <h4 class="mb-2">No Related Post</h4>
+                            <p class="mb-0 text-center">Try exploring other articles from the homepage.</p>
                         </div>
-                    </article>
-                @endforeach
+                    @endif
+                @endif
             </div>
+
 
             @if ($posts->lastPage() > 1)
                 <nav class="pagination">

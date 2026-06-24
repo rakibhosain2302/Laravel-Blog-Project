@@ -316,10 +316,16 @@ class HomeController extends Controller
             return redirect()->route('home');
         }
 
-        $posts = Post::where('title', 'LIKE', "%{$search}%")
+        $posts = Post::with(['user', 'categories'])
+            ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('discription', 'LIKE', "%{$search}%")
+            ->orWhereHas('user', function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->orWhereHas('categories', function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
             ->get();
-
 
         return view('search', compact('posts', 'search'));
     }
